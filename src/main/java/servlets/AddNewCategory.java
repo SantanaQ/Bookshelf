@@ -67,7 +67,7 @@ public class AddNewCategory extends HttpServlet {
 	}
 	
 	private boolean checkCategory(String kategorie) {
-		String regex = "^[a-z]+$";
+		String regex = "^[a-z]+$"; //
 		Pattern pattern = Pattern.compile(regex);
 		Matcher matcher = pattern.matcher(kategorie);
 		return matcher.matches();
