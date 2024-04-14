@@ -139,7 +139,8 @@ public class AddNewBook extends HttpServlet {
 			return errorMessage;
 		}
 		if(!checkCategories(kategorien)) {
-			errorMessage = "Die Eingabe der Kategorien hat nicht das richtige Format. Folgendes Format wird akzeptiert: Kategorie1,Kategorie2,Kategorie3,...";
+			errorMessage = "Die Eingabe der Kategorien hat nicht das richtige Format. Folgendes Format wird akzeptiert: kategorie1,kategorie2,kategorie3,..."
+					+ "Zudem müssen alle Buchstaben klein geschrieben werden (a-z).";
 			return errorMessage;
 		}
 		if(!checkCategoriesContents(kategorien)) {
@@ -184,7 +185,7 @@ public class AddNewBook extends HttpServlet {
 				+ "<div class=\"main\">\r\n"
 				+ "<form action=\"./AddNewBook\" method=\"post\" enctype=\"multipart/form-data\">\r\n"
 				+ "	<div class=\"form-content\">\r\n"
-				+ "     <h1 style=\"color: red\">Fehler: " + fehlermeldung(isbn, preis, kategorien) + "</h1>\r\n"
+				+ "     <h2 style=\"color: red\">Fehler: " + fehlermeldung(isbn, preis, kategorien) + "</h2>\r\n"
 				+ "		<h2>Ein neues Buch hinzufügen:</h2>\r\n"
 				+ "		<input class=\"formval\" type=\"text\" name=\"isbn\" required placeholder=\"ISBN\" minlength=\"13\" maxlength=\"17\" value=\"" + isbn + "\">\r\n"
 				+ "		<input class=\"formval\" type=\"text\" name=\"titel\" required placeholder=\"Titel\" value=\"" + titel + "\">\r\n"
