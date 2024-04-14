@@ -1,0 +1,15 @@
+.main-content{
+	margin: auto;
+	width: 70%;
+	text-align: center;
+}
+
+.add-button{
+	width: 300px;
+	height: 100px;
+	font-size: 24px;
+	font-weight: bold;
+	border: 1px solid black;
+	border-radius: 35px;
+	background-color: white;
+};
