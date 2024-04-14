@@ -7,6 +7,8 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.Arrays;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -28,7 +30,7 @@ public class AddNewCategory extends HttpServlet {
 	
     Connection con;   
 	private boolean inputCorrect = true;
-
+	String existingCategory;
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
@@ -37,7 +39,7 @@ public class AddNewCategory extends HttpServlet {
 		
 		try {
 			con = DatabaseConnection.initializeDatabase();
-			inputCorrect = checkCategory(kategorie);
+			inputCorrect = checkCategory(kategorie) && checkCategoryContents(kategorie);
 			PrintWriter out = response.getWriter();
 			
 			if(inputCorrect) {
@@ -72,12 +74,30 @@ public class AddNewCategory extends HttpServlet {
 		Matcher matcher = pattern.matcher(kategorie);
 		return matcher.matches();
 	}
+	
+	private boolean checkCategoryContents(String kategorie) {
+		List<String> kategorieninDB = DatabaseStatements.getKategorien(con);
+		if(kategorieninDB.contains(kategorie)) {
+			existingCategory = kategorie;
+			return false;
+		}
+		return true;
+	}
 
 	
 	private String fehlermeldung(String kategorie) {
-		String errorMessage = "Die Eingabe der Kategorie hat nicht das richtige Format. Es sind nur Kleinbuchstaben erlaubt (a-z).";
+		String errorMessage = "";
+		if(!checkCategory(kategorie)) {
+			errorMessage = "Die Eingabe der Kategorie hat nicht das richtige Format. Es sind nur Kleinbuchstaben erlaubt (a-z).";
+			return errorMessage;
+		}
+		if(!checkCategoryContents(kategorie)) {
+			errorMessage = "Folgende angegebene Kategorie ist in der Datenbank bereits vorhanden: " + existingCategory;
+			return errorMessage;
+		}
 		return errorMessage;
 	}
+	
 	
 	private String reloadForm(String kategorie) {
 		String html = 
