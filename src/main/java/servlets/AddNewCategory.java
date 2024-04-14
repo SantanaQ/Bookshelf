@@ -37,7 +37,7 @@ public class AddNewCategory extends HttpServlet {
 		
 		try {
 			con = DatabaseConnection.initializeDatabase();
-			inputCorrect = checkCategories(kategorie);
+			inputCorrect = checkCategory(kategorie);
 			PrintWriter out = response.getWriter();
 			
 			if(inputCorrect) {
@@ -66,8 +66,8 @@ public class AddNewCategory extends HttpServlet {
 		
 	}
 	
-	private boolean checkCategories(String kategorie) {
-		String regex = "^[a-z]+(,[a-z]+)*$";
+	private boolean checkCategory(String kategorie) {
+		String regex = "^[a-z]+$";
 		Pattern pattern = Pattern.compile(regex);
 		Matcher matcher = pattern.matcher(kategorie);
 		return matcher.matches();
