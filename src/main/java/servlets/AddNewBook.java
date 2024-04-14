@@ -47,7 +47,6 @@ public class AddNewBook extends HttpServlet {
 		String autor = request.getParameter("autor");
 		String beschreibung = request.getParameter("beschreibung");
 		String pr = request.getParameter("preis");
-		BigDecimal preis = new BigDecimal(pr);
 		String kategorien = request.getParameter("kategorie");
 		Part cover = request.getPart("titelbild");
 		InputStream coverStream = cover.getInputStream();
@@ -62,6 +61,7 @@ public class AddNewBook extends HttpServlet {
 		
             PrintWriter out = response.getWriter();
             if(inputCorrect) {
+        		BigDecimal preis = new BigDecimal(pr);
     			DatabaseStatements.addBook(con, isbn, titel, autor, beschreibung, preis, coverStream);
     			DatabaseStatements.addBookcategories(con, isbn, kategorien);
                 File file = new File("C:\\Users\\Anwender\\git\\bookshelf\\src\\main\\webapp\\SuccessfullyAdded.html");
