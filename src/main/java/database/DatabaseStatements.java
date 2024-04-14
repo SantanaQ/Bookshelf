@@ -32,7 +32,6 @@ public class DatabaseStatements {
 	}
 	
 	public static void addCategory(Connection con, String kategorien) {
-		kategorien.replaceAll(", ", ",");
 		List<String> categoriesList = Arrays.asList(kategorien.split(","));
 		//System.out.println(categoriesList);
 		HashSet<String> hashSetCategories = new HashSet<>(categoriesList);
@@ -88,7 +87,6 @@ public class DatabaseStatements {
 	}
 	
 	private static List<Integer> getBuchkategorienNr(Connection con, String kategorien){
-		kategorien.replaceAll(", ", ",");
 		List<String> categoriesList = Arrays.asList(kategorien.split(","));
 		HashSet<String> hashSetCategories = new HashSet<>(categoriesList);
 		List<Integer> categoryIndex = new ArrayList<>();

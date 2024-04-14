@@ -186,7 +186,7 @@ public class AddNewBook extends HttpServlet {
 				+ "	<div class=\"form-content\">\r\n"
 				+ "     <h1 style=\"color: red\">Fehler: " + fehlermeldung(isbn, preis, kategorien) + "</h1>\r\n"
 				+ "		<h2>Ein neues Buch hinzufügen:</h2>\r\n"
-				+ "		<input class=\"formval\" type=\"text\" name=\"isbn\" required placeholder=\"ISBN\" minlength=\"17\" maxlength=\"17\" value=\"" + isbn + "\">\r\n"
+				+ "		<input class=\"formval\" type=\"text\" name=\"isbn\" required placeholder=\"ISBN\" minlength=\"13\" maxlength=\"17\" value=\"" + isbn + "\">\r\n"
 				+ "		<input class=\"formval\" type=\"text\" name=\"titel\" required placeholder=\"Titel\" value=\"" + titel + "\">\r\n"
 				+ "		<input class=\"formval\" type=\"text\" name=\"autor\" required placeholder=\"Autor\" value=\"" + autor + "\">\r\n"
 				+ "		<textarea class=\"beschreibung\" name=\"beschreibung\" rows=\"25\" cols=\"1\" required placeholder=\"Beschreibung des Buchs...\">" + beschreibung + "</textarea>\r\n"
