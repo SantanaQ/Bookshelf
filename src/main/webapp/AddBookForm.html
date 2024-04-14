@@ -1,21 +1,37 @@
 <!DOCTYPE html>
 <html>
 <head>
+<meta charset="UTF-8">
 <link rel="stylesheet" href="styles/AddBookForm.css">
 <link rel="stylesheet" href="styles/general.css">
+<link rel="stylesheet" href="styles/header.css">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
 
-<meta charset="utf-8">
 <title>Neues Buch hinzufügen</title>
 </head>
 <body>
 
+
+  <!--Anfang Header-->
+  <div class="headerr-onlylogo">
+    <div class="items-onlylogo">
+      <div class="logo-box">
+        <a href="AddBookForm.html">
+          <img class="logo" src="https://github.com/SantanaQ/Internet-Technologien/blob/main/images/logo.png?raw=true" alt="logo">
+        </a>
+      </div>
+    </div>
+    <div class="rightt"></div>
+  </div>
+  <!--Ende Header-->
+
+<div class="main">
 <form action="./AddNewBook" method="post" enctype="multipart/form-data">
 	<div class="form-content">
-		<h2>Füge ein neues Buch der Datenbank hinzu:</h2>
+		<h2>Ein neues Buch hinzufügen:</h2>
 		<input class="formval" type="text" name="isbn" required placeholder="ISBN" minlength="17" maxlength="17">
 		<input class="formval" type="text" name="titel" required placeholder="Titel">
 		<input class="formval" type="text" name="autor" required placeholder="Autor">
@@ -24,7 +40,7 @@
 		<input class="formval" type="text" name="kategorie" required placeholder="Kategorie(n)">
 		<!-- image -->
 		<div class="titelbild-box">
-			<p class="titelbild-text">Titelbild hochladen:</p>
+			<p class="titelbild-text">Buchcover hochladen:</p>
 			<input class="formval-file" type="file" name="titelbild" required placeholder="Titelbild">
 		</div>
 		<div class="submit-box">
@@ -32,6 +48,18 @@
 		</div>
 	</div>
 </form>
+<form action="./AddNewCategory" method="post">
+	<div class="form-content">
+		<h2>Eine neue Kategorie hinzufügen:</h2>
+		<input class="formval" type="text" name="newcategory" required placeholder="Kategoriename">
+		<div class="submit-box">
+			<input class="submit" type="submit" value="Kategorie hinzufügen">
+		</div>
+	</div>
+</form>
+</div>
+
+
 
 </body>
 </html>
