@@ -54,7 +54,7 @@ public class DatabaseStatements {
 		}
 	}
 	
-	private static List<String> getKategorien(Connection con){
+	public static List<String> getKategorien(Connection con){
 		List<String> kategorien = new ArrayList<>();
 		try {
 			PreparedStatement stmt = con.prepareStatement("SELECT * FROM Kategorie");

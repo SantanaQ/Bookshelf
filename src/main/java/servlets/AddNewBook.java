@@ -9,6 +9,8 @@ import java.io.PrintWriter;
 import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.Arrays;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -30,7 +32,9 @@ import database.*;
 public class AddNewBook extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
+	Connection con;
 	private boolean inputCorrect = true;
+	private String notExistingCategory = "";
 	
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
@@ -51,13 +55,12 @@ public class AddNewBook extends HttpServlet {
 	
 		
 		try {
-			Connection con = DatabaseConnection.initializeDatabase();
+			con = DatabaseConnection.initializeDatabase();
 			
-			inputCorrect = checkISBN(isbn) && checkPrice(pr) && checkCategories(kategorien);
+			inputCorrect = checkISBN(isbn) && checkPrice(pr) && checkCategories(kategorien) && checkCategoriesContents(kategorien);
 			//TODO: Inputs auf Richtigkeit prüfen und gute Fehlermeldungen
 			
 			DatabaseStatements.addBook(con, isbn, titel, autor, beschreibung, preis, coverStream);
-			DatabaseStatements.addCategory(con, kategorien);
 			DatabaseStatements.addBookcategories(con, isbn, kategorien);
 			
 			
@@ -114,6 +117,18 @@ public class AddNewBook extends HttpServlet {
 		return matcher.matches();
 	}
 	
+	private boolean checkCategoriesContents(String kategorien) {
+		List<String> kategorieninDB = DatabaseStatements.getKategorien(con);
+		List<String> buchkategorien = Arrays.asList(kategorien.split(","));
+		for(String kategorie : buchkategorien) {
+			if(!kategorieninDB.contains(kategorie)) {
+				notExistingCategory = kategorie;
+				return false;
+			}
+		}
+		return true;
+	}
+	
 	
 	private String fehlermeldung(String isbn, String preis, String kategorien) {
 		String errorMessage = "";
@@ -126,7 +141,11 @@ public class AddNewBook extends HttpServlet {
 			return errorMessage;
 		}
 		if(!checkCategories(kategorien)) {
-			errorMessage = "Die Eingabe der Kategorien hat nicht das richtige Format. Folgendes Format wird akzeptiert: Kategorie1,Kategorie2,Kategorie3";
+			errorMessage = "Die Eingabe der Kategorien hat nicht das richtige Format. Folgendes Format wird akzeptiert: Kategorie1,Kategorie2,Kategorie3,...";
+			return errorMessage;
+		}
+		if(!checkCategoriesContents(kategorien)) {
+			errorMessage = "Folgende angegebene Kategorie ist in der Datenbank nicht vorhanden: " + notExistingCategory;
 			return errorMessage;
 		}
 		return errorMessage;
