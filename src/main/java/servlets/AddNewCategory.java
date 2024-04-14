@@ -7,8 +7,6 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.Arrays;
-import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -30,7 +28,6 @@ public class AddNewCategory extends HttpServlet {
 	
     Connection con;   
 	private boolean inputCorrect = true;
-	private String existingCategory = "";
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
@@ -40,7 +37,7 @@ public class AddNewCategory extends HttpServlet {
 		
 		try {
 			con = DatabaseConnection.initializeDatabase();
-			inputCorrect = checkCategories(kategorie) && checkCategoriesContents(kategorie);
+			inputCorrect = checkCategories(kategorie);
 			PrintWriter out = response.getWriter();
 			
 			if(inputCorrect) {
@@ -69,40 +66,20 @@ public class AddNewCategory extends HttpServlet {
 		
 	}
 	
-	private boolean checkCategories(String kategorien) {
+	private boolean checkCategories(String kategorie) {
 		String regex = "^[a-z]+(,[a-z]+)*$";
 		Pattern pattern = Pattern.compile(regex);
-		Matcher matcher = pattern.matcher(kategorien);
+		Matcher matcher = pattern.matcher(kategorie);
 		return matcher.matches();
 	}
+
 	
-	private boolean checkCategoriesContents(String kategorien) {
-		List<String> kategorieninDB = DatabaseStatements.getKategorien(con);
-		List<String> buchkategorien = Arrays.asList(kategorien.split(","));
-		for(String kategorie : buchkategorien) {
-			if(kategorieninDB.contains(kategorie)) {
-				existingCategory = kategorie;
-				return false;
-			}
-		}
-		return true;
-	}
-	
-	private String fehlermeldung(String kategorien) {
-		String errorMessage = "";
-		if(!checkCategories(kategorien)) {
-			errorMessage = "Die Eingabe der Kategorien hat nicht das richtige Format. Folgendes Format wird akzeptiert: kategorie1,kategorie2,kategorie3,..."
-					+ "Zudem müssen alle Buchstaben klein geschrieben werden (a-z).";
-			return errorMessage;
-		}
-		if(!checkCategoriesContents(kategorien)) {
-			errorMessage = "Folgende angegebene Kategorie ist in der Datenbank vorhanden: " + existingCategory;
-			return errorMessage;
-		}
+	private String fehlermeldung(String kategorie) {
+		String errorMessage = "Die Eingabe der Kategorie hat nicht das richtige Format. Es sind nur Kleinbuchstaben erlaubt (a-z).";
 		return errorMessage;
 	}
 	
-	private String reloadForm(String kategorien) {
+	private String reloadForm(String kategorie) {
 		String html = 
 				"<!DOCTYPE html>\r\n"
 				+ "<html>\r\n"
@@ -156,9 +133,9 @@ public class AddNewCategory extends HttpServlet {
 				+ "</form>\r\n"
 				+ "<form action=\"./AddNewCategory\" method=\"post\">\r\n"
 				+ "	<div class=\"form-content\">\r\n"
-				+ "		<h2>Fehler: " + fehlermeldung(kategorien)
+				+ "		<h2 style=\"color: red\">Fehler: " + fehlermeldung(kategorie) + "</h2>\r\n"
 				+ "		<h2>Eine neue Kategorie hinzufügen:</h2>\r\n"
-				+ "		<input class=\"formval\" type=\"text\" name=\"newcategory\" required placeholder=\"Kategoriename\" value="+ kategorien +">\r\n"
+				+ "		<input class=\"formval\" type=\"text\" name=\"newcategory\" required placeholder=\"Kategoriename\" value="+ kategorie +">\r\n"
 				+ "		<div class=\"submit-box\">\r\n"
 				+ "			<input class=\"submit\" type=\"submit\" value=\"Kategorie hinzufügen\">\r\n"
 				+ "		</div>\r\n"
