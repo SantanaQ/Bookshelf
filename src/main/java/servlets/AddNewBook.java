@@ -59,13 +59,11 @@ public class AddNewBook extends HttpServlet {
 			
 			inputCorrect = checkISBN(isbn) && checkPrice(pr) && checkCategories(kategorien) && checkCategoriesContents(kategorien);
 			//TODO: Inputs auf Richtigkeit prüfen und gute Fehlermeldungen
-			
-			DatabaseStatements.addBook(con, isbn, titel, autor, beschreibung, preis, coverStream);
-			DatabaseStatements.addBookcategories(con, isbn, kategorien);
-			
-			
+		
             PrintWriter out = response.getWriter();
             if(inputCorrect) {
+    			DatabaseStatements.addBook(con, isbn, titel, autor, beschreibung, preis, coverStream);
+    			DatabaseStatements.addBookcategories(con, isbn, kategorien);
                 File file = new File("C:\\Users\\Anwender\\git\\bookshelf\\src\\main\\webapp\\SuccessfullyAdded.html");
                 try (BufferedReader br = new BufferedReader(new FileReader(file))) {
                 	   String line;
@@ -74,7 +72,7 @@ public class AddNewBook extends HttpServlet {
                 	   }
                 	}
             }else {
-            	//Weiterleitung zur Fehlermeldungsseite
+            	out.println(reloadForm(isbn, titel, autor, beschreibung, pr, kategorien));
             }
 
             
@@ -150,5 +148,77 @@ public class AddNewBook extends HttpServlet {
 		}
 		return errorMessage;
 	}
+	
+	private String reloadForm(String isbn, String titel, String autor, String beschreibung, String preis, String kategorien) {
+		String html = 
+				"<!DOCTYPE html>\r\n"
+				+ "<html>\r\n"
+				+ "<head>\r\n"
+				+ "<meta charset=\"UTF-8\">\r\n"
+				+ "<link rel=\"stylesheet\" href=\"styles/AddBookForm.css\">\r\n"
+				+ "<link rel=\"stylesheet\" href=\"styles/general.css\">\r\n"
+				+ "<link rel=\"stylesheet\" href=\"styles/header.css\">\r\n"
+				+ "\r\n"
+				+ "<link rel=\"preconnect\" href=\"https://fonts.googleapis.com\">\r\n"
+				+ "    <link rel=\"preconnect\" href=\"https://fonts.gstatic.com\" crossorigin>\r\n"
+				+ "    <link href=\"https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap\" rel=\"stylesheet\">\r\n"
+				+ "\r\n"
+				+ "<title>Neues Buch hinzufügen</title>\r\n"
+				+ "</head>\r\n"
+				+ "<body>\r\n"
+				+ "\r\n"
+				+ "\r\n"
+				+ "  <!--Anfang Header-->\r\n"
+				+ "  <div class=\"headerr-onlylogo\">\r\n"
+				+ "    <div class=\"items-onlylogo\">\r\n"
+				+ "      <div class=\"logo-box\">\r\n"
+				+ "        <a href=\"AddBookForm.html\">\r\n"
+				+ "          <img class=\"logo\" src=\"https://github.com/SantanaQ/Internet-Technologien/blob/main/images/logo.png?raw=true\" alt=\"logo\">\r\n"
+				+ "        </a>\r\n"
+				+ "      </div>\r\n"
+				+ "    </div>\r\n"
+				+ "    <div class=\"rightt\"></div>\r\n"
+				+ "  </div>\r\n"
+				+ "  <!--Ende Header-->\r\n"
+				+ "\r\n"
+				+ "<div class=\"main\">\r\n"
+				+ "<form action=\"./AddNewBook\" method=\"post\" enctype=\"multipart/form-data\">\r\n"
+				+ "	<div class=\"form-content\">\r\n"
+				+ "     <h1 style=\"color: red\">Fehler: " + fehlermeldung(isbn, preis, kategorien) + "</h1>\r\n"
+				+ "		<h2>Ein neues Buch hinzufügen:</h2>\r\n"
+				+ "		<input class=\"formval\" type=\"text\" name=\"isbn\" required placeholder=\"ISBN\" minlength=\"17\" maxlength=\"17\" value=\"" + isbn + "\">\r\n"
+				+ "		<input class=\"formval\" type=\"text\" name=\"titel\" required placeholder=\"Titel\" value=\"" + titel + "\">\r\n"
+				+ "		<input class=\"formval\" type=\"text\" name=\"autor\" required placeholder=\"Autor\" value\"" + autor + "\">\r\n"
+				+ "		<textarea class=\"beschreibung\" name=\"beschreibung\" rows=\"25\" cols=\"1\" required placeholder=\"Beschreibung des Buchs...\">" + beschreibung + "</textarea>\r\n"
+				+ "		<input class=\"formval\" type=\"text\" name=\"preis\" required placeholder=\"Preis (€)\" value=\"" + preis + "\">\r\n"
+				+ "		<input class=\"formval\" type=\"text\" name=\"kategorie\" required placeholder=\"Kategorie(n)\" value=\"" + kategorien +"\">\r\n"
+				+ "		<!-- image -->\r\n"
+				+ "		<div class=\"titelbild-box\">\r\n"
+				+ "			<p class=\"titelbild-text\">Buchcover hochladen:</p>\r\n"
+				+ "			<input class=\"formval-file\" type=\"file\" name=\"titelbild\" required placeholder=\"Titelbild\">\r\n"
+				+ "		</div>\r\n"
+				+ "		<div class=\"submit-box\">\r\n"
+				+ "			<input class=\"submit\" type=\"submit\" value=\"Buch hinzufügen\">\r\n"
+				+ "		</div>\r\n"
+				+ "	</div>\r\n"
+				+ "</form>\r\n"
+				+ "<form action=\"./AddNewCategory\" method=\"post\">\r\n"
+				+ "	<div class=\"form-content\">\r\n"
+				+ "		<h2>Eine neue Kategorie hinzufügen:</h2>\r\n"
+				+ "		<input class=\"formval\" type=\"text\" name=\"newcategory\" required placeholder=\"Kategoriename\">\r\n"
+				+ "		<div class=\"submit-box\">\r\n"
+				+ "			<input class=\"submit\" type=\"submit\" value=\"Kategorie hinzufügen\">\r\n"
+				+ "		</div>\r\n"
+				+ "	</div>\r\n"
+				+ "</form>\r\n"
+				+ "</div>\r\n"
+				+ "\r\n"
+				+ "\r\n"
+				+ "\r\n"
+				+ "</body>\r\n"
+				+ "</html>";
+				return html;
+	}
+	
 
 }
