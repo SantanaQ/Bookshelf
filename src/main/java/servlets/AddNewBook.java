@@ -54,13 +54,12 @@ public class AddNewBook extends HttpServlet {
 			//TODO: Inputs auf Richtigkeit prüfen und gute Fehlermeldungen
 			
 			DatabaseStatements.addBook(con, isbn, titel, autor, beschreibung, preis, coverStream);
-			//TODO: Fix diese adds, weil Tabellen nicht gefüllt werden
 			DatabaseStatements.addCategory(con, kategorien);
 			DatabaseStatements.addBookcategories(con, isbn, kategorien);
 			
 			
             PrintWriter out = response.getWriter();
-            File file = new File("C:\\Users\\flobo\\git\\bookshelf\\src\\main\\webapp\\SuccessfullyAdded.html");
+            File file = new File("C:\\Users\\Tim\\git\\bookshelf\\src\\main\\webapp\\SuccessfullyAdded.html");
             try (BufferedReader br = new BufferedReader(new FileReader(file))) {
             	   String line;
             	   while ((line = br.readLine()) != null) {

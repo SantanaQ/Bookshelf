@@ -34,16 +34,18 @@ public class DatabaseStatements {
 	public static void addCategory(Connection con, String kategorien) {
 		kategorien.replaceAll(", ", ",");
 		List<String> categoriesList = Arrays.asList(kategorien.split(","));
-		System.out.println(categoriesList);
+		//System.out.println(categoriesList);
 		HashSet<String> hashSetCategories = new HashSet<>(categoriesList);
 		System.out.println(hashSetCategories);
 		List<String> kategorienInDB = getKategorien(con);
 		PreparedStatement stmt = null;
 		try {
 			for(String s : hashSetCategories) {
+				
 				if(!kategorienInDB.contains(s)) {
 					stmt = con.prepareStatement("INSERT INTO Kategorie (Kategoriename) VALUES(?)");
 					stmt.setString(1, s);
+					stmt.executeUpdate();
 				}
 			}
 		} catch (SQLException e) {

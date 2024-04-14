@@ -49,12 +49,16 @@ HttpServletResponse response)
             // Close all the connections 
             st.close(); 
             con.close(); 
-  
-            // Get a writer pointer  
-            // to display the successful result 
-            PrintWriter out = response.getWriter(); 
-            out.println("<html><body><b>Successfully Inserted"
-                        + "</b></body></html>"); 
+            
+         // Get a writer pointer  
+            // to display the successful result
+        	PrintWriter out = response.getWriter(); 
+            out.println("<html>"
+            			+"<body>"
+            			+"<b>Successfully Inserted</b>"
+                        +"</body>"
+                        +"</html>");
+             
         } 
         catch (Exception e) { 
             e.printStackTrace(); 
