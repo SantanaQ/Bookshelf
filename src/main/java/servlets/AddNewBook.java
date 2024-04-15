@@ -7,12 +7,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
 import java.math.BigDecimal;
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.util.Arrays;
-import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
@@ -23,6 +17,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 
 import database.*;
+import objects.Buch;
+import errorHandling.AddBookErrorHandling;
 
 /**
  * Servlet implementation class AddNewBook
@@ -32,9 +28,7 @@ import database.*;
 public class AddNewBook extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	Connection con;
-	private boolean inputCorrect = true;
-	private String notExistingCategory = "";
+	private boolean inputCorrect;
 	
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
@@ -50,105 +44,37 @@ public class AddNewBook extends HttpServlet {
 		String kategorien = request.getParameter("kategorie");
 		Part cover = request.getPart("titelbild");
 		InputStream coverStream = cover.getInputStream();
-		
-	
-		
-		try {
-			con = DatabaseConnection.initializeDatabase();
 			
-			inputCorrect = checkISBN(isbn) && checkPrice(pr) && checkCategories(kategorien) && checkCategoriesContents(kategorien);
-			//TODO: Inputs auf Richtigkeit prüfen und gute Fehlermeldungen
-		
-            PrintWriter out = response.getWriter();
-            if(inputCorrect) {
-        		BigDecimal preis = new BigDecimal(pr);
-    			DatabaseStatements.addBook(con, isbn, titel, autor, beschreibung, preis, coverStream);
-    			DatabaseStatements.addBookcategories(con, isbn, kategorien);
-                File file = new File("C:\\Users\\Anwender\\git\\bookshelf\\src\\main\\webapp\\SuccessfullyAdded.html");
-                try (BufferedReader br = new BufferedReader(new FileReader(file))) {
-                	   String line;
-                	   while ((line = br.readLine()) != null) {
-                	       out.println(line);
-                	   }
-                	}
-            }else {
-            	out.println(reloadForm(isbn, titel, autor, beschreibung, pr, kategorien));
-            }
+		inputCorrect = AddBookErrorHandling.checkISBN(isbn) && AddBookErrorHandling.checkPrice(pr) && AddBookErrorHandling.checkCategories(kategorien)
+				&& AddBookErrorHandling.checkCategoriesContents(kategorien);
 
-            
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} finally {
-            if (coverStream != null) {
-                try {
-                    coverStream.close();
-                } catch (IOException io) {
-                	io.printStackTrace();
-                }
-            }
+		PrintWriter out = response.getWriter();
+		if (inputCorrect) {
+			BigDecimal preis = new BigDecimal(pr);
+			Buch buch = new Buch(isbn, titel, autor, beschreibung, Buch.CategoryStringToList(kategorien), preis, coverStream);
+			
+			DatabaseStatements.addBook(buch);
+			DatabaseStatements.addBookcategories(isbn, kategorien);
+			File file = new File("C:\\Users\\Anwender\\git\\bookshelf\\src\\main\\webapp\\SuccessfullyAdded.html");
+			try (BufferedReader br = new BufferedReader(new FileReader(file))) {
+				String line;
+				while ((line = br.readLine()) != null) {
+					out.println(line);
+				}
+			}
+		} else {
+			out.println(reloadForm(isbn, titel, autor, beschreibung, pr, kategorien));
 		}
-		
-	}
-	
-	private boolean checkISBN(String isbn) {
-		String regex = "(?=[0-9X]{10}$|(?=(?:[0-9]+[-]){3})[-0-9X]{13}$|97[89][0-9]{10}$|(?=(?:[0-9]+[-]){4})[-0-9]{17}$)(?:97[89][-]?)?[0-9]{1,5}[-]?[0-9]+[-]?[0-9]+[-]?[0-9X]$";
-		Pattern pattern = Pattern.compile(regex);
-		Matcher matcher = pattern.matcher(isbn);
-		return matcher.matches();
-	}
-	
-	private boolean checkPrice(String preis) {
-		String regex = "\\d{1,5}\\.\\d{2}";
-		Pattern pattern = Pattern.compile(regex);
-		Matcher matcher = pattern.matcher(preis);
-		return matcher.matches();
-	}
-	
-	private boolean checkCategories(String kategorien) {
-		String regex = "^[a-z]+(,[a-z]+)*$";
-		Pattern pattern = Pattern.compile(regex);
-		Matcher matcher = pattern.matcher(kategorien);
-		return matcher.matches();
-	}
-	
-	private boolean checkCategoriesContents(String kategorien) {
-		List<String> kategorieninDB = DatabaseStatements.getKategorien(con);
-		List<String> buchkategorien = Arrays.asList(kategorien.split(","));
-		for(String kategorie : buchkategorien) {
-			if(!kategorieninDB.contains(kategorie)) {
-				notExistingCategory = kategorie;
-				return false;
+		if (coverStream != null) {
+			try {
+				coverStream.close();
+			} catch (IOException io) {
+				io.printStackTrace();
 			}
 		}
-		return true;
 	}
 	
-	
-	private String fehlermeldung(String isbn, String preis, String kategorien) {
-		String errorMessage = "";
-		if(!checkISBN(isbn)) {
-			errorMessage = "Die ISBN entspricht nicht dem richtigen Format. Folgende Formate werden akzeptiert: XXX-X-XXX-XXXXX-X bzw. X-XXX-XXXXX-X.";
-			return errorMessage;
-		}
-		if(!checkPrice(preis)) {
-			errorMessage = "Der Preis hat nicht das richtige Format. Akzeptiert wird folgendes Format: XX.XX z.B. 10.50";
-			return errorMessage;
-		}
-		if(!checkCategories(kategorien)) {
-			errorMessage = "Die Eingabe der Kategorien hat nicht das richtige Format. Folgendes Format wird akzeptiert: kategorie1,kategorie2,kategorie3,..."
-					+ "Zudem müssen alle Buchstaben klein geschrieben werden (a-z).";
-			return errorMessage;
-		}
-		if(!checkCategoriesContents(kategorien)) {
-			errorMessage = "Folgende angegebene Kategorie ist in der Datenbank nicht vorhanden: " + notExistingCategory;
-			return errorMessage;
-		}
-		return errorMessage;
-	}
+
 	
 	private String reloadForm(String isbn, String titel, String autor, String beschreibung, String preis, String kategorien) {
 		String html = 
@@ -185,7 +111,7 @@ public class AddNewBook extends HttpServlet {
 				+ "<div class=\"main\">\r\n"
 				+ "<form action=\"./AddNewBook\" method=\"post\" enctype=\"multipart/form-data\">\r\n"
 				+ "	<div class=\"form-content\">\r\n"
-				+ "     <h2 style=\"color: red\">Fehler: " + fehlermeldung(isbn, preis, kategorien) + "</h2>\r\n"
+				+ "     <h2 style=\"color: red\">Fehler: " + AddBookErrorHandling.fehlermeldung(isbn, preis, kategorien) + "</h2>\r\n"
 				+ "		<h2>Ein neues Buch hinzufügen:</h2>\r\n"
 				+ "		<input class=\"formval\" type=\"text\" name=\"isbn\" required placeholder=\"ISBN\" minlength=\"13\" maxlength=\"17\" value=\"" + isbn + "\">\r\n"
 				+ "		<input class=\"formval\" type=\"text\" name=\"titel\" required placeholder=\"Titel\" value=\"" + titel + "\">\r\n"

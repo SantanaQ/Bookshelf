@@ -5,12 +5,6 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.util.Arrays;
-import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -19,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import database.*;
+import errorHandling.AddCategoryErrorHandling;
 
 /**
  * Servlet implementation class AddNewCategory
@@ -28,8 +23,8 @@ import database.*;
 public class AddNewCategory extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
-    Connection con;   
-	private boolean inputCorrect = true;
+
+	private boolean inputCorrect;
 	String existingCategory;
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
@@ -37,68 +32,26 @@ public class AddNewCategory extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String kategorie = request.getParameter("newcategory");
 		
-		try {
-			con = DatabaseConnection.initializeDatabase();
-			inputCorrect = checkCategory(kategorie) && checkCategoryContents(kategorie);
-			PrintWriter out = response.getWriter();
+		inputCorrect = AddCategoryErrorHandling.checkCategory(kategorie) && AddCategoryErrorHandling.checkCategoryContents(kategorie);
+		PrintWriter out = response.getWriter();
+		
+		if(inputCorrect) {
+			DatabaseStatements.addCategory(kategorie);
 			
-			if(inputCorrect) {
-				DatabaseStatements.addCategory(con, kategorie);
-				
-	            File file = new File("C:\\Users\\Anwender\\git\\bookshelf\\src\\main\\webapp\\SuccessfullyAdded.html");
-	            try (BufferedReader br = new BufferedReader(new FileReader(file))) {
-	            	   String line;
-	            	   while ((line = br.readLine()) != null) {
-	            	       out.println(line);
-	            	   }
-	            	}
-			}
-			else {
-				out.println(reloadForm(kategorie));
-			}
-			
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		    File file = new File("C:\\Users\\Anwender\\git\\bookshelf\\src\\main\\webapp\\SuccessfullyAdded.html");
+		    try (BufferedReader br = new BufferedReader(new FileReader(file))) {
+		    	   String line;
+		    	   while ((line = br.readLine()) != null) {
+		    	       out.println(line);
+		    	   }
+		    	}
+		}
+		else {
+			out.println(reloadForm(kategorie));
 		}
 		
-		
-	}
-	
-	private boolean checkCategory(String kategorie) {
-		String regex = "^[a-z]+$"; //
-		Pattern pattern = Pattern.compile(regex);
-		Matcher matcher = pattern.matcher(kategorie);
-		return matcher.matches();
-	}
-	
-	private boolean checkCategoryContents(String kategorie) {
-		List<String> kategorieninDB = DatabaseStatements.getKategorien(con);
-		if(kategorieninDB.contains(kategorie)) {
-			existingCategory = kategorie;
-			return false;
-		}
-		return true;
 	}
 
-	
-	private String fehlermeldung(String kategorie) {
-		String errorMessage = "";
-		if(!checkCategory(kategorie)) {
-			errorMessage = "Die Eingabe der Kategorie hat nicht das richtige Format. Es sind nur Kleinbuchstaben erlaubt (a-z).";
-			return errorMessage;
-		}
-		if(!checkCategoryContents(kategorie)) {
-			errorMessage = "Folgende angegebene Kategorie ist in der Datenbank bereits vorhanden: " + existingCategory;
-			return errorMessage;
-		}
-		return errorMessage;
-	}
-	
-	
 	private String reloadForm(String kategorie) {
 		String html = 
 				"<!DOCTYPE html>\r\n"
@@ -153,7 +106,7 @@ public class AddNewCategory extends HttpServlet {
 				+ "</form>\r\n"
 				+ "<form action=\"./AddNewCategory\" method=\"post\">\r\n"
 				+ "	<div class=\"form-content\">\r\n"
-				+ "		<h2 style=\"color: red\">Fehler: " + fehlermeldung(kategorie) + "</h2>\r\n"
+				+ "		<h2 style=\"color: red\">Fehler: " + AddCategoryErrorHandling.fehlermeldung(kategorie) + "</h2>\r\n"
 				+ "		<h2>Eine neue Kategorie hinzufügen:</h2>\r\n"
 				+ "		<input class=\"formval\" type=\"text\" name=\"newcategory\" required placeholder=\"Kategoriename\" value="+ kategorie +">\r\n"
 				+ "		<div class=\"submit-box\">\r\n"
