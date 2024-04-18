@@ -26,6 +26,7 @@ public class DatabaseStatements {
 			stmt.setBigDecimal(5, buch.getPreis());
 			stmt.setBlob(6, buch.getCover());
 			stmt.executeUpdate();
+			con.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} catch (ClassNotFoundException e) {
@@ -70,6 +71,7 @@ public class DatabaseStatements {
 			while(rs.next()) {
 				kategorien.add(rs.getString("Kategoriename"));
 			}
+			con.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -92,7 +94,7 @@ public class DatabaseStatements {
 				stmt.setInt(2, i);
 				stmt.executeUpdate();
 			}
-			
+			con.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -116,6 +118,7 @@ public class DatabaseStatements {
 					categoryIndex.add(rs.getInt("KategorieNr"));
 				}
 			}
+			con.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -135,6 +138,7 @@ public class DatabaseStatements {
 			while(rs.next()) {
 				isbns.add(rs.getString("ISBN"));
 			}
+			con.close();
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -59,20 +59,20 @@ public class AddBookErrorHandling {
 			errorMessage += "Es existiert bereits ein Buch mit angegebener ISBN.";
 		}
 		if(!checkISBN(isbn)) {
-			errorMessage = "Die ISBN entspricht nicht dem richtigen Format. Folgende Formate werden akzeptiert: XXX-X-XXX-XXXXX-X bzw. X-XXX-XXXXX-X.";
+			errorMessage += "Die ISBN entspricht nicht dem richtigen Format. Folgende Formate werden akzeptiert: XXX-X-XXX-XXXXX-X bzw. X-XXX-XXXXX-X.";
 			return errorMessage;
 		}
 		if(!checkPrice(preis)) {
-			errorMessage = "Der Preis hat nicht das richtige Format. Akzeptiert wird folgendes Format: XX.XX z.B. 10.50";
+			errorMessage += "Der Preis hat nicht das richtige Format. Akzeptiert wird folgendes Format: XX.XX z.B. 10.50";
 			return errorMessage;
 		}
 		if(!checkCategories(kategorien)) {
-			errorMessage = "Die Eingabe der Kategorien hat nicht das richtige Format. Folgendes Format wird akzeptiert: kategorie1,kategorie2,kategorie3,..."
+			errorMessage += "Die Eingabe der Kategorien hat nicht das richtige Format. Folgendes Format wird akzeptiert: kategorie1,kategorie2,kategorie3,..."
 					+ "Zudem müssen alle Buchstaben klein geschrieben werden (a-z).";
 			return errorMessage;
 		}
 		if(!checkCategoriesContents(kategorien)) {
-			errorMessage = "Folgende angegebene Kategorie ist in der Datenbank nicht vorhanden: " + notExistingCategory;
+			errorMessage += "Folgende angegebene Kategorie ist in der Datenbank nicht vorhanden: " + notExistingCategory;
 			return errorMessage;
 		}
 		return errorMessage;
