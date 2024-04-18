@@ -44,9 +44,20 @@ public class AddBookErrorHandling {
 		return true;
 	}
 	
+	public static boolean checkIfIsbnExists(String isbn) {
+		List <String> allISBNs = DatabaseStatements.getAllISBN();
+		if(allISBNs.contains(isbn)) {
+			return false;
+		}
+		return true;
+	}
+	
 	
 	public static String fehlermeldung(String isbn, String preis, String kategorien) {
 		String errorMessage = "";
+		if(!checkIfIsbnExists(isbn)) {
+			errorMessage = "Es existiert bereits ein Buch mit angegebener ISBN.";
+		}
 		if(!checkISBN(isbn)) {
 			errorMessage = "Die ISBN entspricht nicht dem richtigen Format. Folgende Formate werden akzeptiert: XXX-X-XXX-XXXXX-X bzw. X-XXX-XXXXX-X.";
 			return errorMessage;

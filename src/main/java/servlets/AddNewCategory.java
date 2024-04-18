@@ -38,7 +38,7 @@ public class AddNewCategory extends HttpServlet {
 		if(inputCorrect) {
 			DatabaseStatements.addCategory(kategorie);
 			
-		    File file = new File("C:\\Users\\Anwender\\git\\bookshelf\\src\\main\\webapp\\SuccessfullyAdded.html");
+		    File file = new File("C:\\Users\\flobo\\git\\bookshelf\\src\\main\\webapp\\SuccessfullyAdded.html");
 		    try (BufferedReader br = new BufferedReader(new FileReader(file))) {
 		    	   String line;
 		    	   while ((line = br.readLine()) != null) {
@@ -57,7 +57,7 @@ public class AddNewCategory extends HttpServlet {
 				"<!DOCTYPE html>\r\n"
 				+ "<html>\r\n"
 				+ "<head>\r\n"
-				+ "<meta charset=\"UTF-8\">\r\n"
+				+ "<meta http-equiv=\"content-type\" content=\"text/html; charset=utf-8\">\r\n"
 				+ "<link rel=\"stylesheet\" href=\"styles/AddBookForm.css\">\r\n"
 				+ "<link rel=\"stylesheet\" href=\"styles/general.css\">\r\n"
 				+ "<link rel=\"stylesheet\" href=\"styles/header.css\">\r\n"

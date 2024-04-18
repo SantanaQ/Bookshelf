@@ -125,4 +125,23 @@ public class DatabaseStatements {
 		return categoryIndex;
 	}
 	
+	public static List<String> getAllISBN(){
+		List<String> isbns = new ArrayList<>();
+		try {
+			con = DatabaseConnection.initializeDatabase();
+			PreparedStatement stmt = con.prepareStatement("SELECT Buch.isbn FROM Buch");
+			ResultSet rs = stmt.executeQuery();
+			while(rs.next()) {
+				isbns.add(rs.getString("ISBN"));
+			}
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return isbns;
+	}
+	
 }
