@@ -12,7 +12,7 @@ import objects.Buch;
 
 public class DatabaseStatements {
 	
-	private static Connection con;
+	private static Connection con; //
 
 	public static void addBook(Buch buch) {
 		PreparedStatement stmt = null;
