@@ -41,7 +41,7 @@ public class AddNewBook extends HttpServlet {
 		String autor = request.getParameter("autor");
 		String beschreibung = request.getParameter("beschreibung");
 		String pr = request.getParameter("preis");
-		String kategorien = request.getParameter("kategorie");
+		String kategorien = request.getParameter("kategorie"); //
 		Part cover = request.getPart("titelbild");
 		InputStream coverStream = cover.getInputStream();
 		
