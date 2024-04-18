@@ -44,6 +44,9 @@ public class AddNewBook extends HttpServlet {
 		String kategorien = request.getParameter("kategorie");
 		Part cover = request.getPart("titelbild");
 		InputStream coverStream = cover.getInputStream();
+		
+		
+		response.setCharacterEncoding("UTF-8");
 			
 		inputCorrect = AddBookErrorHandling.checkISBN(isbn) && AddBookErrorHandling.checkPrice(pr) 
 				&& AddBookErrorHandling.checkCategories(kategorien)

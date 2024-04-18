@@ -32,6 +32,8 @@ public class AddNewCategory extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String kategorie = request.getParameter("newcategory");
 		
+		response.setCharacterEncoding("UTF-8");
+		
 		inputCorrect = AddCategoryErrorHandling.checkCategory(kategorie) && AddCategoryErrorHandling.checkCategoryContents(kategorie);
 		PrintWriter out = response.getWriter();
 		
