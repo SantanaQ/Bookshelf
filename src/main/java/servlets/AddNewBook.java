@@ -8,6 +8,7 @@ import java.io.InputStream;
 import java.io.PrintWriter;
 import java.math.BigDecimal;
 
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
@@ -30,10 +31,15 @@ public class AddNewBook extends HttpServlet {
 
 	private boolean inputCorrect;
 	
+	
+	@Override
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+	}
+	
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
-	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		String isbn = request.getParameter("isbn");
@@ -47,7 +53,7 @@ public class AddNewBook extends HttpServlet {
 		
 		
 		response.setCharacterEncoding("UTF-8");
-			
+		//nicht static	
 		inputCorrect = AddBookErrorHandling.checkISBN(isbn) && AddBookErrorHandling.checkPrice(pr) 
 				&& AddBookErrorHandling.checkCategories(kategorien)
 				&& AddBookErrorHandling.checkCategoriesContents(kategorien)
@@ -57,10 +63,13 @@ public class AddNewBook extends HttpServlet {
 		if (inputCorrect) {
 			BigDecimal preis = new BigDecimal(pr);
 			Buch buch = new Buch(isbn, titel, autor, beschreibung, Buch.CategoryStringToList(kategorien), preis, coverStream);
-			
+			//nicht static
 			DatabaseStatements.addBook(buch);
 			DatabaseStatements.addBookcategories(isbn, kategorien);
-			File file = new File("C:\\Users\\flobo\\git\\bookshelf\\src\\main\\webapp\\SuccessfullyAdded.html");
+			//relativer Pfad einfügen
+			ServletContext context = getServletContext();
+			String filepath = context.getRealPath("/WEB-INF/html/SuccessfullyAdded.html");
+			File file = new File(filepath);
 			try (BufferedReader br = new BufferedReader(new FileReader(file))) {
 				String line;
 				while ((line = br.readLine()) != null) {

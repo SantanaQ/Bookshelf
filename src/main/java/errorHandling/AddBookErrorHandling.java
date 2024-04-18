@@ -52,11 +52,11 @@ public class AddBookErrorHandling {
 		return true;
 	}
 	
-	
+	//Fehlermeldungen anhängen.
 	public static String fehlermeldung(String isbn, String preis, String kategorien) {
 		String errorMessage = "";
 		if(!checkIfIsbnExists(isbn)) {
-			errorMessage = "Es existiert bereits ein Buch mit angegebener ISBN.";
+			errorMessage += "Es existiert bereits ein Buch mit angegebener ISBN.";
 		}
 		if(!checkISBN(isbn)) {
 			errorMessage = "Die ISBN entspricht nicht dem richtigen Format. Folgende Formate werden akzeptiert: XXX-X-XXX-XXXXX-X bzw. X-XXX-XXXXX-X.";

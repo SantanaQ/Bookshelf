@@ -51,6 +51,7 @@ public class DatabaseStatements {
 					stmt.executeUpdate();
 				}
 			}
+			con.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

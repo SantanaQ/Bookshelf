@@ -6,6 +6,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -39,8 +40,9 @@ public class AddNewCategory extends HttpServlet {
 		
 		if(inputCorrect) {
 			DatabaseStatements.addCategory(kategorie);
-			
-		    File file = new File("C:\\Users\\flobo\\git\\bookshelf\\src\\main\\webapp\\SuccessfullyAdded.html");
+			ServletContext context = getServletContext();
+			String filepath = context.getRealPath("/WEB-INF/html/SuccessfullyAdded.html");
+			File file = new File(filepath);
 		    try (BufferedReader br = new BufferedReader(new FileReader(file))) {
 		    	   String line;
 		    	   while ((line = br.readLine()) != null) {
