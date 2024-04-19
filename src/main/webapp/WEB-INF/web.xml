@@ -4,7 +4,7 @@
     <description></description>
     <display-name>HelloWorld</display-name>
     <servlet-name>HelloWorld</servlet-name>
-    <servlet-class>servlets.HelloWorld</servlet-class>
+    <servlet-class>servlets.AddNewBook</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>HelloWorld</servlet-name>

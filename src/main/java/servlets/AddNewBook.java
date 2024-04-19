@@ -21,6 +21,7 @@ import javax.servlet.http.Part;
 
 import database.*;
 import errorhandling.AddBookErrorHandling;
+import errorhandling.AddCategoryErrorHandling;
 import objects.Buch;
 import helpers.DataTransformHelper;
 
@@ -33,14 +34,14 @@ public class AddNewBook extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	private boolean inputCorrect;
-	private AddBookErrorHandling errors;
-	
+
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		DatabaseStatements dbstatements = new DatabaseStatements();
+		resp.setCharacterEncoding("UTF-8");
 		PrintWriter out = resp.getWriter();
-		out.println(reloadForm(null, null, null, null, null, dbstatements.getKategorien(), null ));
+		inputCorrect = true;
+		out.println(reloadForm(null, "", "", "", "", "",  null ));
 	}
 	
 	/**
@@ -58,9 +59,9 @@ public class AddNewBook extends HttpServlet {
 		InputStream coverStream = cover.getInputStream();
 		
 		
-		response.setCharacterEncoding("UTF-8");
+		response.setCharacterEncoding("UTF-8");//
 		
-		errors = new AddBookErrorHandling();
+		AddBookErrorHandling errors = new AddBookErrorHandling();
 		
 		inputCorrect = 	   errors.checkISBN(isbn) 
 						&& errors.checkPrice(pr) 
@@ -89,7 +90,7 @@ public class AddNewBook extends HttpServlet {
 				}
 			}
 		} else {
-			out.println(reloadForm(isbn, titel, autor, beschreibung, pr, dbstatements.getKategorien(), kategorien));
+			out.println(reloadForm(errors, isbn, titel, autor, beschreibung, pr, kategorien));
 		}
 		if (coverStream != null) {
 			try {
@@ -102,8 +103,10 @@ public class AddNewBook extends HttpServlet {
 	
 
 	
-	private String reloadForm(String isbn, String titel, String autor, String beschreibung, String preis, List<String >kategorien, List<String> buchkategorien) {
-		
+	private String reloadForm(AddBookErrorHandling errors, String isbn, String titel, 
+			String autor, String beschreibung, String preis, List<String> buchkategorien) {
+		DatabaseStatements dbstatements = new DatabaseStatements();
+		List<String> kategorien = dbstatements.getKategorien();
 		String html = 
 				"<!DOCTYPE html>\r\n"
 				+ "<html>\r\n"
@@ -126,7 +129,7 @@ public class AddNewBook extends HttpServlet {
 				+ "<div class=\"headerr-onlylogo\">\r\n"
 				+ "  <div class=\"items-onlylogo\">\r\n"
 				+ "    <div class=\"logo-box\">\r\n"
-				+ "      <a href=\"AddBookForm.html\">\r\n"
+				+ "      <a href=\"#\">\r\n"
 				+ "        <img class=\"logo\" src=\"https://github.com/SantanaQ/Internet-Technologien/blob/main/images/logo.png?raw=true\" alt=\"logo\">\r\n"
 				+ "      </a>\r\n"
 				+ "    </div>\r\n"
@@ -136,27 +139,32 @@ public class AddNewBook extends HttpServlet {
 				+ "<!--Ende Header-->\r\n"
 				+ "\r\n"
 				+ "<div class=\"main\">\r\n"
-				+ "<form action=\"./AddNewBook\" method=\"post\" enctype=\"multipart/form-data\">\r\n";
+				+ "<form action=\"./AddNewBook\" method=\"post\" enctype=\"multipart/form-data\">\r\n"
+				+"	<div class=\"form-content\">\r\n";
 				if(!inputCorrect) {
-					html += "<p>"+ errors.fehlermeldung() +"</p>";
+					html += "<p style=\"color:red\">"+ errors.fehlermeldung() +"</p>";
 				}
-		
-				html += 
-				"	<div class=\"form-content\">\r\n"
-				+ "		<h2>Ein neues Buch hinzufügen:</h2>\r\n"
-				+ "		<input class=\"formval\" type=\"text\" name=\"isbn\" required placeholder=\"ISBN\" minlength=\"13\" maxlength=\"17\" value=\"" + isbn + ">\r\n"
-				+ "		<input class=\"formval\" type=\"text\" name=\"titel\" required placeholder=\"Titel\" value=\"" + titel + ">\r\n"
-				+ "		<input class=\"formval\" type=\"text\" name=\"autor\" required placeholder=\"Autor\" value=\""+ autor + ">\r\n"
+				html
+				+= "	<h2>Ein neues Buch hinzufügen:</h2>\r\n"
+				+ "		<input class=\"formval\" type=\"text\" name=\"isbn\" required placeholder=\"ISBN\" minlength=\"13\" maxlength=\"17\" value=\"" + isbn + "\">\r\n"
+				+ "		<input class=\"formval\" type=\"text\" name=\"titel\" required placeholder=\"Titel\" value=\"" + titel + "\">\r\n"
+				+ "		<input class=\"formval\" type=\"text\" name=\"autor\" required placeholder=\"Autor\" value=\""+ autor + "\">\r\n"
 				+ "		<textarea class=\"beschreibung\" name=\"beschreibung\" rows=\"25\" cols=\"1\" required placeholder=\"Beschreibung des Buchs...\">"+ beschreibung +"</textarea>\r\n"
-				+ "		<input class=\"formval\" type=\"text\" name=\"preis\" required placeholder=\"Preis (€)\" value=\"" + preis + ">\r\n"
-				+ "		<div class=\"kategorien box\">\r\n";
+				+ "		<input class=\"formval\" type=\"text\" name=\"preis\" required placeholder=\"Preis (€)\" value=\"" + preis + "\">\r\n"
+				+"      <p>Kategorien:</p>\r\n"
+				+ "		<div class=\"kategorien-box\">\r\n";
+
 				for(int i = 0 ; i < kategorien.size(); i++) {
-					if(buchkategorien.contains(kategorien.get(i))) {
-						html += "<input type=\"checkbox\"  id=\"kat"+ i +"\" name=\"kategorien\" value=\""+ kategorien.get(i) + "\" checked>\r\n"
-								+ "			<label for=\"kat" + i + "\">"+kategorien.get(i) +"</label>";
+					if(buchkategorien != null && buchkategorien.contains(kategorien.get(i)))  {
+						html += "<div class=\"check\">"
+								+ "<input type=\"checkbox\"  id=\"kat"+ i +"\" name=\"kategorien\" value=\""+ kategorien.get(i) + "\" checked>\r\n"
+								+ "			<label for=\"kat" + i + "\">"+kategorien.get(i) +"</label>"
+								+ "</div>";
 					} else
-						html += "<input type=\"checkbox\"  id=\"kat"+ i +"\" name=\"kategorien\" value=\""+ kategorien.get(i) + "\">\r\n"
-								+ "			<label for=\"kat" + i + "\">"+kategorien.get(i) +"</label>";
+						html += "<div class=\"check\">"
+								+ "<input type=\"checkbox\"  id=\"kat"+ i +"\" name=\"kategorien\" value=\""+ kategorien.get(i) + "\">\r\n"
+								+ "			<label for=\"kat" + i + "\">"+kategorien.get(i) +"</label>"
+								+ "</div>";
 				}
 
 				html += "		</div>\r\n"

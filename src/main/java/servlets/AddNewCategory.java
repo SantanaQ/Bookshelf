@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -14,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import database.*;
+import errorhandling.AddBookErrorHandling;
 import errorhandling.AddCategoryErrorHandling;
 
 /**
@@ -35,7 +37,9 @@ public class AddNewCategory extends HttpServlet {
 		
 		response.setCharacterEncoding("UTF-8");
 		
-		inputCorrect = AddCategoryErrorHandling.checkCategory(kategorie) && AddCategoryErrorHandling.checkCategoryContents(kategorie);
+		AddCategoryErrorHandling errors = new AddCategoryErrorHandling();
+		
+		inputCorrect = errors.checkCategory(kategorie) && errors.checkCategoryContents(kategorie);
 		PrintWriter out = response.getWriter();
 		
 		if(inputCorrect) {
@@ -51,12 +55,14 @@ public class AddNewCategory extends HttpServlet {
 		    	}
 		}
 		else {
-			out.println(reloadForm(kategorie));
+			out.println(reloadForm(errors, kategorie));
 		}
 		
 	}
-
-	private String reloadForm(String kategorie) {
+	
+	private String reloadForm(AddCategoryErrorHandling errors, String kategorie) {
+		DatabaseStatements dbstatements = new DatabaseStatements();
+		List<String> kategorien = dbstatements.getKategorien();
 		String html = 
 				"<!DOCTYPE html>\r\n"
 				+ "<html>\r\n"
@@ -75,33 +81,47 @@ public class AddNewCategory extends HttpServlet {
 				+ "<body>\r\n"
 				+ "\r\n"
 				+ "\r\n"
-				+ "  <!--Anfang Header-->\r\n"
-				+ "  <div class=\"headerr-onlylogo\">\r\n"
-				+ "    <div class=\"items-onlylogo\">\r\n"
-				+ "      <div class=\"logo-box\">\r\n"
-				+ "        <a href=\"AddBookForm.html\">\r\n"
-				+ "          <img class=\"logo\" src=\"https://github.com/SantanaQ/Internet-Technologien/blob/main/images/logo.png?raw=true\" alt=\"logo\">\r\n"
-				+ "        </a>\r\n"
-				+ "      </div>\r\n"
+				+ "<!--Anfang Header-->\r\n"
+				+ "<div class=\"headerr-onlylogo\">\r\n"
+				+ "  <div class=\"items-onlylogo\">\r\n"
+				+ "    <div class=\"logo-box\">\r\n"
+				+ "      <a href=\"#\">\r\n"
+				+ "        <img class=\"logo\" src=\"https://github.com/SantanaQ/Internet-Technologien/blob/main/images/logo.png?raw=true\" alt=\"logo\">\r\n"
+				+ "      </a>\r\n"
 				+ "    </div>\r\n"
-				+ "    <div class=\"rightt\"></div>\r\n"
 				+ "  </div>\r\n"
-				+ "  <!--Ende Header-->\r\n"
+				+ "  <div class=\"rightt\"></div>\r\n"
+				+ "</div>\r\n"
+				+ "<!--Ende Header-->\r\n"
 				+ "\r\n"
 				+ "<div class=\"main\">\r\n"
 				+ "<form action=\"./AddNewBook\" method=\"post\" enctype=\"multipart/form-data\">\r\n"
-				+ "	<div class=\"form-content\">\r\n"
-				+ "		<h2>Ein neues Buch hinzufügen:</h2>\r\n"
-				+ "		<input class=\"formval\" type=\"text\" name=\"isbn\" required placeholder=\"ISBN\" minlength=\"13\" maxlength=\"17\">"
-				+ "		<input class=\"formval\" type=\"text\" name=\"titel\" required placeholder=\"Titel\">"
-				+ "		<input class=\"formval\" type=\"text\" name=\"autor\" required placeholder=\"Autor\">"
-				+ "		<textarea class=\"beschreibung\" name=\"beschreibung\" rows=\"25\" cols=\"1\" required placeholder=\"Beschreibung des Buchs...\"></textarea>"
-				+ "		<input class=\"formval\" type=\"text\" name=\"preis\" required placeholder=\"Preis (€)\">"
-				+ "		<input class=\"formval\" type=\"text\" name=\"kategorie\" required placeholder=\"Kategorie(n)\">"
+				+"	<div class=\"form-content\">\r\n";
+				if(!inputCorrect) {
+					html += "<p style=\"color:red\">"+ errors.fehlermeldung() +"</p>";
+				}
+				html
+				+= "	<h2>Ein neues Buch hinzufügen:</h2>\r\n"
+				+ "		<input class=\"formval\" type=\"text\" name=\"isbn\" required placeholder=\"ISBN\" minlength=\"13\" maxlength=\"17\" value=\">\r\n"
+				+ "		<input class=\"formval\" type=\"text\" name=\"titel\" required placeholder=\"Titel\" value=\"\">\r\n"
+				+ "		<input class=\"formval\" type=\"text\" name=\"autor\" required placeholder=\"Autor\" value=\"\">\r\n"
+				+ "		<textarea class=\"beschreibung\" name=\"beschreibung\" rows=\"25\" cols=\"1\" required placeholder=\"Beschreibung des Buchs...\"></textarea>\r\n"
+				+ "		<input class=\"formval\" type=\"text\" name=\"preis\" required placeholder=\"Preis (€)\" value=\"\">\r\n"
+				+"      <p>Kategorien:</p>\r\n"
+				+ "		<div class=\"kategorien-box\">\r\n";
+
+				for(int i = 0 ; i < kategorien.size(); i++) {
+						html += "<div class=\"check\">"
+								+ "<input type=\"checkbox\"  id=\"kat"+ i +"\" name=\"kategorien\" value=\""+ kategorien.get(i) + "\">\r\n"
+								+ "			<label for=\"kat" + i + "\">"+kategorien.get(i) +"</label>"
+								+ "</div>";
+				}
+
+				html += "		</div>\r\n"
 				+ "		<!-- image -->\r\n"
 				+ "		<div class=\"titelbild-box\">\r\n"
 				+ "			<p class=\"titelbild-text\">Buchcover hochladen:</p>\r\n"
-				+ "			<input class=\"formval-file\" type=\"file\" name=\"titelbild\" required placeholder=\"Titelbild\">\r\n"
+				+ "			<input class=\"formval-file\" type=\"file\" name=\"titelbild\" required placeholder=\"Titelbild\" accept=\".png,.jpeg,.webp\" >\r\n"
 				+ "		</div>\r\n"
 				+ "		<div class=\"submit-box\">\r\n"
 				+ "			<input class=\"submit\" type=\"submit\" value=\"Buch hinzufügen\">\r\n"
@@ -110,21 +130,19 @@ public class AddNewCategory extends HttpServlet {
 				+ "</form>\r\n"
 				+ "<form action=\"./AddNewCategory\" method=\"post\">\r\n"
 				+ "	<div class=\"form-content\">\r\n"
-				+ "		<h2 style=\"color: red\">Fehler: " + AddCategoryErrorHandling.fehlermeldung(kategorie) + "</h2>\r\n"
 				+ "		<h2>Eine neue Kategorie hinzufügen:</h2>\r\n"
-				+ "		<input class=\"formval\" type=\"text\" name=\"newcategory\" required placeholder=\"Kategoriename\" value="+ kategorie +">\r\n"
+				+ "		<input class=\"formval\" type=\"text\" name=\"newcategory\" required placeholder=\"Kategoriename\" value=\""+ kategorie +">\r\n"
 				+ "		<div class=\"submit-box\">\r\n"
 				+ "			<input class=\"submit\" type=\"submit\" value=\"Kategorie hinzufügen\">\r\n"
 				+ "		</div>\r\n"
 				+ "	</div>\r\n"
 				+ "</form>\r\n"
 				+ "</div>\r\n"
-				+ "\r\n"
-				+ "\r\n"
-				+ "\r\n"
 				+ "</body>\r\n"
 				+ "</html>";
 				return html;
 	}
+
+
 
 }
