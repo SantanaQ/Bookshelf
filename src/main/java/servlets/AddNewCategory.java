@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import database.*;
-import errorHandling.AddCategoryErrorHandling;
+import errorhandling.AddCategoryErrorHandling;
 
 /**
  * Servlet implementation class AddNewCategory
@@ -39,7 +39,7 @@ public class AddNewCategory extends HttpServlet {
 		PrintWriter out = response.getWriter();
 		
 		if(inputCorrect) {
-			DatabaseStatements.addCategory(kategorie);
+			//DatabaseStatements.addCategory(kategorie);
 			ServletContext context = getServletContext();
 			String filepath = context.getRealPath("/WEB-INF/html/SuccessfullyAdded.html");
 			File file = new File(filepath);

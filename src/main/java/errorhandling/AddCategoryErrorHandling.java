@@ -1,4 +1,4 @@
-package errorHandling;
+package errorhandling;
 
 import java.util.List;
 import java.util.regex.Matcher;
@@ -19,7 +19,8 @@ public class AddCategoryErrorHandling {
 	
 	
 	public static boolean checkCategoryContents(String kategorie) {
-		List<String> kategorieninDB = DatabaseStatements.getKategorien();
+		DatabaseStatements dbstatements = new DatabaseStatements();
+		List<String> kategorieninDB = dbstatements.getKategorien();
 		if(kategorieninDB.contains(kategorie)) {
 			existingCategory = kategorie;
 			return false;

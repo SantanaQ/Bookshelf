@@ -15,21 +15,22 @@
 <body>
 
 
-  <!--Anfang Header-->
-  <div class="headerr-onlylogo">
-    <div class="items-onlylogo">
-      <div class="logo-box">
-        <a href="AddBookForm.html">
-          <img class="logo" src="https://github.com/SantanaQ/Internet-Technologien/blob/main/images/logo.png?raw=true" alt="logo">
-        </a>
-      </div>
+<!--Anfang Header-->
+<div class="headerr-onlylogo">
+  <div class="items-onlylogo">
+    <div class="logo-box">
+      <a href="AddBookForm.html">
+        <img class="logo" src="https://github.com/SantanaQ/Internet-Technologien/blob/main/images/logo.png?raw=true" alt="logo">
+      </a>
     </div>
-    <div class="rightt"></div>
   </div>
-  <!--Ende Header-->
+  <div class="rightt"></div>
+</div>
+<!--Ende Header-->
 
 <div class="main">
 <form action="./AddNewBook" method="post" enctype="multipart/form-data">
+	<h2 style="color: red">Fehler:</h2>
 	<div class="form-content">
 		<h2>Ein neues Buch hinzufügen:</h2>
 		<input class="formval" type="text" name="isbn" required placeholder="ISBN" minlength="13" maxlength="17">
@@ -37,7 +38,12 @@
 		<input class="formval" type="text" name="autor" required placeholder="Autor">
 		<textarea class="beschreibung" name="beschreibung" rows="25" cols="1" required placeholder="Beschreibung des Buchs..."></textarea>
 		<input class="formval" type="text" name="preis" required placeholder="Preis (€)">
-		<input class="formval" type="text" name="kategorie" required placeholder="Kategorie(n)">
+		<div class="kategorien box">
+			<input type="checkbox"  id="kat1" name="kategorien" value="roman">
+			<label for="kat1">Roman</label>
+			<input type="checkbox"  id="kat2" name="kategorien" value="manga">
+			<label for="kat2">Manga</label>
+		</div>
 		<!-- image -->
 		<div class="titelbild-box">
 			<p class="titelbild-text">Buchcover hochladen:</p>
@@ -58,8 +64,5 @@
 	</div>
 </form>
 </div>
-
-
-
 </body>
 </html>

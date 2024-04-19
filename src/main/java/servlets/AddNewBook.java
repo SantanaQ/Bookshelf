@@ -7,6 +7,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
 import java.math.BigDecimal;
+import java.util.Arrays;
+import java.util.List;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -18,8 +20,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 
 import database.*;
+import errorhandling.AddBookErrorHandling;
 import objects.Buch;
-import errorHandling.AddBookErrorHandling;
+import helpers.DataTransformHelper;
 
 /**
  * Servlet implementation class AddNewBook
@@ -34,7 +37,9 @@ public class AddNewBook extends HttpServlet {
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
+		DatabaseStatements dbstatements = new DatabaseStatements();
+		PrintWriter out = resp.getWriter();
+		out.println(reloadForm(null, null, null, null, null, dbstatements.getKategorien(), null ));
 	}
 	
 	/**
@@ -47,26 +52,35 @@ public class AddNewBook extends HttpServlet {
 		String autor = request.getParameter("autor");
 		String beschreibung = request.getParameter("beschreibung");
 		String pr = request.getParameter("preis");
-		String kategorien = request.getParameter("kategorie"); //
-		Part cover = request.getPart("titelbild"); //
+		List<String> kategorien = Arrays.asList(request.getParameterValues("kategorien"));
+		Part cover = request.getPart("titelbild"); 
 		InputStream coverStream = cover.getInputStream();
 		
 		
 		response.setCharacterEncoding("UTF-8");
-		//nicht static	
-		inputCorrect = AddBookErrorHandling.checkISBN(isbn) && AddBookErrorHandling.checkPrice(pr) 
-				&& AddBookErrorHandling.checkCategories(kategorien)
-				&& AddBookErrorHandling.checkCategoriesContents(kategorien)
-				&& AddBookErrorHandling.checkIfIsbnExists(isbn);
+		
+		AddBookErrorHandling errors = new AddBookErrorHandling();
+		
+		inputCorrect = 	   errors.checkISBN(isbn) 
+						&& errors.checkPrice(pr) 
+						&& errors.checkIfIsbnExists(isbn)
+						&& errors.checkAuthor(autor)
+						&& errors.checkTitle(titel);
+				
 
 		PrintWriter out = response.getWriter();
+		
+		DatabaseStatements dbstatements = new DatabaseStatements();
+		DataTransformHelper helper = new DataTransformHelper();
+
 		if (inputCorrect) {
+
 			BigDecimal preis = new BigDecimal(pr);
-			Buch buch = new Buch(isbn, titel, autor, beschreibung, Buch.CategoryStringToList(kategorien), preis, coverStream);
+
+			Buch buch = new Buch(isbn, titel, autor, beschreibung, kategorien, preis, coverStream);
 			//nicht static
-			DatabaseStatements.addBook(buch);
-			DatabaseStatements.addBookcategories(isbn, kategorien);
-			//relativer Pfad einfügen
+			dbstatements.addBook(buch);
+			dbstatements.addBookcategories(isbn, kategorien);
 			ServletContext context = getServletContext();
 			String filepath = context.getRealPath("/WEB-INF/html/SuccessfullyAdded.html");
 			File file = new File(filepath);
@@ -77,7 +91,7 @@ public class AddNewBook extends HttpServlet {
 				}
 			}
 		} else {
-			out.println(reloadForm(isbn, titel, autor, beschreibung, pr, kategorien));
+			out.println(reloadForm(isbn, titel, autor, beschreibung, pr, dbstatements.getKategorien(), kategorien));
 		}
 		if (coverStream != null) {
 			try {
@@ -90,7 +104,8 @@ public class AddNewBook extends HttpServlet {
 	
 
 	
-	private String reloadForm(String isbn, String titel, String autor, String beschreibung, String preis, String kategorien) {
+	private String reloadForm(String isbn, String titel, String autor, String beschreibung, String preis, List<String >kategorien, List<String> buchkategorien) {
+		
 		String html = 
 				"<!DOCTYPE html>\r\n"
 				+ "<html>\r\n"
@@ -109,34 +124,44 @@ public class AddNewBook extends HttpServlet {
 				+ "<body>\r\n"
 				+ "\r\n"
 				+ "\r\n"
-				+ "  <!--Anfang Header-->\r\n"
-				+ "  <div class=\"headerr-onlylogo\">\r\n"
-				+ "    <div class=\"items-onlylogo\">\r\n"
-				+ "      <div class=\"logo-box\">\r\n"
-				+ "        <a href=\"AddBookForm.html\">\r\n"
-				+ "          <img class=\"logo\" src=\"https://github.com/SantanaQ/Internet-Technologien/blob/main/images/logo.png?raw=true\" alt=\"logo\">\r\n"
-				+ "        </a>\r\n"
-				+ "      </div>\r\n"
+				+ "<!--Anfang Header-->\r\n"
+				+ "<div class=\"headerr-onlylogo\">\r\n"
+				+ "  <div class=\"items-onlylogo\">\r\n"
+				+ "    <div class=\"logo-box\">\r\n"
+				+ "      <a href=\"AddBookForm.html\">\r\n"
+				+ "        <img class=\"logo\" src=\"https://github.com/SantanaQ/Internet-Technologien/blob/main/images/logo.png?raw=true\" alt=\"logo\">\r\n"
+				+ "      </a>\r\n"
 				+ "    </div>\r\n"
-				+ "    <div class=\"rightt\"></div>\r\n"
 				+ "  </div>\r\n"
-				+ "  <!--Ende Header-->\r\n"
+				+ "  <div class=\"rightt\"></div>\r\n"
+				+ "</div>\r\n"
+				+ "<!--Ende Header-->\r\n"
 				+ "\r\n"
 				+ "<div class=\"main\">\r\n"
 				+ "<form action=\"./AddNewBook\" method=\"post\" enctype=\"multipart/form-data\">\r\n"
+				+ "	<h2 style=\"color: red\">Fehler:</h2>\r\n"
 				+ "	<div class=\"form-content\">\r\n"
-				+ "     <h2 style=\"color: red\">Fehler: " + AddBookErrorHandling.fehlermeldung(isbn, preis, kategorien) + "</h2>\r\n"
 				+ "		<h2>Ein neues Buch hinzufügen:</h2>\r\n"
-				+ "		<input class=\"formval\" type=\"text\" name=\"isbn\" required placeholder=\"ISBN\" minlength=\"13\" maxlength=\"17\" value=\"" + isbn + "\">\r\n"
-				+ "		<input class=\"formval\" type=\"text\" name=\"titel\" required placeholder=\"Titel\" value=\"" + titel + "\">\r\n"
-				+ "		<input class=\"formval\" type=\"text\" name=\"autor\" required placeholder=\"Autor\" value=\"" + autor + "\">\r\n"
-				+ "		<textarea class=\"beschreibung\" name=\"beschreibung\" rows=\"25\" cols=\"1\" required placeholder=\"Beschreibung des Buchs...\">" + beschreibung + "</textarea>\r\n"
-				+ "		<input class=\"formval\" type=\"text\" name=\"preis\" required placeholder=\"Preis (€)\" value=\"" + preis + "\">\r\n"
-				+ "		<input class=\"formval\" type=\"text\" name=\"kategorie\" required placeholder=\"Kategorie(n)\" value=\"" + kategorien +"\">\r\n"
+				+ "		<input class=\"formval\" type=\"text\" name=\"isbn\" required placeholder=\"ISBN\" minlength=\"13\" maxlength=\"17\">\r\n"
+				+ "		<input class=\"formval\" type=\"text\" name=\"titel\" required placeholder=\"Titel\">\r\n"
+				+ "		<input class=\"formval\" type=\"text\" name=\"autor\" required placeholder=\"Autor\">\r\n"
+				+ "		<textarea class=\"beschreibung\" name=\"beschreibung\" rows=\"25\" cols=\"1\" required placeholder=\"Beschreibung des Buchs...\"></textarea>\r\n"
+				+ "		<input class=\"formval\" type=\"text\" name=\"preis\" required placeholder=\"Preis (€)\">\r\n"
+				+ "		<div class=\"kategorien box\">\r\n";
+				for(int i = 0 ; i < kategorien.size(); i++) {
+					if(buchkategorien.contains(kategorien.get(i))) {
+						html += "<input type=\"checkbox\"  id=\"kat"+ i +"\" name=\"kategorien\" value=\""+ kategorien.get(i) + "\" checked>\r\n"
+								+ "			<label for=\"kat" + i + "\">"+kategorien.get(i) +"</label>";
+					} else
+						html += "<input type=\"checkbox\"  id=\"kat"+ i +"\" name=\"kategorien\" value=\""+ kategorien.get(i) + "\">\r\n"
+								+ "			<label for=\"kat" + i + "\">"+kategorien.get(i) +"</label>";
+				}
+
+				html += "		</div>\r\n"
 				+ "		<!-- image -->\r\n"
 				+ "		<div class=\"titelbild-box\">\r\n"
 				+ "			<p class=\"titelbild-text\">Buchcover hochladen:</p>\r\n"
-				+ "			<input class=\"formval-file\" type=\"file\" name=\"titelbild\" required placeholder=\"Titelbild\">\r\n"
+				+ "			<input class=\"formval-file\" type=\"file\" name=\"titelbild\" required placeholder=\"Titelbild\" accept=\".png,.jpeg,.webp\" >\r\n"
 				+ "		</div>\r\n"
 				+ "		<div class=\"submit-box\">\r\n"
 				+ "			<input class=\"submit\" type=\"submit\" value=\"Buch hinzufügen\">\r\n"
@@ -153,11 +178,9 @@ public class AddNewBook extends HttpServlet {
 				+ "	</div>\r\n"
 				+ "</form>\r\n"
 				+ "</div>\r\n"
-				+ "\r\n"
-				+ "\r\n"
-				+ "\r\n"
 				+ "</body>\r\n"
 				+ "</html>";
+				
 				return html;
 	}
 	

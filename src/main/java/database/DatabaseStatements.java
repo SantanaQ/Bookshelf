@@ -14,7 +14,7 @@ public class DatabaseStatements {
 	
 	private static Connection con; //
 
-	public static void addBook(Buch buch) {
+	public void addBook(Buch buch) {
 		PreparedStatement stmt = null;
 		try {
 			con = DatabaseConnection.initializeDatabase();
@@ -30,39 +30,25 @@ public class DatabaseStatements {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 	
-	public static void addCategory(String kategorien) {
-		List<String> categoriesList = Buch.CategoryStringToList(kategorien);
-		//System.out.println(categoriesList);
-		HashSet<String> hashSetCategories = new HashSet<>(categoriesList);
-		System.out.println(hashSetCategories);
-		List<String> kategorienInDB = getKategorien();
-		PreparedStatement stmt = null;
+	public void addCategory(String kategorie) {
 		try {
 			con = DatabaseConnection.initializeDatabase();
-			for(String s : hashSetCategories) {
-				
-				if(!kategorienInDB.contains(s)) {
-					stmt = con.prepareStatement("INSERT INTO Kategorie (Kategoriename) VALUES(?)");
-					stmt.setString(1, s);
-					stmt.executeUpdate();
-				}
-			}
+			PreparedStatement stmt = con.prepareStatement("INSERT INTO Kategorie (Kategoriename) VALUES(?)");
+			stmt.setString(1, kategorie);
+			stmt.executeUpdate();
 			con.close();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 	
-	public static List<String> getKategorien(){
+	public List<String> getKategorien(){
 		List<String> kategorien = new ArrayList<>();
 		try {
 			con = DatabaseConnection.initializeDatabase();
@@ -73,10 +59,8 @@ public class DatabaseStatements {
 			}
 			con.close();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return kategorien;
@@ -84,7 +68,7 @@ public class DatabaseStatements {
 	
 	
 	
-	public static void addBookcategories(String isbn, String kategorien) {
+	public void addBookcategories(String isbn, List<String> kategorien) {
 		List<Integer> katNrList = getBuchkategorienNr(kategorien);
 		try {
 			con = DatabaseConnection.initializeDatabase();
@@ -96,22 +80,17 @@ public class DatabaseStatements {
 			}
 			con.close();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 	
-	private static List<Integer> getBuchkategorienNr(String kategorien){
-		List<String> categoriesList = Buch.CategoryStringToList(kategorien);
-		HashSet<String> hashSetCategories = new HashSet<>(categoriesList);
+	private List<Integer> getBuchkategorienNr(List<String> kategorien){
 		List<Integer> categoryIndex = new ArrayList<>();
-		
 		try {
 			con = DatabaseConnection.initializeDatabase();
-			for(String s : hashSetCategories) {
+			for(String s : kategorien) {
 				PreparedStatement stmt = con.prepareStatement("SELECT * FROM Kategorie WHERE Kategoriename = '" + s + "'");
 				ResultSet rs = stmt.executeQuery();
 				if(rs.next()) {
@@ -120,16 +99,14 @@ public class DatabaseStatements {
 			}
 			con.close();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return categoryIndex;
 	}
 	
-	public static List<String> getAllISBN(){
+	public List<String> getAllISBN(){
 		List<String> isbns = new ArrayList<>();
 		try {
 			con = DatabaseConnection.initializeDatabase();
@@ -140,10 +117,8 @@ public class DatabaseStatements {
 			}
 			con.close();
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return isbns;

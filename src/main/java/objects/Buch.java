@@ -26,10 +26,6 @@ public class Buch {
 		this.cover = cover;
 	}
 	
-	public static List<String> CategoryStringToList(String kategorien){
-		List<String> categories = Arrays.asList(kategorien.split(","));
-		return categories;
-	}
 	
 	public String getIsbn() {
 		return isbn;
