@@ -33,6 +33,7 @@ public class AddNewBook extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	private boolean inputCorrect;
+	private AddBookErrorHandling errors;
 	
 	
 	@Override
@@ -59,7 +60,7 @@ public class AddNewBook extends HttpServlet {
 		
 		response.setCharacterEncoding("UTF-8");
 		
-		AddBookErrorHandling errors = new AddBookErrorHandling();
+		errors = new AddBookErrorHandling();
 		
 		inputCorrect = 	   errors.checkISBN(isbn) 
 						&& errors.checkPrice(pr) 
@@ -71,14 +72,11 @@ public class AddNewBook extends HttpServlet {
 		PrintWriter out = response.getWriter();
 		
 		DatabaseStatements dbstatements = new DatabaseStatements();
-		DataTransformHelper helper = new DataTransformHelper();
 
 		if (inputCorrect) {
 
 			BigDecimal preis = new BigDecimal(pr);
-
 			Buch buch = new Buch(isbn, titel, autor, beschreibung, kategorien, preis, coverStream);
-			//nicht static
 			dbstatements.addBook(buch);
 			dbstatements.addBookcategories(isbn, kategorien);
 			ServletContext context = getServletContext();
@@ -138,15 +136,19 @@ public class AddNewBook extends HttpServlet {
 				+ "<!--Ende Header-->\r\n"
 				+ "\r\n"
 				+ "<div class=\"main\">\r\n"
-				+ "<form action=\"./AddNewBook\" method=\"post\" enctype=\"multipart/form-data\">\r\n"
-				+ "	<h2 style=\"color: red\">Fehler:</h2>\r\n"
-				+ "	<div class=\"form-content\">\r\n"
+				+ "<form action=\"./AddNewBook\" method=\"post\" enctype=\"multipart/form-data\">\r\n";
+				if(!inputCorrect) {
+					html += "<p>"+ errors.fehlermeldung() +"</p>";
+				}
+		
+				html += 
+				"	<div class=\"form-content\">\r\n"
 				+ "		<h2>Ein neues Buch hinzufügen:</h2>\r\n"
-				+ "		<input class=\"formval\" type=\"text\" name=\"isbn\" required placeholder=\"ISBN\" minlength=\"13\" maxlength=\"17\">\r\n"
-				+ "		<input class=\"formval\" type=\"text\" name=\"titel\" required placeholder=\"Titel\">\r\n"
-				+ "		<input class=\"formval\" type=\"text\" name=\"autor\" required placeholder=\"Autor\">\r\n"
-				+ "		<textarea class=\"beschreibung\" name=\"beschreibung\" rows=\"25\" cols=\"1\" required placeholder=\"Beschreibung des Buchs...\"></textarea>\r\n"
-				+ "		<input class=\"formval\" type=\"text\" name=\"preis\" required placeholder=\"Preis (€)\">\r\n"
+				+ "		<input class=\"formval\" type=\"text\" name=\"isbn\" required placeholder=\"ISBN\" minlength=\"13\" maxlength=\"17\" value=\"" + isbn + ">\r\n"
+				+ "		<input class=\"formval\" type=\"text\" name=\"titel\" required placeholder=\"Titel\" value=\"" + titel + ">\r\n"
+				+ "		<input class=\"formval\" type=\"text\" name=\"autor\" required placeholder=\"Autor\" value=\""+ autor + ">\r\n"
+				+ "		<textarea class=\"beschreibung\" name=\"beschreibung\" rows=\"25\" cols=\"1\" required placeholder=\"Beschreibung des Buchs...\">"+ beschreibung +"</textarea>\r\n"
+				+ "		<input class=\"formval\" type=\"text\" name=\"preis\" required placeholder=\"Preis (€)\" value=\"" + preis + ">\r\n"
 				+ "		<div class=\"kategorien box\">\r\n";
 				for(int i = 0 ; i < kategorien.size(); i++) {
 					if(buchkategorien.contains(kategorien.get(i))) {
@@ -180,7 +182,6 @@ public class AddNewBook extends HttpServlet {
 				+ "</div>\r\n"
 				+ "</body>\r\n"
 				+ "</html>";
-				
 				return html;
 	}
 	

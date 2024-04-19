@@ -15,7 +15,7 @@ public class AddBookErrorHandling {
 	private boolean titleOK = true;
 	private boolean authorOK = true;
 	
-	String notExistingCategory;
+	//String notExistingCategory;
 
 	public boolean checkIfIsbnExists(String isbn) {
 		DatabaseStatements dbstatements = new DatabaseStatements();
@@ -83,7 +83,7 @@ public class AddBookErrorHandling {
 
 	
 	//Fehlermeldungen anhängen.
-	public String fehlermeldung(String isbn, String preis, String kategorien) {
+	public String fehlermeldung() {
 		String errorMessage = "";
 		if(!isbnNEW) {
 			errorMessage += "Fehler: Es existiert bereits ein Buch mit angegebener ISBN. <br/>";
