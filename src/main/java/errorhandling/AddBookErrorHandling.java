@@ -8,11 +8,19 @@ import database.DatabaseStatements;
 
 public class AddBookErrorHandling {
 	
-	private boolean isbnNEW = false;
-	private boolean isbnOK = false;;
-	private boolean priceOK = false;;
-	private boolean titleOK = false;;
-	private boolean authorOK = false;; 
+	private boolean isbnNEW;
+	private boolean isbnOK;
+	private boolean priceOK;
+	private boolean titleOK;
+	private boolean authorOK;
+	
+	public AddBookErrorHandling() {
+		this.isbnNEW = true;
+		this.isbnOK = true;
+		this.priceOK = true;
+		this.titleOK = true;
+		this.authorOK = true;
+	}
 	
 	//String notExistingCategory;
 
@@ -20,9 +28,9 @@ public class AddBookErrorHandling {
 		DatabaseStatements dbstatements = new DatabaseStatements();
 		List <String> allISBNs = dbstatements.getAllISBN();
 		if(allISBNs.contains(isbn)) {
+			isbnNEW = false;
 			return false;
 		}
-		isbnNEW = true;//
 		return true;
 	}
 	
@@ -31,9 +39,9 @@ public class AddBookErrorHandling {
 		Pattern pattern = Pattern.compile(regex);
 		Matcher matcher = pattern.matcher(isbn);
 		if(!matcher.matches()) {
+			isbnOK = false;
 			return false;
 		}
-		isbnOK = true;
 		return true;
 	}
 	
@@ -42,9 +50,9 @@ public class AddBookErrorHandling {
 		Pattern pattern = Pattern.compile(regex);
 		Matcher matcher = pattern.matcher(preis);
 		if(!matcher.matches()) {
+			priceOK = false;
 			return false;	
 		}
-		priceOK = true;
 		return true;
 	}
 	
@@ -53,9 +61,10 @@ public class AddBookErrorHandling {
 		Pattern pattern = Pattern.compile(regex);
 		Matcher matcher = pattern.matcher(titel);
 		if(!matcher.matches()) {
+			titleOK = false;
 			return false;	
 		}
-		titleOK = true;
+
 		return true;
 	}
 	
@@ -64,9 +73,9 @@ public class AddBookErrorHandling {
 		Pattern pattern = Pattern.compile(regex);
 		Matcher matcher = pattern.matcher(autor);
 		if(!matcher.matches()) {
+			authorOK = false;
 			return false;
 		}
-		authorOK = true;
 		return true;
 	}
 	

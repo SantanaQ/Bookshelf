@@ -1,0 +1,27 @@
+<div class="bookbox" id="item">
+	<a class="link-to-details" href="bookdetails.html">
+		<div class="coverbox">
+			<img
+				th:src="${cover}"
+				alt="Cover">
+		</div>
+		<div class="description">
+			<div class="title">
+				<p class="booktitle" th:text="${title}"></p>
+			</div>
+	</a>
+			<div class="author">
+				<p th:text="${author}"></p>
+			</div>
+		</div>
+		<div class="price-and-shopping">
+			<div class="price">
+				<p><span th:text="${price}"></span> €</p>
+			</div>
+			<div class="shoppingcart">
+				<button class="mini-warenkorb-button">
+					<ion-icon name="cart-outline" class="mini-warenkorb"></ion-icon>
+				</button>
+			</div>
+		</div>
+</div>

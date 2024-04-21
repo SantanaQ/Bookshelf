@@ -63,11 +63,13 @@ public class AddNewBook extends HttpServlet {
 		
 		AddBookErrorHandling errors = new AddBookErrorHandling();
 		
+		
+		
 		inputCorrect = 	   errors.checkISBN(isbn) 
-						&& errors.checkPrice(pr) 
-						&& errors.checkIfIsbnExists(isbn)
-						&& errors.checkAuthor(autor)
-						&& errors.checkTitle(titel);
+						& errors.checkPrice(pr) 
+						& errors.checkIfIsbnExists(isbn)
+						& errors.checkAuthor(autor)
+						& errors.checkTitle(titel);
 				
 
 		PrintWriter out = response.getWriter();
