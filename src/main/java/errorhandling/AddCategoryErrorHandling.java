@@ -44,7 +44,7 @@ public class AddCategoryErrorHandling {
 		String errorMessage = "";
 		if(!categoryOK) {
 			errorMessage = "Fehler: Die Eingabe der Kategorie hat nicht das richtige Format. "
-					+ "Der Name einer Kategorie muss mit einem Großbuchstaben starten und darf danach nur Kleinbuchstaben "
+					+ "Der Name einer Kategorie muss mit einem Großbuchstaben beginnen und darf danach nur Kleinbuchstaben "
 					+ "ohne weitere Leerzeichen oder Sonderzeichen enthalten.";
 		}
 		if(!contentOK) {
