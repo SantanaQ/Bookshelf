@@ -8,7 +8,6 @@ import database.DatabaseStatements;
 
 public class AddCategoryErrorHandling {
 	
-	private String existingCategory;
 	private boolean categoryOK;
 	private boolean contentOK;
 	
@@ -18,7 +17,7 @@ public class AddCategoryErrorHandling {
 	}
 
 	public boolean checkCategory(String kategorie) {
-		String regex = "^[a-z]+$"; //
+		String regex = "^[A-Z][a-z]+$"; //
 		Pattern pattern = Pattern.compile(regex);
 		Matcher matcher = pattern.matcher(kategorie);
 		if(!matcher.matches()) {
@@ -34,7 +33,6 @@ public class AddCategoryErrorHandling {
 		DatabaseStatements dbstatements = new DatabaseStatements();
 		List<String> kategorieninDB = dbstatements.getKCategories();
 		if(kategorieninDB.contains(kategorie)) {
-			existingCategory = kategorie;
 			contentOK = false;
 			return false;
 		}
@@ -45,10 +43,12 @@ public class AddCategoryErrorHandling {
 	public  String fehlermeldung() {
 		String errorMessage = "";
 		if(!categoryOK) {
-			errorMessage = "Die Eingabe der Kategorie hat nicht das richtige Format. Es sind nur Kleinbuchstaben erlaubt (a-z).";
+			errorMessage = "Fehler: Die Eingabe der Kategorie hat nicht das richtige Format. "
+					+ "Der Name einer Kategorie muss mit einem Großbuchstaben starten und darf danach nur Kleinbuchstaben "
+					+ "ohne weitere Leerzeichen oder Sonderzeichen enthalten.";
 		}
 		if(!contentOK) {
-			errorMessage = "Folgende angegebene Kategorie ist in der Datenbank bereits vorhanden: " + existingCategory;
+			errorMessage = "Fehler: Die angegebene Kategorie ist in der Datenbank bereits vorhanden.";
 		}
 		return errorMessage;
 	}

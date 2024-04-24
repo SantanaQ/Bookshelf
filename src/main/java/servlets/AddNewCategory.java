@@ -95,12 +95,8 @@ public class AddNewCategory extends HttpServlet {
 				+ "\r\n"
 				+ "<div class=\"main\">\r\n"
 				+ "<form action=\"./AddNewBook\" method=\"post\" enctype=\"multipart/form-data\">\r\n"
-				+"	<div class=\"form-content\">\r\n";
-				if(!inputCorrect) {
-					html += "<p style=\"color:red\">"+ errors.fehlermeldung() +"</p>";
-				}
-				html
-				+= "	<h2>Ein neues Buch hinzufügen:</h2>\r\n"
+				+ "	<div class=\"form-content\">\r\n"
+				+ "	<h2>Ein neues Buch hinzufügen:</h2>\r\n"
 				+ "		<input class=\"formval\" type=\"text\" name=\"isbn\" required placeholder=\"ISBN\" minlength=\"13\" maxlength=\"17\" value=\"\">\r\n"
 				+ "		<input class=\"formval\" type=\"text\" name=\"titel\" required placeholder=\"Titel\" value=\"\">\r\n"
 				+ "		<input class=\"formval\" type=\"text\" name=\"autor\" required placeholder=\"Autor\" value=\"\">\r\n"
@@ -128,8 +124,11 @@ public class AddNewCategory extends HttpServlet {
 				+ "	</div>\r\n"
 				+ "</form>\r\n"
 				+ "<form action=\"./AddNewCategory\" method=\"post\">\r\n"
-				+ "	<div class=\"form-content\">\r\n"
-				+ "		<h2>Eine neue Kategorie hinzufügen:</h2>\r\n"
+				+ "	<div class=\"form-content\">\r\n";
+				if(!inputCorrect) {
+					html += "<p style=\"color:red\">"+ errors.fehlermeldung() +"</p>";
+				}
+				html += "		<h2>Eine neue Kategorie hinzufügen:</h2>\r\n"
 				+ "		<input class=\"formval\" type=\"text\" name=\"newcategory\" required placeholder=\"Kategoriename\" value=\""+ kategorie + "\"/>\r\n"
 				+ "		<div class=\"submit-box\">\r\n"
 				+ "			<input class=\"submit\" type=\"submit\" value=\"Kategorie hinzufügen\">\r\n"
