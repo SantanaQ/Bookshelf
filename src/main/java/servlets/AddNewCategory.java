@@ -34,16 +34,15 @@ public class AddNewCategory extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String kategorie = request.getParameter("newcategory");
-		
 		response.setCharacterEncoding("UTF-8");
-		
-		AddCategoryErrorHandling errors = new AddCategoryErrorHandling();
-		
-		inputCorrect = errors.checkCategory(kategorie) && errors.checkCategoryContents(kategorie);
 		PrintWriter out = response.getWriter();
 		
+		AddCategoryErrorHandling errors = new AddCategoryErrorHandling();
+		inputCorrect = errors.checkCategory(kategorie) && errors.checkCategoryContents(kategorie);
+		
 		if(inputCorrect) {
-			//DatabaseStatements.addCategory(kategorie);
+			DatabaseStatements stmt = new DatabaseStatements();
+			stmt.addCategory(kategorie);
 			ServletContext context = getServletContext();
 			String filepath = context.getRealPath("/WEB-INF/html/SuccessfullyAdded.html");
 			File file = new File(filepath);
@@ -131,7 +130,7 @@ public class AddNewCategory extends HttpServlet {
 				+ "<form action=\"./AddNewCategory\" method=\"post\">\r\n"
 				+ "	<div class=\"form-content\">\r\n"
 				+ "		<h2>Eine neue Kategorie hinzufügen:</h2>\r\n"
-				+ "		<input class=\"formval\" type=\"text\" name=\"newcategory\" required placeholder=\"Kategoriename\" value=\""+ kategorie +">\r\n"
+				+ "		<input class=\"formval\" type=\"text\" name=\"newcategory\" required placeholder=\"Kategoriename\" value=\""+ kategorie + "\"/>\r\n"
 				+ "		<div class=\"submit-box\">\r\n"
 				+ "			<input class=\"submit\" type=\"submit\" value=\"Kategorie hinzufügen\">\r\n"
 				+ "		</div>\r\n"

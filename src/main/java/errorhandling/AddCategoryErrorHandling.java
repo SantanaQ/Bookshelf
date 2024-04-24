@@ -11,14 +11,22 @@ public class AddCategoryErrorHandling {
 	private String existingCategory;
 	private boolean categoryOK;
 	private boolean contentOK;
+	
+	public AddCategoryErrorHandling() {
+		this.categoryOK = true;
+		this.contentOK = true;
+	}
 
 	public boolean checkCategory(String kategorie) {
 		String regex = "^[a-z]+$"; //
 		Pattern pattern = Pattern.compile(regex);
 		Matcher matcher = pattern.matcher(kategorie);
-		if(!matcher.matches())
+		if(!matcher.matches()) {
 			categoryOK = false;
-		return matcher.matches();
+			return false;
+		}
+
+		return true;
 	}
 	
 	
@@ -38,11 +46,9 @@ public class AddCategoryErrorHandling {
 		String errorMessage = "";
 		if(!categoryOK) {
 			errorMessage = "Die Eingabe der Kategorie hat nicht das richtige Format. Es sind nur Kleinbuchstaben erlaubt (a-z).";
-			return errorMessage;
 		}
 		if(!contentOK) {
 			errorMessage = "Folgende angegebene Kategorie ist in der Datenbank bereits vorhanden: " + existingCategory;
-			return errorMessage;
 		}
 		return errorMessage;
 	}

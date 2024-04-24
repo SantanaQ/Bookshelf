@@ -21,9 +21,7 @@ import javax.servlet.http.Part;
 
 import database.*;
 import errorhandling.AddBookErrorHandling;
-import errorhandling.AddCategoryErrorHandling;
 import objects.Buch;
-import helpers.DataTransformHelper;
 
 /**
  * Servlet implementation class AddNewBook
@@ -58,22 +56,16 @@ public class AddNewBook extends HttpServlet {
 		Part cover = request.getPart("titelbild"); 
 		InputStream coverStream = cover.getInputStream();
 		
-		
 		response.setCharacterEncoding("UTF-8");//
+		PrintWriter out = response.getWriter();
 		
 		AddBookErrorHandling errors = new AddBookErrorHandling();
-		
-		
-		
 		inputCorrect = 	   errors.checkISBN(isbn) 
 						& errors.checkPrice(pr) 
 						& errors.checkIfIsbnExists(isbn)
 						& errors.checkAuthor(autor)
 						& errors.checkTitle(titel);
 				
-
-		PrintWriter out = response.getWriter();
-		
 		DatabaseStatements dbstatements = new DatabaseStatements();
 
 		if (inputCorrect) {
