@@ -48,7 +48,7 @@ public class DatabaseStatements {
 		}
 	}
 	
-	public List<String> getKategorien(){
+	public List<String> getKCategories(){
 		List<String> kategorien = new ArrayList<>();
 		try {
 			con = DatabaseConnection.initializeDatabase();
@@ -68,8 +68,8 @@ public class DatabaseStatements {
 	
 	
 	
-	public void addBookcategories(String isbn, List<String> kategorien) {
-		List<Integer> katNrList = getBuchkategorienNr(kategorien);
+	public void addBookCategories(String isbn, List<String> kategorien) {
+		List<Integer> katNrList = getBookCategoriesNr(kategorien);
 		try {
 			con = DatabaseConnection.initializeDatabase();
 			for(int i : katNrList) {
@@ -86,7 +86,7 @@ public class DatabaseStatements {
 		}
 	}
 	
-	private List<Integer> getBuchkategorienNr(List<String> kategorien){
+	private List<Integer> getBookCategoriesNr(List<String> kategorien){
 		List<Integer> categoryIndex = new ArrayList<>();
 		try {
 			con = DatabaseConnection.initializeDatabase();

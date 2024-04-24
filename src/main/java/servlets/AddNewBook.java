@@ -73,7 +73,7 @@ public class AddNewBook extends HttpServlet {
 			BigDecimal preis = new BigDecimal(pr);
 			Buch buch = new Buch(isbn, titel, autor, beschreibung, kategorien, preis, coverStream);
 			dbstatements.addBook(buch);
-			dbstatements.addBookcategories(isbn, kategorien);
+			dbstatements.addBookCategories(isbn, kategorien);
 			ServletContext context = getServletContext();
 			String filepath = context.getRealPath("/WEB-INF/html/SuccessfullyAdded.html");
 			File file = new File(filepath);
@@ -100,7 +100,7 @@ public class AddNewBook extends HttpServlet {
 	private String reloadForm(AddBookErrorHandling errors, String isbn, String titel, 
 			String autor, String beschreibung, String preis, List<String> buchkategorien) {
 		DatabaseStatements dbstatements = new DatabaseStatements();
-		List<String> kategorien = dbstatements.getKategorien();
+		List<String> kategorien = dbstatements.getKCategories();
 		String html = 
 				"<!DOCTYPE html>\r\n"
 				+ "<html>\r\n"

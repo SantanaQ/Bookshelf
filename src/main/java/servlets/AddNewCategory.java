@@ -61,7 +61,7 @@ public class AddNewCategory extends HttpServlet {
 	
 	private String reloadForm(AddCategoryErrorHandling errors, String kategorie) {
 		DatabaseStatements dbstatements = new DatabaseStatements();
-		List<String> kategorien = dbstatements.getKategorien();
+		List<String> kategorien = dbstatements.getKCategories();
 		String html = 
 				"<!DOCTYPE html>\r\n"
 				+ "<html>\r\n"
