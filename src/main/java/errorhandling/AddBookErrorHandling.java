@@ -57,7 +57,7 @@ public class AddBookErrorHandling {
 	}
 	
 	public boolean checkTitle(String titel) {
-		String regex = "[a-zA-Z ,.:;-_!]+$";
+		String regex = "[a-zA-Z ,.:;_!-]+$";
 		Pattern pattern = Pattern.compile(regex);
 		Matcher matcher = pattern.matcher(titel);
 		if(!matcher.matches()) {
