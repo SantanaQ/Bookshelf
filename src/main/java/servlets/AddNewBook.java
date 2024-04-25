@@ -64,7 +64,8 @@ public class AddNewBook extends HttpServlet {
 						& errors.checkPrice(pr) 
 						& errors.checkIfIsbnExists(isbn)
 						& errors.checkAuthor(autor)
-						& errors.checkTitle(titel);
+						& errors.checkTitle(titel)
+						& errors.checkIfCategoriesinDB();
 				
 		DatabaseStatements dbstatements = new DatabaseStatements();
 
