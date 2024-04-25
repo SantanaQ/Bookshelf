@@ -79,7 +79,7 @@ public class AddBookErrorHandling {
 	}
 	
 	public boolean checkTitle(String titel) {
-		String regex = "[a-zA-Z0-9 ,.:;_?!-]+$";
+		String regex = "[A-Z][a-zA-Z0-9 ,.:;_?!-]+$";
 		Pattern pattern = Pattern.compile(regex);
 		Matcher matcher = pattern.matcher(titel);
 		if(!matcher.matches()) {
@@ -101,28 +101,6 @@ public class AddBookErrorHandling {
 		return true;
 	}
 	
-
-	/*
-	public boolean checkCategories(String kategorien) {
-		String regex = "^[a-z]+(,[a-z]+)*$";
-		Pattern pattern = Pattern.compile(regex);
-		Matcher matcher = pattern.matcher(kategorien);
-		return matcher.matches();
-	}
-	
-	public boolean checkCategoriesContents(String kategorien) {
-		List<String> kategorieninDB = DatabaseStatements.getKategorien();
-		List<String> buchkategorien = Arrays.asList(kategorien.split(","));
-		for(String kategorie : buchkategorien) {
-			if(!kategorieninDB.contains(kategorie)) {
-				notExistingCategory = kategorie;
-				return false;
-			}
-		}
-		return true;
-	}
-	*/
-
 	
 	public String fehlermeldung() {
 		String errorMessage = "";
