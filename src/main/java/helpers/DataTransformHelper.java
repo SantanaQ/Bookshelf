@@ -9,5 +9,14 @@ public class DataTransformHelper {
 		List<String> categories = Arrays.asList(s.split(","));
 		return categories;
 	}
+	
+	public boolean findVal(String[] arr, String val) {
+		for(String s: arr) {
+			if(s.equals(val)) {
+				return true;
+			}
+		}
+		return false;
+	}
 
 }

@@ -21,6 +21,7 @@ import javax.servlet.http.Part;
 
 import database.*;
 import errorhandling.AddBookErrorHandling;
+import helpers.DataTransformHelper;
 import objects.Buch;
 
 /**
@@ -54,6 +55,7 @@ public class AddNewBook extends HttpServlet {
 		String pr = request.getParameter("preis");
 
 		List<String> kategorien = null;
+		String[] buchkats = request.getParameterValues("kategorien");
 		
 		Part cover = request.getPart("titelbild"); 
 		InputStream coverStream = cover.getInputStream();
@@ -88,7 +90,7 @@ public class AddNewBook extends HttpServlet {
 				}
 			}
 		} else {
-			out.println(reloadForm(errors, isbn, titel, autor, beschreibung, pr, kategorien));
+			out.println(reloadForm(errors, isbn, titel, autor, beschreibung, pr, buchkats));
 		}
 		if (coverStream != null) {
 			try {
@@ -102,7 +104,7 @@ public class AddNewBook extends HttpServlet {
 
 	
 	private String reloadForm(AddBookErrorHandling errors, String isbn, String titel, 
-			String autor, String beschreibung, String preis, List<String> buchkategorien) {
+			String autor, String beschreibung, String preis, String[] buchkategorien) {
 		DatabaseStatements dbstatements = new DatabaseStatements();
 		List<String> kategorien = dbstatements.getKCategories();
 		String html = 
@@ -151,16 +153,16 @@ public class AddNewBook extends HttpServlet {
 				+ "		<input class=\"formval\" type=\"text\" name=\"preis\" required placeholder=\"Preis (€)\" value=\"" + preis + "\">\r\n"
 				+"      <p>Kategorien:</p>\r\n"
 				+ "		<div class=\"kategorien-box\">\r\n";
-
+				DataTransformHelper helper = new DataTransformHelper();
 				for(int i = 0 ; i < kategorien.size(); i++) {
-					if(buchkategorien != null && buchkategorien.contains(kategorien.get(i)))  {
+					if(buchkategorien != null && helper.findVal(buchkategorien, kategorien.get(i)))  {
 						html += "<div class=\"check\">"
-								+ "<input type=\"checkbox\"  id=\"kat"+ i +"\" name=\"kategorien\" value=\""+ kategorien.get(i) + "\" checked>\r\n"
+								+ "<input type=\"checkbox\"  id=\"kat"+ i +"\" name=\"kategorien\" value=\""+ kategorien.get(i) + "\" checked />\r\n"
 								+ "			<label for=\"kat" + i + "\">"+kategorien.get(i) +"</label>"
 								+ "</div>";
 					} else
 						html += "<div class=\"check\">"
-								+ "<input type=\"checkbox\"  id=\"kat"+ i +"\" name=\"kategorien\" value=\""+ kategorien.get(i) + "\">\r\n"
+								+ "<input type=\"checkbox\"  id=\"kat"+ i +"\" name=\"kategorien\" value=\""+ kategorien.get(i) + "\" />\r\n"
 								+ "			<label for=\"kat" + i + "\">"+kategorien.get(i) +"</label>"
 								+ "</div>";
 				}
