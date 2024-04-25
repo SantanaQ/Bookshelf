@@ -29,7 +29,7 @@ public class AddBookErrorHandling {
 	//String notExistingCategory;
 
 	public boolean checkIfCategorySelected(String[] categoryParam) {
-		if(( categoryParam.length == 0 || categoryParam == null ) && checkIfCategoriesinDB()) {
+		if( categoryParam == null  && checkIfCategoriesinDB()) {
 			categoriesSelected = false;
 			return false;
 		}
@@ -126,6 +126,9 @@ public class AddBookErrorHandling {
 	
 	public String fehlermeldung() {
 		String errorMessage = "";
+		if(!categoriesSelected) {
+			errorMessage += "Fehler: Es ist keine Kategorie für das Buch ausgewählt. </br>";
+		}
 		if(!categoriesExist) {
 			errorMessage += "Fehler: Buch kann nicht hinzugefügt werden, Datenbank enthält noch keine Kategorien. </br>";
 		}
