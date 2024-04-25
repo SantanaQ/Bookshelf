@@ -13,6 +13,7 @@ public class AddBookErrorHandling {
 	private boolean priceOK;
 	private boolean titleOK;
 	private boolean authorOK;
+	private boolean categoriesExist;
 	
 	public AddBookErrorHandling() {
 		this.isbnNEW = true;
@@ -20,10 +21,21 @@ public class AddBookErrorHandling {
 		this.priceOK = true;
 		this.titleOK = true;
 		this.authorOK = true;
+		this.categoriesExist = true;
 	}
 	
 	//String notExistingCategory;
 
+	public boolean checkIfCategoriesinDB() {
+		DatabaseStatements dbstatements = new DatabaseStatements();
+		List<String> categoriesInDB = dbstatements.getKCategories();
+		if(categoriesInDB.isEmpty()) {
+			categoriesExist = false;
+			return false;
+		}
+		return true;
+	}
+	
 	public boolean checkIfIsbnExists(String isbn) {
 		DatabaseStatements dbstatements = new DatabaseStatements();
 		List <String> allISBNs = dbstatements.getAllISBN();
@@ -57,7 +69,7 @@ public class AddBookErrorHandling {
 	}
 	
 	public boolean checkTitle(String titel) {
-		String regex = "[a-zA-Z ,.:;_!-]+$";
+		String regex = "[a-zA-Z0-9 ,.:;_?!-]+$";
 		Pattern pattern = Pattern.compile(regex);
 		Matcher matcher = pattern.matcher(titel);
 		if(!matcher.matches()) {
@@ -104,6 +116,9 @@ public class AddBookErrorHandling {
 	
 	public String fehlermeldung() {
 		String errorMessage = "";
+		if(!categoriesExist) {
+			errorMessage += "Fehler: Buch kann nicht hinzugefügt werden, Datenbank enthält noch keine Kategorien. </br>";
+		}
 		if(!isbnNEW) {
 			errorMessage += "Fehler: Es existiert bereits ein Buch mit angegebener ISBN. <br/>";
 		}
@@ -114,21 +129,12 @@ public class AddBookErrorHandling {
 			errorMessage += "Fehler: Der Preis hat nicht das richtige Format. Akzeptiert wird folgendes Format: XX.XX z.B. 10.50 <br/>";
 		}
 		if(!titleOK) {
-			errorMessage += "Fehler: Der Titel erlaubt nur folgende Sonderzeichen: , . : ; - _ ! <br/>";
+			errorMessage += "Fehler: Der Titel erlaubt nur folgende Sonderzeichen: , \" . : ; - _ ? ! <br/>";
 		}
 		if(!authorOK) {
 			errorMessage += "Fehler: Der Autor darf keine Sonderzeichen enthalten. <br/>";
 		}
-		/*
-		if(!checkCategories(kategorien)) {
-			errorMessage += "Die Eingabe der Kategorien hat nicht das richtige Format. Folgendes Format wird akzeptiert: kategorie1,kategorie2,kategorie3,..."
-					+ "Zudem müssen alle Buchstaben klein geschrieben werden (a-z).";
-			return errorMessage;
-		}
-		if(!checkCategoriesContents(kategorien)) {
-			errorMessage += "Folgende angegebene Kategorie ist in der Datenbank nicht vorhanden: " + notExistingCategory;
-			return errorMessage;
-		}*/
+		
 		return errorMessage;
 	}
 	
