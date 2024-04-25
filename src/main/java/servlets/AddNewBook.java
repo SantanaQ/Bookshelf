@@ -67,7 +67,8 @@ public class AddNewBook extends HttpServlet {
 						& errors.checkIfIsbnExists(isbn)
 						& errors.checkAuthor(autor)
 						& errors.checkTitle(titel)
-						& errors.checkIfCategoriesinDB();
+						& errors.checkIfCategoriesinDB()
+						& errors.checkIfCategorySelected(request.getParameterValues("kategorien"));
 				
 		DatabaseStatements dbstatements = new DatabaseStatements();
 

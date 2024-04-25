@@ -14,6 +14,7 @@ public class AddBookErrorHandling {
 	private boolean titleOK;
 	private boolean authorOK;
 	private boolean categoriesExist;
+	private boolean categoriesSelected;
 	
 	public AddBookErrorHandling() {
 		this.isbnNEW = true;
@@ -22,10 +23,19 @@ public class AddBookErrorHandling {
 		this.titleOK = true;
 		this.authorOK = true;
 		this.categoriesExist = true;
+		this.categoriesSelected = true;
 	}
 	
 	//String notExistingCategory;
 
+	public boolean checkIfCategorySelected(String[] categoryParam) {
+		if(( categoryParam.length == 0 || categoryParam == null ) && checkIfCategoriesinDB()) {
+			categoriesSelected = false;
+			return false;
+		}
+		return true;
+	}
+	
 	public boolean checkIfCategoriesinDB() {
 		DatabaseStatements dbstatements = new DatabaseStatements();
 		List<String> categoriesInDB = dbstatements.getKCategories();
