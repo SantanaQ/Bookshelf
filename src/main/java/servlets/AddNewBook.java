@@ -52,7 +52,9 @@ public class AddNewBook extends HttpServlet {
 		String autor = request.getParameter("autor");
 		String beschreibung = request.getParameter("beschreibung");
 		String pr = request.getParameter("preis");
-		List<String> kategorien = Arrays.asList(request.getParameterValues("kategorien"));
+
+		List<String> kategorien = null;
+		
 		Part cover = request.getPart("titelbild"); 
 		InputStream coverStream = cover.getInputStream();
 		
@@ -70,7 +72,7 @@ public class AddNewBook extends HttpServlet {
 		DatabaseStatements dbstatements = new DatabaseStatements();
 
 		if (inputCorrect) {
-
+			kategorien = Arrays.asList(request.getParameterValues("kategorien"));
 			BigDecimal preis = new BigDecimal(pr);
 			Buch buch = new Buch(isbn, titel, autor, beschreibung, kategorien, preis, coverStream);
 			dbstatements.addBook(buch);
