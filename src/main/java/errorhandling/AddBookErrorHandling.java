@@ -26,7 +26,6 @@ public class AddBookErrorHandling {
 		this.categoriesSelected = true;
 	}
 	
-	//String notExistingCategory;
 
 	public boolean checkIfCategorySelected(String[] categoryParam) {
 		if( categoryParam == null  && checkIfCategoriesinDB()) {

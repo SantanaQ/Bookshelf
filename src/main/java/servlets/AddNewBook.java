@@ -21,7 +21,7 @@ import javax.servlet.http.Part;
 
 import database.*;
 import errorhandling.AddBookErrorHandling;
-import helpers.DataTransformHelper;
+import helpers.DataHelper;
 import objects.Buch;
 
 /**
@@ -153,9 +153,9 @@ public class AddNewBook extends HttpServlet {
 				+ "		<input class=\"formval\" type=\"text\" name=\"preis\" required placeholder=\"Preis (€)\" value=\"" + preis + "\">\r\n"
 				+"      <p>Kategorien:</p>\r\n"
 				+ "		<div class=\"kategorien-box\">\r\n";
-				DataTransformHelper helper = new DataTransformHelper();
+				DataHelper helper = new DataHelper();
 				for(int i = 0 ; i < kategorien.size(); i++) {
-					if(buchkategorien != null && helper.findVal(buchkategorien, kategorien.get(i)))  {
+					if(buchkategorien != null && helper.containsVal(buchkategorien, kategorien.get(i)))  {
 						html += "<div class=\"check\">"
 								+ "<input type=\"checkbox\"  id=\"kat"+ i +"\" name=\"kategorien\" value=\""+ kategorien.get(i) + "\" checked />\r\n"
 								+ "			<label for=\"kat" + i + "\">"+kategorien.get(i) +"</label>"
