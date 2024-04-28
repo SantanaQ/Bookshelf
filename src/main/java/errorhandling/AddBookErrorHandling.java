@@ -37,7 +37,7 @@ public class AddBookErrorHandling {
 	
 	public boolean checkIfCategoriesinDB() {
 		DatabaseStatements dbstatements = new DatabaseStatements();
-		List<String> categoriesInDB = dbstatements.getKCategories();
+		List<String> categoriesInDB = dbstatements.getCategories();
 		if(categoriesInDB.isEmpty()) {
 			categoriesExist = false;
 			return false;

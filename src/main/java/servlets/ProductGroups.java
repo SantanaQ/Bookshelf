@@ -1,6 +1,9 @@
 package servlets;
 
 import java.io.IOException;
+import java.util.List;
+
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -10,6 +13,8 @@ import javax.servlet.http.HttpServletResponse;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
 
+import database.DatabaseStatements;
+import objects.Buch;
 import thymeleaf.ThymeleafConfig;
 
 /**
@@ -22,7 +27,7 @@ public class ProductGroups extends HttpServlet {
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ProductGroups() {
+    public ProductGroups() {//
         super();
         // TODO Auto-generated constructor stub
     }
@@ -35,9 +40,14 @@ public class ProductGroups extends HttpServlet {
         WebContext context = new WebContext(request, response, request.getServletContext());
         response.setCharacterEncoding("UTF-8");
         
-        
+        DatabaseStatements dbstatements = new DatabaseStatements();
+        List<Buch> buecher = dbstatements.getBooks("Kategorien");
+        List<String> kategorien = dbstatements.getCategories();
+        context.setVariable("buecher", buecher);//
+        context.setVariable("kategorien", kategorien);
+        engine.process("index.html", context, response.getWriter());//
+        //-- machjetzt
 	}
-
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */

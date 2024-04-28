@@ -31,7 +31,7 @@ public class AddCategoryErrorHandling {
 	
 	public boolean checkCategoryContents(String kategorie) {
 		DatabaseStatements dbstatements = new DatabaseStatements();
-		List<String> kategorieninDB = dbstatements.getKCategories();
+		List<String> kategorieninDB = dbstatements.getCategories();
 		if(kategorieninDB.contains(kategorie)) {
 			contentOK = false;
 			return false;

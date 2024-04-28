@@ -1,7 +1,12 @@
 package helpers;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Arrays;
 import java.util.List;
+
+import org.jose4j.base64url.Base64;
+import org.primefaces.shaded.commons.io.IOUtils;
 
 public class DataHelper {
 	
@@ -17,6 +22,18 @@ public class DataHelper {
 			}
 		}
 		return false;
+	}
+	
+	public String streamToB64Convert(InputStream stream) {
+		String base64 = "";
+		try {
+			byte[] bytes = stream.readAllBytes();
+			base64 = Base64.encode(bytes);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return base64;
 	}
 
 }

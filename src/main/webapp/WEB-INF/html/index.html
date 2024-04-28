@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="styles/header.css">
     <link rel="stylesheet" href="styles/general.css">
-    <link rel="stylesheet" href="styles/index.css">
+    <link rel="stylesheet" th:href="styles/index.css">
 
     <link rel="icon" type="image/x-icon" href="https://github.com/SantanaQ/Internet-Technologien/blob/main/images/icon.png?raw=true">
 
@@ -41,151 +41,63 @@
   </div>
   <!--Ende Header-->
 
-    <div class="main-content">
-      <div class="katalog">
-        <div class="main-top">
-          <div class="ueberschrift-katalog">
-            <h1 class="durchsuchen">Durchsuchen</h1>
-          </div>
-        </div>
-        <div class="filteroptionen">
-          
-          <aside class="menu">
-            <p class="menu-label">
-              <a class="label-link" href="#">Alle Bücher</a>
-            </p>
-            <ul class="menu-list">
-              <li><a class="menu-item" href="#">Biographie</a></li>
-              <li><a class="menu-item" href="#">Fachliteratur</a></li>
-              <li><a class="menu-item" href="#">Kochen & Backen</a></li>
-              <li><a class="menu-item" href="#">Manga</a></li>
-              <li><a class="menu-item" href="#">Romane</a></li>
-              <li><a class="menu-item" href="#">Ratgeber</a></li>
-              <li><a class="menu-item" href="#">Sachbücher</a></li>
-              <li><a class="menu-item" href="#">Schule & Lernen</a></li>
-            </ul>
-            <p class="menu-label">
-              Genres
-            </p>
-            <ul class="menu-list">
-              <li><a class="menu-item" href="#">Fantasy</a></li>
-              <li><a class="menu-item" href="#">Gesellschaft & Entwicklung</a></li>
-              <li><a class="menu-item" href="#">Historische Romane</a></li>
-              <li><a class="menu-item" href="#">Horror</a></li>
-              <li><a class="menu-item" href="#">Krimi</a></li>
-              <li><a class="menu-item" href="#">Liebesromane</a></li>
-              <li><a class="menu-item" href="#">Science Fiction</a></li>
-              <li><a class="menu-item" href="#">Thriller</a></li>
-            </ul>
-          </aside>
-        </div>
-      </div>
-      <div class="auswahl">
-        <section class="auswahl-kontent">
+<div class="main-content">
+		<div class="katalog">
+			<div class="main-top">
+				<div class="ueberschrift-katalog">
+					<h1 class="durchsuchen">Durchsuchen</h1>
+				</div>
+			</div>
+			<div class="filteroptionen">
 
-          <div class="bookbox" id="item-1">
-            <a class="link-to-details" href="bookdetails.html">
-              <div class="coverbox">
-                <img src="https://github.com/SantanaQ/Internet-Technologien/blob/main/images/shining-taschenbuch-stephen-king.webp?raw=true" alt="stephen-king-shining">
-              </div>
-              <div class="description">
-                <div class="title">
-                  <p class="booktitle">Shining</p>
-                </div>
-            </a>
-                <div class="author">
-                  <p>Stephen King</p>
-                </div>
-              </div>
-              <div class="price-and-shopping">
-                <div class="price">
-                  <p>13,00 €</p>
-                </div>
-                <div class="shoppingcart">
-                  <button class="mini-warenkorb-button"><ion-icon name="cart-outline" class="mini-warenkorb"></ion-icon></button>
-                </div>
-              </div>
-          </div>
+				<aside class="menu">
+					<form action="./ProductGroups" method="post">
+						<p class="menu-label">
+							<input class="katlabel all" type="submit" value="Kategorien" />
+						</p>
+						<ul class="menu-list">
+							<li th:each="kategorie : ${kategorien}"><input class="katlabel" type="submit" th:value="${kategorie}" /></li>
+						</ul>
+					</form>
+				</aside>
+			</div>
+		</div>
 
-          <div class="bookbox" id="item-2">
-            <a class="link-to-details" href="bookdetails.html">
-              <div class="coverbox">
-                <img src="https://github.com/SantanaQ/Internet-Technologien/blob/main/images/harry-potter-und-der-stein-der-weisen-j-k-rowling.jpeg?raw=true" alt="j-k-rowling-harry-pottter-1">
-              </div>
-              <div class="description">
-                <div class="title">
-                  <p class="booktitle">Harry Potter und der Stein der Weisen</p>
-                </div>
-            </a>
-                <div class="author">
-                  <p>J.K. Rowling</p>
-                </div>
-              </div>
-              <div class="price-and-shopping">
-                <div class="price">
-                  <p>10,00 €</p>
-                </div>
-                <div class="shoppingcart">
-                  <button class="mini-warenkorb-button"><ion-icon name="cart-outline" class="mini-warenkorb"></ion-icon></button>
-                </div>
-              </div>
-          </div>
-
-          <div class="bookbox" id="item-3">
-            <a class="link-to-details" href="bookdetails.html">
-              <div class="coverbox">
-                <img src="https://github.com/SantanaQ/Internet-Technologien/blob/main/images/edgar-allan-poe-die-besten-geschichten-taschenbuch-edgar-allan-poe.webp?raw=true" alt="edgar-allen-poe-die-besten-geschichten">
-              </div>
-              <div class="description">
-                <div class="title">
-                  <p class="booktitle">Die besten Geschichten</p>
-                </div>
-            </a>
-                <div class="author">
-                  <p>Edgar Allan Poe</p>
-                </div>
-              </div>
-              <div class="price-and-shopping">
-                <div class="price">
-                  <p>4,99 €</p>
-                </div>
-                <div class="shoppingcart">
-                  <button class="mini-warenkorb-button"><ion-icon name="cart-outline" class="mini-warenkorb"></ion-icon></button>
-                </div>
-              </div>
-          </div>
-
-          <div class="bookbox" id="item-4">
-            <a class="link-to-details" href="bookdetails.html">
-              <div class="coverbox">
-                <img src="https://github.com/SantanaQ/Internet-Technologien/blob/main/images/a-song-of-ice-and-fire-01-a-game-of-thrones-taschenbuch-george-r-r-martin-englisch.webp?raw=true" alt="george-r-r-martin-a-game-of-thrones">
-              </div>
-              <div class="description">
-                <div class="title">
-                  <p class="booktitle">A Song of Ice and Fire 01. A Game of Thrones</p>
-                </div>
-            </a>
-                <div class="author">
-                  <p>George R.R. Martin</p>
-                </div>
-              </div>
-              <div class="price-and-shopping">
-                <div class="price">
-                  <p>9,50 €</p>
-                </div>
-                <div class="shoppingcart">
-                  <button class="mini-warenkorb-button"><ion-icon name="cart-outline" class="mini-warenkorb"></ion-icon></button>
-                </div>
-              </div>
-          </div>
-
-     
-        </section>
-      </div>
-    </div>
+	<section class="auswahl-kontent">
+		<th:block th:each="buch : ${buecher}">
+		<div class="auswahl">
+				<div class="bookbox" id="item">
+					<a class="link-to-details" href="bookdetails.html">
+						<div class="coverbox">
+							<img
+								th:src="@{'data:image/jpeg;base64,'+${buch.b64Cover}}"/>
+						</div>
+						<div class="description">
+							<div class="title">
+								<p class="booktitle" th:text="${buch.titel}"></p>
+							</div>
+					</a>
+					<div class="author">
+						<p th:text="${buch.autor}"></p>
+					</div>
+				</div>
+				<div class="price-and-shopping">
+					<div class="price">
+						<p><span th:text="${buch.preis}"></span> €</p>
+					</div>
+					<div class="shoppingcart">
+						<button class="mini-warenkorb-button">
+							<ion-icon name="cart-outline" class="mini-warenkorb"></ion-icon>
+						</button>
+					</div>
+				</div>
+		</div>
+		</th:block>
+	</section>
+</div>
 
 
-  <!--Icon source-->
+	<!--Icon source-->
   <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
   <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
   </body>

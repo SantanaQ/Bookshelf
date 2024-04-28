@@ -2,8 +2,8 @@ package objects;
 
 import java.io.InputStream;
 import java.math.BigDecimal;
-import java.util.Arrays;
 import java.util.List;
+
 
 public class Buch {
 	
@@ -14,9 +14,10 @@ public class Buch {
 	private List<String> kategorien;
 	private BigDecimal preis;
 	private InputStream cover;
+	private String b64Cover;
 	
 	public Buch(String isbn, String titel, String autor, String beschreibung, List<String> kategorien, BigDecimal preis,
-			InputStream cover) {
+			InputStream cover, String b64Cover) {
 		this.isbn = isbn;
 		this.titel = titel;
 		this.autor = autor;
@@ -24,9 +25,10 @@ public class Buch {
 		this.kategorien = kategorien;
 		this.preis = preis;
 		this.cover = cover;
+		this.setB64Cover(b64Cover);
 	}
 	
-	
+		
 	public String getIsbn() {
 		return isbn;
 	}
@@ -81,6 +83,16 @@ public class Buch {
 
 	public void setCover(InputStream cover) {
 		this.cover = cover;
+	}
+
+
+	public String getB64Cover() {
+		return b64Cover;
+	}
+
+
+	public void setB64Cover(String b64Cover) {
+		this.b64Cover = b64Cover;
 	}
 
 }

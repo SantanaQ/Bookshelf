@@ -40,7 +40,7 @@ public class ThymeleafConfig implements ServletContextListener {
 // legt Verzeichnis für Templates fest
 	private ITemplateResolver templateResolver(ServletContext servletContext) {
 		ServletContextTemplateResolver resolver = new ServletContextTemplateResolver(servletContext);
-		resolver.setPrefix("/WEB-INF/templates/");
+		resolver.setPrefix("/WEB-INF/html/");
 		resolver.setTemplateMode(TemplateMode.HTML);
 		return resolver;
 	}

@@ -1,14 +1,18 @@
 package database;
 
+import java.io.InputStream;
+import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.Collections;
 import java.util.List;
 
+import helpers.DataHelper;
 import objects.Buch;
+
 
 public class DatabaseStatements {
 	
@@ -34,6 +38,51 @@ public class DatabaseStatements {
 		}
 	}
 	
+	public List<Buch> getBooks(String kategorie){
+		List<Buch> buecher = new ArrayList<>();
+		try {
+			con = DatabaseConnection.initializeDatabase();
+			PreparedStatement stmt;
+			ResultSet rs;
+			String select = "SELECT *";
+			if(kategorie.equals("") || kategorie.equals("Kategorien")) { //Kategorien => submit value if all books selected
+				String from = " FROM Buch";
+				stmt = con.prepareStatement(select + from);
+			}else {
+				String from = " FROM Buch, Buchkategorien, Kategorie";
+				String where = " WHERE Buch.ISBN = Buchkategorien.ISBN"
+						+ "AND Buchkategorien.KategorieNr = KategorieNr"
+						+ "AND Kategorie.Kategoriename = " + kategorie;
+				stmt = con.prepareStatement(select + from + where);
+			}
+			rs = stmt.executeQuery();
+			while(rs.next()) {
+				String isbn = rs.getNString("ISBN");
+				String titel = rs.getString("Titel");
+				String autor = rs.getString("Autor");
+				String beschreibung = rs.getString("Beschreibung");
+				BigDecimal preis = rs.getBigDecimal("Preis"); 
+				InputStream cover = rs.getBinaryStream("Titelbild");
+				DataHelper helper = new DataHelper();
+				String b64Cover = helper.streamToB64Convert(cover);
+				PreparedStatement katstmt = con.prepareStatement("SELECT Kategorie.KategorieNr, Kategorie.Kategoriename"
+						+ " FROM Kategorie, Buchkategorien"
+						+ " WHERE Kategorie.KategorieNr = Buchkategorien.KategorieNr"
+						+ " AND Buchkategorien.ISBN = " + isbn);
+				ResultSet katrs = katstmt.executeQuery();
+				List<String> buchkategorien = new ArrayList<>();
+				while(katrs.next()) {
+					buchkategorien.add(rs.getString("Kategoriename"));
+				}
+				Buch buch = new Buch(isbn, titel, autor, beschreibung, buchkategorien, preis, cover, b64Cover);
+				buecher.add(buch);
+			}
+			con.close();
+		} catch (Exception e) {
+		}
+		return buecher;
+	}
+	
 	public void addCategory(String kategorie) {
 		try {
 			con = DatabaseConnection.initializeDatabase();
@@ -48,7 +97,7 @@ public class DatabaseStatements {
 		}
 	}
 	
-	public List<String> getKCategories(){
+	public List<String> getCategories(){
 		List<String> kategorien = new ArrayList<>();
 		try {
 			con = DatabaseConnection.initializeDatabase();
@@ -63,6 +112,7 @@ public class DatabaseStatements {
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
+		Collections.sort(kategorien);
 		return kategorien;
 	}
 	
