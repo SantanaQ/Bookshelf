@@ -78,7 +78,7 @@ public class AddBookErrorHandling {
 	}
 	
 	public boolean checkTitle(String titel) {
-		String regex = "[A-Z0-9][a-zA-Z0-9 ,.:;_?!-]+$";
+		String regex = "[A-Z0-9][a-zA-Z0-9 ,.:;_?!&-]+$";
 		Pattern pattern = Pattern.compile(regex);
 		Matcher matcher = pattern.matcher(titel);
 		if(!matcher.matches()) {
@@ -90,7 +90,7 @@ public class AddBookErrorHandling {
 	}
 	
 	public boolean checkAuthor(String autor) {
-		String regex = "[a-zA-Z ]+$";
+		String regex = "[a-zA-Z .]+$";
 		Pattern pattern = Pattern.compile(regex);
 		Matcher matcher = pattern.matcher(autor);
 		if(!matcher.matches()) {
@@ -119,10 +119,10 @@ public class AddBookErrorHandling {
 			errorMessage += "Fehler: Der Preis hat nicht das richtige Format. Akzeptiert wird folgendes Format: XX.XX z.B. 10.50 <br/>";
 		}
 		if(!titleOK) {
-			errorMessage += "Fehler: Der Titel muss mit einem Großbuchstaben oder einer Zahl beginnen und erlaubt nur folgende Sonderzeichen: , . : ; - _ ? ! <br/>";
+			errorMessage += "Fehler: Der Titel muss mit einem Großbuchstaben oder einer Zahl beginnen und erlaubt nur folgende Sonderzeichen: , . : ; - _ ? & ! <br/>";
 		}
 		if(!authorOK) {
-			errorMessage += "Fehler: Der Autor darf keine Sonderzeichen enthalten. <br/>";
+			errorMessage += "Fehler: Der Autor darf keine Sonderzeichen, außer '.' enthalten. <br/>";
 		}
 		
 		return errorMessage;

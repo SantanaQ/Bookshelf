@@ -27,7 +27,7 @@ public class ProductGroups extends HttpServlet {
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ProductGroups() {//
+    public ProductGroups() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -43,17 +43,25 @@ public class ProductGroups extends HttpServlet {
         DatabaseStatements dbstatements = new DatabaseStatements();
         List<Buch> buecher = dbstatements.getBooks("Kategorien");
         List<String> kategorien = dbstatements.getCategories();
-        context.setVariable("buecher", buecher);//
+        context.setVariable("buecher", buecher);
         context.setVariable("kategorien", kategorien);
-        engine.process("index.html", context, response.getWriter());//
-        //-- machjetzt
+        engine.process("index.html", context, response.getWriter());
 	}
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
+		TemplateEngine engine = ThymeleafConfig.getTemplateEngine();
+        WebContext context = new WebContext(request, response, request.getServletContext());
+        response.setCharacterEncoding("UTF-8");
+        String kategorie = request.getParameter("kategorien");
+        
+        DatabaseStatements dbstatements = new DatabaseStatements();
+        List<Buch> buecher = dbstatements.getBooks(kategorie);
+        List<String> kategorien = dbstatements.getCategories();
+        context.setVariable("buecher", buecher);
+        context.setVariable("kategorien", kategorien);
+        engine.process("index.html", context, response.getWriter());
 	}
 
 }

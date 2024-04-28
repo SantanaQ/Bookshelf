@@ -30,7 +30,7 @@ import objects.Buch;
 @WebServlet("/AddNewBook")
 @MultipartConfig
 public class AddNewBook extends HttpServlet {
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;//
 
 	private boolean inputCorrect;
 

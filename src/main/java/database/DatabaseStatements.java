@@ -28,7 +28,7 @@ public class DatabaseStatements {
 			stmt.setString(3, buch.getAutor());
 			stmt.setString(4, buch.getBeschreibung());
 			stmt.setBigDecimal(5, buch.getPreis());
-			stmt.setBlob(6, buch.getCover());
+			stmt.setString(6, buch.getB64Cover());
 			stmt.executeUpdate();
 			con.close();
 		} catch (SQLException e) {
@@ -44,36 +44,29 @@ public class DatabaseStatements {
 			con = DatabaseConnection.initializeDatabase();
 			PreparedStatement stmt;
 			ResultSet rs;
-			String select = "SELECT *";
-			if(kategorie.equals("") || kategorie.equals("Kategorien")) { //Kategorien => submit value if all books selected
+			if(kategorie.equals("") || kategorie == null || kategorie.equals("Kategorien")) { //Kategorien => submit value if all books selected
+				String select = "SELECT *";
 				String from = " FROM Buch";
 				stmt = con.prepareStatement(select + from);
 			}else {
+				String select = "SELECT Buch.ISBN, Buch.Titel, Buch.Autor, Buch.Beschreibung, Buch.Preis, Buch.Titelbild";
 				String from = " FROM Buch, Buchkategorien, Kategorie";
 				String where = " WHERE Buch.ISBN = Buchkategorien.ISBN"
-						+ "AND Buchkategorien.KategorieNr = KategorieNr"
-						+ "AND Kategorie.Kategoriename = " + kategorie;
+						+ " AND Buchkategorien.KategorieNr = Kategorie.KategorieNr"
+						+ " AND Kategorie.Kategoriename = '" + kategorie + "'";
 				stmt = con.prepareStatement(select + from + where);
 			}
 			rs = stmt.executeQuery();
 			while(rs.next()) {
-				String isbn = rs.getNString("ISBN");
+				String isbn = rs.getString("ISBN");
 				String titel = rs.getString("Titel");
 				String autor = rs.getString("Autor");
 				String beschreibung = rs.getString("Beschreibung");
 				BigDecimal preis = rs.getBigDecimal("Preis"); 
-				InputStream cover = rs.getBinaryStream("Titelbild");
-				DataHelper helper = new DataHelper();
-				String b64Cover = helper.streamToB64Convert(cover);
-				PreparedStatement katstmt = con.prepareStatement("SELECT Kategorie.KategorieNr, Kategorie.Kategoriename"
-						+ " FROM Kategorie, Buchkategorien"
-						+ " WHERE Kategorie.KategorieNr = Buchkategorien.KategorieNr"
-						+ " AND Buchkategorien.ISBN = " + isbn);
-				ResultSet katrs = katstmt.executeQuery();
-				List<String> buchkategorien = new ArrayList<>();
-				while(katrs.next()) {
-					buchkategorien.add(rs.getString("Kategoriename"));
-				}
+				InputStream cover = null;
+				String b64Cover = rs.getString("Titelbild");
+				List<String> buchkategorien = getBookCategories(isbn);
+
 				Buch buch = new Buch(isbn, titel, autor, beschreibung, buchkategorien, preis, cover, b64Cover);
 				buecher.add(buch);
 			}
@@ -81,6 +74,26 @@ public class DatabaseStatements {
 		} catch (Exception e) {
 		}
 		return buecher;
+	}
+	
+	public List<String> getBookCategories(String isbn){
+		List<String> buchkategorien = new ArrayList<>();
+		String sql = "SELECT Kategorie.Kategoriename FROM Kategorie, Buchkategorien WHERE Kategorie.KategorieNr = Buchkategorien.KategorieNr AND Buchkategorien.ISBN = '" + isbn + "'";
+		try {
+			con = DatabaseConnection.initializeDatabase();
+			PreparedStatement stmt = con.prepareStatement(sql);
+			ResultSet rs = stmt.executeQuery();
+			while(rs.next()) {
+				buchkategorien.add(rs.getString("Kategoriename"));
+			}
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return buchkategorien;
 	}
 	
 	public void addCategory(String kategorie) {
