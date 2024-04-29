@@ -113,7 +113,7 @@ public class AddBookErrorHandling {
 			errorMessage += "Fehler: Es existiert bereits ein Buch mit angegebener ISBN. <br/>";
 		}
 		if(!isbnOK) {
-			errorMessage += "Fehler: Die ISBN entspricht nicht dem richtigen Format. Folgende Formate werden akzeptiert: </br> XXX-X-XXX-XXXXX-X bzw. X-XXX-XXXXX-X. <br/>";
+			errorMessage += "Fehler: Die ISBN entspricht nicht dem richtigen Format. Folgende Formate werden akzeptiert: </br> 978-X-XXX-XXXXX-X bzw. X-XXX-XXXXX-X. <br/>";
 		}
 		if(!priceOK) {
 			errorMessage += "Fehler: Der Preis hat nicht das richtige Format. Akzeptiert wird folgendes Format: XX.XX z.B. 10.50 <br/>";
