@@ -45,7 +45,7 @@
   <div class="main-content">
     <div class="image-box">
       <div class="image">
-        <img class="book-image" src="https://github.com/SantanaQ/Internet-Technologien/blob/main/images/shining-taschenbuch-stephen-king.webp?raw=true" alt="big-picture-book">
+        <img class="book-image" th:src="@{'data:image/jpeg;base64,'+${buch.b64Cover}}" alt="big-picture-book">
       </div>
     </div>
     <div class="text-box">

@@ -47,7 +47,7 @@ public class DatabaseStatements {
 			ResultSet rs;
 			
 			stmt = con.prepareStatement("SELECT * FROM Buch WHERE Buch.ISBN = ?");
-			stmt.setString(0, isbn);
+			stmt.setString(1, isbn);
 			
 			rs = stmt.executeQuery();
 			rs.next();
