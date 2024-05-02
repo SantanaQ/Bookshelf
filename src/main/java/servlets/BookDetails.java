@@ -47,7 +47,7 @@ public class BookDetails extends HttpServlet {
         
         DatabaseStatements dbstatements = new DatabaseStatements();
         String isbn = request.getParameter("isbn");
-        //Buch buch = dbstatements.getBook(isbn);
+        Buch buch = dbstatements.getBuch(isbn);
         context.setVariable("titel", buch.getTitel());
         context.setVariable("autor", buch.getAutor());
         context.setVariable("preis", buch.getPreis());

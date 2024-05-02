@@ -38,6 +38,38 @@ public class DatabaseStatements {
 		}
 	}
 	
+	public Buch getBuch(String isbn) {
+		Buch buch = null;
+		try {
+			
+			con = DatabaseConnection.initializeDatabase();
+			PreparedStatement stmt;
+			ResultSet rs;
+			
+			stmt = con.prepareStatement("SELECT * FROM Buch WHERE Buch.ISBN = ?");
+			stmt.setString(0, isbn);
+			
+			rs = stmt.executeQuery();
+			rs.next();
+			String isbn2 = rs.getString("ISBN");
+			String titel = rs.getString("Titel");
+			String autor = rs.getString("Autor");
+			String beschreibung = rs.getString("Beschreibung");
+			BigDecimal preis = rs.getBigDecimal("Preis"); 
+			InputStream cover = null;
+			String b64Cover = rs.getString("Titelbild");
+			List<String> buchkategorien = getBookCategories(isbn);
+
+			buch = new Buch(isbn2, titel, autor, beschreibung, buchkategorien, preis, cover, b64Cover);
+			
+			con.close();
+			
+		} catch (Exception e) {
+		}
+		
+		return buch;
+	}
+	
 	public List<Buch> getBooks(String kategorie){
 		List<Buch> buecher = new ArrayList<>();
 		try {
