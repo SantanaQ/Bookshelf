@@ -21,7 +21,7 @@
     <div class="leftt"></div>
     <div class="items">
       <div class="logo-box">
-        <a href="#">
+        <a href="./ProductGroups" method="get">
           <img class="logo" src="https://github.com/SantanaQ/Internet-Technologien/blob/main/images/logo.png?raw=true" alt="logo">
         </a>
       </div>
@@ -70,7 +70,7 @@
         <button class="warenkorb-hinzufuegen-button">In den Warenkorb</button>
       </div>
       <div class="isbn-box">
-        <p class="isbn" th:text="${isbn}"></p>
+        <p class="isbn" >ISBN <span th:text="${isbn}"></span></p>
       </div>
     </div>
   </div>

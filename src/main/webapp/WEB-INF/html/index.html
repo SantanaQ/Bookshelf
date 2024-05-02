@@ -22,7 +22,7 @@
     <div class="leftt"></div>
     <div class="items">
       <div class="logo-box">
-        <a href="#">
+        <a href="./ProductGroups" method="get">
           <img class="logo" src="https://github.com/SantanaQ/Internet-Technologien/blob/main/images/logo.png?raw=true" alt="logo">
         </a>
       </div>
@@ -46,7 +46,7 @@
 		<div class="katalog">
 			<div class="main-top">
 				<div class="ueberschrift-katalog">
-					<h1 class="durchsuchen">Durchsuchen</h1>
+					<h1 class="durchsuchen" th:text="${kategorieheadline}"></h1>
 				</div>
 			</div>
 			<div class="filteroptionen">

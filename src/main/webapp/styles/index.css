@@ -270,6 +270,13 @@ li{
 	font-size: 20px;
 }
 
+.katlabel:hover{
+	color: rgb(0, 81, 255);
+	font-weight: bold;
+	cursor: pointer;	
+}
+
+
 .all{
 	border-bottom: solid 1px gray;	
 }
@@ -278,11 +285,6 @@ li{
 	color: black;
 }
 
-.katlabel:hover{
-	color: rgb(0, 81, 255);
-	font-weight: bold;
-	cursor: pointer;	
-}
 
 
 

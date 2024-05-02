@@ -41,6 +41,7 @@ public class ProductGroups extends HttpServlet {
         DatabaseStatements dbstatements = new DatabaseStatements();
         List<Buch> buecher = dbstatements.getBooks("Kategorien");
         List<String> kategorien = dbstatements.getCategories();
+        context.setVariable("kategorieheadline", "Durchsuchen");
         context.setVariable("buecher", buecher);
         context.setVariable("kategorien", kategorien);
         engine.process("index.html", context, response.getWriter());
@@ -57,6 +58,10 @@ public class ProductGroups extends HttpServlet {
         DatabaseStatements dbstatements = new DatabaseStatements();
         List<Buch> buecher = dbstatements.getBooks(kategorie);
         List<String> kategorien = dbstatements.getCategories();
+        if(kategorie.equals("Kategorien")) {
+            context.setVariable("kategorieheadline", "Durchsuchen");
+        }else
+        	context.setVariable("kategorieheadline", kategorie);
         context.setVariable("buecher", buecher);
         context.setVariable("kategorien", kategorien);
         engine.process("index.html", context, response.getWriter());
