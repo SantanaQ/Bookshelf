@@ -166,7 +166,6 @@ li{
 
 .description {
 	height: 80px;
-	border-bottom: 1px solid rgb(218, 218, 218);
 }
 
 .booktitle {
@@ -579,6 +578,20 @@ button{
 	border: none;
 	margin: 5px;
 }
+
+.buchtitel {
+	text-align: left;
+	white-space: normal;
+	margin: auto;
+ 	margin-top: 20px;
+ 	margin-left: 16px;
+	width: 80%;
+	background: none;
+	border: none;
+	font-weight: bold;
+	cursor: pointer;
+}
+
 </style>
     
     <link rel="icon" type="image/x-icon" href="https://github.com/SantanaQ/Internet-Technologien/blob/main/images/icon.png?raw=true">
@@ -647,7 +660,11 @@ button{
 						</div>
 						<div class="description">
 							<div class="title">
-								<p class="booktitle" th:text="${buch.titel}"></p>
+								<form action="./BookDetails" method="post">
+									<input type="hidden" name="isbn" th:value="${buch.isbn}" />
+									<input class="buchtitel" type="submit" name="titel" th:value="${buch.titel}" />
+								</form>
+								
 							</div>
 							<div class="author">
 								<p th:text="${buch.autor}"></p>

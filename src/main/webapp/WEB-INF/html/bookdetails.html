@@ -53,36 +53,31 @@
         <h1 th:text="${titel}"></h1>
       </div>
       <div class="buchart">
-        <p th:text="${"></p>
+      	<th:block th:each="kategorie : ${kategorien}">
+	      	<div class="katbox">
+	        	<p th:text="${kategorie}"></p>      		
+	      	</div>
+		</th:block>
       </div>
       <div class="autor">
-        <h3>Stephen King</h3>
-      </div>
-      <div class="medium">
-        <p>Taschenbuch</p>
+        <h3 th:text="${autor}"></h3>
       </div>
       <div class="preisinfo">
-        <h3 class="preiss">13,00 €</h3>
+        <h3 class="preiss"><span th:text="${preis}"></span> €</h3>
         <p class="mwst">inkl. gesetzl. MwSt.</p>
       </div>
       <div class="warenkorb-box">
         <button class="warenkorb-hinzufuegen-button">In den Warenkorb</button>
       </div>
       <div class="isbn-box">
-        <p class="isbn">ISBN 978-3-404-13089-4</p>
+        <p class="isbn" th:text="${isbn}"></p>
       </div>
     </div>
   </div>
   <div class="beschreibungs-box-unten" id="Buchbeschreibung">
     <h1 class="beschreibung-ueberschrift">Beschreibung</h1>
     <div class="beschreibungstext-box">
-      <p>Ein Hotel in den Bergen von Colorado. 
-        Jack Torrance, ein verkrachter Intellektueller mit Psycho-Problemen, bekommt den Job als Hausmeister, 
-        um den er sich beworben hat. 
-        Zusammen mit seiner Frau Wendy und seinem Sohn Danny reist er in den letzten Tagen des Herbstes an. 
-        Das Hotel "Overlook" ist ein verrufener Ort. 
-        Wer sich ihm ausliefert, verfällt ihm, wird zum ausführenden Organ aller bösen Träume und Wünsche, 
-        die sich in ihm manifestieren. Der Alptraum beginnt ...</p>
+      <p th:text="${beschreibung}"></p>
     </div>
   </div>
 
