@@ -114,7 +114,10 @@ public class AddNewBook extends HttpServlet {
 				+ "<html>\r\n"
 				+ "<head>\r\n"
 				+ "<meta http-equiv=\"content-type\" content=\"text/html; charset=utf-8\">\r\n"
-				+ css
+				//+ css
+				+ "<link rel=\"stylesheet\" href=\"./styles/AddBookForm.css\">\r\n"
+				+ "<link rel=\"stylesheet\" href=\"./styles/general.css\">\r\n"
+				+ "<link rel=\"stylesheet\" href=\"./styles/header.css\">\r\n"
 				+ "<link rel=\"preconnect\" href=\"https://fonts.googleapis.com\">\r\n"
 				+ "    <link rel=\"preconnect\" href=\"https://fonts.gstatic.com\" crossorigin>\r\n"
 				+ "    <link href=\"https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap\" rel=\"stylesheet\">\r\n"
