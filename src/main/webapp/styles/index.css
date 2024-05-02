@@ -158,9 +158,20 @@ li{
 
 .description{
   height: 80px;
-  border-bottom: 1px solid rgb(218, 218, 218);
 }
 
+.buchtitel {
+	text-align: left;
+	white-space: normal;
+	margin: auto;
+ 	margin-top: 20px;
+ 	margin-left: 16px;
+	width: 80%;
+	background: none;
+	border: none;
+	font-weight: bold;
+	cursor: pointer;
+}
 
 .booktitle{
   color: black;

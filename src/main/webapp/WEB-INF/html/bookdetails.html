@@ -3,9 +3,9 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="styles/header.css">
-    <link rel="stylesheet" href="styles/general.css">
-    <link rel="stylesheet" href="styles/bookdetails.css">
+    <link rel="stylesheet" href="./styles/header.css">
+    <link rel="stylesheet" href="./styles/general.css">
+    <link rel="stylesheet" href="./styles/bookdetails.css">
 
     <link rel="icon" type="image/x-icon" href="https://github.com/SantanaQ/Internet-Technologien/blob/main/images/icon.png?raw=true">
 
@@ -21,7 +21,7 @@
     <div class="leftt"></div>
     <div class="items">
       <div class="logo-box">
-        <a href="index.html">
+        <a href="#">
           <img class="logo" src="https://github.com/SantanaQ/Internet-Technologien/blob/main/images/logo.png?raw=true" alt="logo">
         </a>
       </div>
@@ -45,7 +45,7 @@
   <div class="main-content">
     <div class="image-box">
       <div class="image">
-        <img class="book-image" th:src="@{'data:image/jpeg;base64,'+${buch.b64Cover}}" alt="big-picture-book">
+        <img class="book-image" th:src="@{'data:image/jpeg;base64,'+${b64Cover}}" alt="big-picture-book">
       </div>
     </div>
     <div class="text-box">
