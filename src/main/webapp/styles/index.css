@@ -66,7 +66,7 @@ section{
 
 aside {
   float: left;
-  width: 25%;
+  width: 20%;
   background-color: white;
   box-shadow: 0px 2px 4px rgba(65, 65, 65, 0.3);
 }
@@ -80,6 +80,7 @@ ul {
 li{
   margin: 0;
 }
+
 
 
 .menu-label{
@@ -265,7 +266,7 @@ li{
 .katlabel{
 	border: none;
 	background-color: white;
-	width: 60%;
+	width: 100%;
 	height: 40px;
 	font-size: 20px;
 }

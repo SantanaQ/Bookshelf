@@ -104,10 +104,12 @@ h3{
 .beschreibungs-box-unten{
     margin: auto;
     width: 50%;
-    height: 600px;
+    height: inherit;
     background-color: white;
     box-shadow: 0px 2px 4px rgba(65, 65, 65, 0.3);
     border-radius: 10px 100px 10px 100px;
+    display: absolute;
+    padding-bottom: 120px;
 }
 
 .beschreibung-ueberschrift{
@@ -117,15 +119,16 @@ h3{
 }
 
 .beschreibungstext-box{
+	display: inline-block;
     margin-left: 75px;
     width: 70%;
-    height: 70%;
     border: 1px solid whitesmoke;
-    border-radius: 25px 100px;
+    border-radius: 25px 100px 25px 25px;
     box-shadow: 0px 2px 4px rgba(65, 65, 65, 0.3);
     padding-top: 20px;
     padding-left: 30px;
     padding-right: 40px;
+    padding-bottom: 20px;
 }
 
 p{
