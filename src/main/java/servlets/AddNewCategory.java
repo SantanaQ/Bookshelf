@@ -62,13 +62,14 @@ public class AddNewCategory extends HttpServlet {
 	private String reloadForm(AddCategoryErrorHandling errors, String kategorie) {
 		DatabaseStatements dbstatements = new DatabaseStatements();
 		List<String> kategorien = dbstatements.getCategories();
-		String css = AddNewBook.getStyle();
 		String html = 
 				"<!DOCTYPE html>\r\n"
 				+ "<html>\r\n"
 				+ "<head>\r\n"
 				+ "<meta http-equiv=\"content-type\" content=\"text/html; charset=utf-8\">\r\n"
-				+ css
+				+ "<link rel=\"stylesheet\" href=\"./styles/AddBookForm.css\">\r\n"
+				+ "<link rel=\"stylesheet\" href=\"./styles/general.css\">\r\n"
+				+ "<link rel=\"stylesheet\" href=\"./styles/header.css\">"
 				+ "\r\n"
 				+ "<link rel=\"preconnect\" href=\"https://fonts.googleapis.com\">\r\n"
 				+ "    <link rel=\"preconnect\" href=\"https://fonts.gstatic.com\" crossorigin>\r\n"
