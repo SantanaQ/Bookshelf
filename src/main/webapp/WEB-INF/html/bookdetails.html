@@ -52,15 +52,15 @@
       <div class="title">
         <h1 th:text="${titel}"></h1>
       </div>
+      <div class="autor">
+        <h3 th:text="${autor}"></h3>
+      </div>
       <div class="buchart">
       	<th:block th:each="kategorie : ${kategorien}">
 	      	<div class="katbox">
 	        	<p th:text="${kategorie}"></p>      		
 	      	</div>
 		</th:block>
-      </div>
-      <div class="autor">
-        <h3 th:text="${autor}"></h3>
       </div>
       <div class="preisinfo">
         <h3 class="preiss"><span th:text="${preis}"></span> €</h3>

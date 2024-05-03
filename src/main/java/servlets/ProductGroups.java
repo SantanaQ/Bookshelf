@@ -39,7 +39,7 @@ public class ProductGroups extends HttpServlet {
         response.setCharacterEncoding("UTF-8");
         
         DatabaseStatements dbstatements = new DatabaseStatements();
-        List<Buch> buecher = dbstatements.getBooks("Kategorien");
+        List<Buch> buecher = dbstatements.getBooks("");
         List<String> kategorien = dbstatements.getCategories();
         context.setVariable("kategorieheadline", "Durchsuchen");
         context.setVariable("buecher", buecher);
