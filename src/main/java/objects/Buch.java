@@ -15,6 +15,7 @@ public class Buch {
 	private BigDecimal preis;
 	private InputStream cover;
 	private String b64Cover;
+	private int anzahl;
 	
 	public Buch(String isbn, String titel, String autor, String beschreibung, List<String> kategorien, BigDecimal preis,
 			InputStream cover, String b64Cover) {
@@ -26,6 +27,19 @@ public class Buch {
 		this.preis = preis;
 		this.cover = cover;
 		this.setB64Cover(b64Cover);
+	}
+	
+	public Buch(String isbn, String titel, String autor, String beschreibung, List<String> kategorien, BigDecimal preis,
+			InputStream cover, String b64Cover, int anzahl) {
+		this.isbn = isbn;
+		this.titel = titel;
+		this.autor = autor;
+		Beschreibung = beschreibung;
+		this.kategorien = kategorien;
+		this.preis = preis;
+		this.cover = cover;
+		this.setB64Cover(b64Cover);
+		this.setAnzahl(anzahl);
 	}
 	
 		
@@ -93,6 +107,14 @@ public class Buch {
 
 	public void setB64Cover(String b64Cover) {
 		this.b64Cover = b64Cover;
+	}
+
+	public int getAnzahl() {
+		return anzahl;
+	}
+
+	public void setAnzahl(int anzahl) {
+		this.anzahl = anzahl;
 	}
 
 }
