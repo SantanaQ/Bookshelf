@@ -1,27 +1,32 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="./styles/header.css">
-    <link rel="stylesheet" href="./styles/general.css">
-    <link rel="stylesheet" href="./styles/shoppingcart.css">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+  <h:head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <link rel="stylesheet" href="./styles/header.css"/>
+    <link rel="stylesheet" href="./styles/general.css"/>
+    <link rel="stylesheet" href="./styles/shoppingcart.css"/>
 
-    <link rel="icon" type="image/x-icon" href="https://github.com/SantanaQ/Internet-Technologien/blob/main/images/icon.png?raw=true">
-
+    <link rel="icon" type="image/x-icon" href="https://github.com/SantanaQ/Internet-Technologien/blob/main/images/icon.png?raw=true"/>
+<!-- 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+     -->
     <title>Bookshelf - Warenkorb</title>
-  </head>
-  <body>
+  </h:head>
+  <h:body>
   <!--Anfang Header-->
   <div class="headerr">
     <div class="leftt"></div>
     <div class="items">
       <div class="logo-box">
         <a href="index.html">
-          <img class="logo" src="https://github.com/SantanaQ/Internet-Technologien/blob/main/images/logo.png?raw=true" alt="logo">
+          <img class="logo" src="https://github.com/SantanaQ/Internet-Technologien/blob/main/images/logo.png?raw=true" alt="logo"/>
         </a>
       </div>
       <div class="buttons">
@@ -51,7 +56,7 @@
         <div class="ware-box">
           <div class="cover-box">
             <div class="shadow-box">
-            <img src="https://github.com/SantanaQ/Internet-Technologien/blob/main/images/shining-taschenbuch-stephen-king.webp?raw=true" alt="stephen-king-shining">
+            <img src="https://github.com/SantanaQ/Internet-Technologien/blob/main/images/shining-taschenbuch-stephen-king.webp?raw=true" alt="stephen-king-shining"/>
             </div>
           </div>
           <div class="infos">
@@ -63,31 +68,6 @@
             <h2>13,00 €</h2>
             <div class="delete-from-shoppingcart">
               <button class="delete-item-button"><ion-icon class="trashcan" name="trash-outline"></ion-icon></button>
-            </div>
-            <div class="anzahl-box">
-              <p class="anzahl-title">Anzahl</p>
-              <button class="anzahl-button">+</button>
-              <p class="anzahl-title">1</p>
-              <button class="anzahl-button">-</button>
-            </div>
-          </div>
-        </div>
-
-        <div class="ware-box">
-          <div class="cover-box">
-            <div class="shadow-box">
-              <img src="https://github.com/SantanaQ/Internet-Technologien/blob/main/images/harry-potter-und-der-stein-der-weisen-j-k-rowling.jpeg?raw=true" alt="j-k-rowling-harry-pottter-1">
-            </div>
-          </div>
-          <div class="infos">
-            <h2>Harry Potter und der Stein der Weisen</h2>
-            <h3>von J.K. Rowling</h3>
-            <p>Sofort lieferbar</p>
-          </div>
-          <div class="preis-box">
-            <h2>10,00 €</h2>
-            <div class="delete-from-shoppingcart">
-                <button class="delete-item-button"><ion-icon class="trashcan" name="trash-outline"></ion-icon></button>
             </div>
             <div class="anzahl-box">
               <p class="anzahl-title">Anzahl</p>
@@ -110,9 +90,10 @@
 
 
 
-  <!--Icon source-->
+  <!--Icon source
   <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
   <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
-  </body>
+  -->
+  </h:body>
 </html>
 
