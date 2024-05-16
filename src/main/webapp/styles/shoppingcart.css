@@ -1,6 +1,6 @@
 .main-content{
   margin: auto;
-  width: 70%;
+  width: 80%;
   margin-top: 50px;
 }
 
@@ -63,13 +63,18 @@ p{
 
 .preis-box{
   width: 20%;
-  padding-top: 20px;
-  text-align: center;
+  text-align: end;
+  margin-right: 10px;
+  position: relative;
+}
+
+.delete-from-shoppingcart{
+	position: absolute;
+    bottom: 0;
+    right: 0;
 }
 
 .delete-item-button{
-  margin-top: -10px;
-  margin-left: 30px;
   background-color: white;
   border: none;
   width: 50px;
@@ -84,10 +89,9 @@ p{
 
 .anzahl-box{
   margin-top: 10px;
-  margin-right: 10px;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: end;
 }
 
 .anzahl-title{

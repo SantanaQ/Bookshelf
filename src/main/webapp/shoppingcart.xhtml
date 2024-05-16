@@ -10,13 +10,10 @@
     <link rel="stylesheet" href="./styles/header.css"/>
     <link rel="stylesheet" href="./styles/general.css"/>
     <link rel="stylesheet" href="./styles/shoppingcart.css"/>
+    <h:outputStylesheet name="primeicons/primeicons.css" library="primefaces" />
 
     <link rel="icon" type="image/x-icon" href="https://github.com/SantanaQ/Internet-Technologien/blob/main/images/icon.png?raw=true"/>
-<!-- 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
-     -->
+
     <title>Bookshelf - Warenkorb</title>
   </h:head>
   <h:body>
@@ -25,7 +22,7 @@
     <div class="leftt"></div>
     <div class="items">
       <div class="logo-box">
-        <a href="index.html">
+        <a href="./ProductGroups" method="get">
           <img class="logo" src="https://github.com/SantanaQ/Internet-Technologien/blob/main/images/logo.png?raw=true" alt="logo"/>
         </a>
       </div>
@@ -36,8 +33,8 @@
         <a href="registration.html">
           <button class="signup">Sign Up</button>
         </a>
-        <a href="shoppingcart.html">
-          <button class="warenkorb-button"><ion-icon name="cart-outline" class="warenkorb"></ion-icon></button>
+        <a href="shoppingcart.xhtml">
+          <button class="warenkorb-button"><i class="pi pi-shopping-cart" style="font-size: 2rem"></i></button>
         </a>
       </div>
     </div>
@@ -66,14 +63,14 @@
           </div>
           <div class="preis-box">
             <h2>13,00 €</h2>
-            <div class="delete-from-shoppingcart">
-              <button class="delete-item-button"><ion-icon class="trashcan" name="trash-outline"></ion-icon></button>
-            </div>
             <div class="anzahl-box">
               <p class="anzahl-title">Anzahl</p>
               <button class="anzahl-button">+</button>
               <p class="anzahl-title">1</p>
               <button class="anzahl-button">-</button>
+            </div>
+            <div class="delete-from-shoppingcart">
+              <button class="delete-item-button"><i class="pi pi-trash" style="font-size: 2rem"></i></button>
             </div>
           </div>
         </div>
@@ -89,11 +86,6 @@
   </div>
 
 
-
-  <!--Icon source
-  <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
-  <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
-  -->
-  </h:body>
+</h:body>
 </html>
 
