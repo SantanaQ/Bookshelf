@@ -79,8 +79,9 @@ public class DatabaseStatements {
 				String from = " FROM Buch, Buchkategorien, Kategorie";
 				String where = " WHERE Buch.ISBN = Buchkategorien.ISBN"
 						+ " AND Buchkategorien.KategorieNr = Kategorie.KategorieNr"
-						+ " AND Kategorie.Kategoriename = '" + kategorie + "'";
+						+ " AND Kategorie.Kategoriename = ?";
 				stmt = con.prepareStatement(select + from + where);
+				stmt.setString(1, kategorie);
 			}
 			rs = stmt.executeQuery();
 			while(rs.next()) {
@@ -140,7 +141,7 @@ public class DatabaseStatements {
 		List<String> kategorien = new ArrayList<>();
 		try {
 			con = DatabaseConnection.initializeDatabase();
-			PreparedStatement stmt = con.prepareStatement("SELECT * FROM Kategorie");
+			PreparedStatement stmt = con.prepareStatement("SELECT * FROM Kategorie ORDER BY Kategoriename");
 			ResultSet rs = stmt.executeQuery();
 			while(rs.next()) {
 				kategorien.add(rs.getString("Kategoriename"));
@@ -151,7 +152,6 @@ public class DatabaseStatements {
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
-		Collections.sort(kategorien);
 		return kategorien;
 	}
 	
