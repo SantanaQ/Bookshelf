@@ -15,17 +15,15 @@ public class ShoppingcartHandler implements java.io.Serializable{
 
 	private static final long serialVersionUID = 1L;
 	
-	private double total;
-	private int numberItems;
+	private double total = 0;
+	private int numberItems = 0;
 	private List<Buch> books = new ArrayList<>();
-	
 	
 	
 	
 	public List<Buch> getBooks() {
 		return books;
 	}
-	
 	
 	public double getTotal() {
 		return total;
@@ -39,24 +37,24 @@ public class ShoppingcartHandler implements java.io.Serializable{
 		DatabaseStatements dbstatements = new DatabaseStatements();
 		Buch buch = dbstatements.getBook(isbn);
 		buch.setAnzahl(1);
+		numberItems += 1;
+		total += buch.getPreis().doubleValue();
 		books.add(buch);
 	}
 	
-	public void delete(String isbn) {
+	public void delete(Buch buch) {
 		double price = 0;
 		double amount = 0;
-		Buch deleted = null;
 		for (Buch b : books) {
-			if(b.getIsbn().equals(isbn)) {
+			if(b.equals(buch)) {
 				price = b.getAnzahl() * b.getPreis().doubleValue();
 				amount = b.getAnzahl();
-				deleted = b;
 				break;
 			}
 		}
 		total -= price;
 		numberItems -= amount;
-		books.remove(deleted);
+		books.remove(buch);
 	}
 	
 	public void addAmount() {

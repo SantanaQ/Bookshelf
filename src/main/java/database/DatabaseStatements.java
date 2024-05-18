@@ -72,7 +72,7 @@ public class DatabaseStatements {
 			ResultSet rs;
 			if(kategorie.equals("") || kategorie == null || kategorie.equals("Kategorien")) { //Kategorien => submit value if all books selected
 				String select = "SELECT *";
-				String from = " FROM Buch";
+				String from = " FROM Buch ORDER BY Titel";
 				stmt = con.prepareStatement(select + from);
 			}else {
 				String select = "SELECT Buch.ISBN, Buch.Titel, Buch.Autor, Buch.Beschreibung, Buch.Preis, Buch.Titelbild";
