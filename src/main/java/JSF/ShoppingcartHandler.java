@@ -1,24 +1,34 @@
 package JSF;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
 
 import database.DatabaseStatements;
 import objects.Buch;
 
-@Named("shoppingcartHandler")
+@Named("cartHandler")
 @SessionScoped
-public class ShoppingcartHandler implements java.io.Serializable{
+public class ShoppingcartHandler implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 	
 	private double total = 0;
 	private int numberItems = 0;
-	private List<Buch> books = new ArrayList<>();
+	private List<Buch> books;
 	
+	public List<Buch> fill(){
+		DatabaseStatements dbstatements = new DatabaseStatements();
+		books = dbstatements.getBooks("Krimi");
+		for(Buch b : books) {
+			b.setAnzahl(1);
+		}
+		return books;
+	}
 	
 	
 	public List<Buch> getBooks() {
@@ -32,7 +42,7 @@ public class ShoppingcartHandler implements java.io.Serializable{
 	public int getNumberItems() {
 		return numberItems;
 	}
-	
+	/*
 	public void addNew(String isbn) {
 		DatabaseStatements dbstatements = new DatabaseStatements();
 		Buch buch = dbstatements.getBook(isbn);
@@ -56,7 +66,7 @@ public class ShoppingcartHandler implements java.io.Serializable{
 		numberItems -= amount;
 		books.remove(buch);
 	}
-	
+	*/
 	public void addAmount() {
 		
 	}

@@ -1,11 +1,14 @@
 package objects;
 
 import java.io.InputStream;
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.List;
 
 
-public class Buch {
+public class Buch implements Serializable{
+	
+	private static final long serialVersionUID = 1L;
 	
 	private String isbn;
 	private String titel;

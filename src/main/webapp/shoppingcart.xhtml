@@ -47,21 +47,21 @@
     <div class="warenkorb-ueberschrift-box">
       <h1>Ihr Warenkorb</h1>
     </div>
-    <div class="warenkorb-items-box">
+      <div class="warenkorb-items-box">
       <div class="ausgewaehlte-items">
-				<h:outputText value="Ihr Warenkorb ist aktuell leer."
-					rendered="#{empty shoppingcartHandler.books}" />
+ 				<h:outputText value="Ihr Warenkorb ist aktuell leer."
+					rendered="#{empty cartHandler.books}" />
 
-				<ui:repeat var="book" value="shoppingcartHandler.books">
+				<ui:repeat value="cartHandler.books" var="buch">
 					<div class="ware-box">
 						<div class="cover-box">
 							<div class="shadow-box">
-								<h:graphicImage id="myimageid" value="${book.b64Cover}" />
+								<h:graphicImage value="${buch.b64Cover}" />
 							</div>
 						</div>
 						<div class="infos">
-							<h2>#{book.titel}</h2>
-							<h3>von #{book.autor}</h3>
+							<h2>#{buch.titel}</h2>
+							<h3>von #{buch.autor}</h3>
 							<p>Sofort lieferbar</p>
 						</div>
 						<div class="preis-box">
@@ -69,7 +69,7 @@
 							<div class="anzahl-box">
 								<p class="anzahl-title">Anzahl</p>
 								<button class="anzahl-button">+</button>
-								<p class="anzahl-title">#{book.anzahl}</p>
+								<p class="anzahl-title">#{buch.anzahl}</p>
 								<button class="anzahl-button">-</button>
 							</div>
 							<div class="delete-from-shoppingcart">
@@ -80,11 +80,11 @@
 						</div>
 					</div>
 				</ui:repeat>
-			</div>
+	  </div>
       
       
       <div class="gesamt">
-        <h2> #{shoppingcartHandler.numberItems} Artikel | #{shoppingcartHandler.total} €</h2>
+        <h2> #{cartHandler.numberItems} Artikel | #{cartHandler.total} €</h2>
         <a href="checkout-shipping.html">
           <button class="kasse-button">Zur Kasse</button>
         </a>
