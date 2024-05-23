@@ -44,52 +44,76 @@
 
 
   <div class="main-content">
-    <div class="warenkorb-ueberschrift-box">
-      <h1>Ihr Warenkorb</h1>
-    </div>
-      <div class="warenkorb-items-box">
-      <div class="ausgewaehlte-items">
- 				<h:outputText value="Ihr Warenkorb ist aktuell leer."
-					rendered="#{empty cartHandler.books}" />
-
-				<ui:repeat value="cartHandler.books" var="buch">
-					<div class="ware-box">
-						<div class="cover-box">
-							<div class="shadow-box">
-								<h:graphicImage value="${buch.b64Cover}" />
+   	<h:form id="form">
+	    <div class="warenkorb-ueberschrift-box">
+	      <h1>Ihr Warenkorb</h1>
+	    </div>
+	    <div class="warenkorb-items-box">
+	    	<div class="ausgewaehlte-items">
+	 				<h:outputText value="Ihr Warenkorb ist aktuell leer..."
+						rendered="#{empty cartHandler.books}" />
+						
+	
+					<ui:repeat id="form" value="#{cartHandler.books}" var="item">
+						<div class="ware-box">
+							<div class="cover-box">
+								<div class="shadow-box">
+									<h:graphicImage value="data:image/jpg;base64,#{item.buch.b64Cover}" />
+								</div>
+							</div>
+							<div class="infos">
+								<h2>#{item.buch.titel}</h2>
+								<h3>von #{item.buch.autor}</h3>
+								<p>Sofort lieferbar</p>
+							</div>
+							<div class="preis-box">
+								<h2>#{item.buch.preis} €</h2>
+								<div class="anzahl-box">
+									<p class="anzahl-title">Anzahl</p>
+									<p:commandLink type="button"
+										action="#{cartHandler.addAmount(item)}"
+										class="anzahl-button"
+										update="form">
+										<f:ajax execute="@form" render="@form"></f:ajax>
+										<center>
+											<i class="pi pi-plus"></i>
+										</center>
+									</p:commandLink>
+									<p class="anzahl-title">#{item.anzahl}</p>
+									<p:commandLink type="button"
+										action="#{cartHandler.reduceAmount(item)}" 
+										class="anzahl-button"
+										update="form">
+										<f:ajax execute="@form" render="@form"></f:ajax>
+										<center>
+											<i class="pi pi-minus"></i>
+										</center>
+									</p:commandLink>
+								</div>
+								<div class="delete-from-shoppingcart">
+									<p:commandLink type="button"
+										action="#{cartHandler.delete(item)}"
+										class="delete-item-button" update="form">
+										<f:ajax execute="@form" render="@form"></f:ajax>
+										<center>
+											<i class="pi pi-trash" style="font-size: 2rem"></i>
+										</center>
+									</p:commandLink>
+								</div>
 							</div>
 						</div>
-						<div class="infos">
-							<h2>#{buch.titel}</h2>
-							<h3>von #{buch.autor}</h3>
-							<p>Sofort lieferbar</p>
-						</div>
-						<div class="preis-box">
-							<h2>€</h2>
-							<div class="anzahl-box">
-								<p class="anzahl-title">Anzahl</p>
-								<button class="anzahl-button">+</button>
-								<p class="anzahl-title">#{buch.anzahl}</p>
-								<button class="anzahl-button">-</button>
-							</div>
-							<div class="delete-from-shoppingcart">
-								<button class="delete-item-button">
-									<i class="pi pi-trash" style="font-size: 2rem"></i>
-								</button>
-							</div>
-						</div>
-					</div>
-				</ui:repeat>
-	  </div>
-      
-      
-      <div class="gesamt">
-        <h2> #{cartHandler.numberItems} Artikel | #{cartHandler.total} €</h2>
-        <a href="checkout-shipping.html">
-          <button class="kasse-button">Zur Kasse</button>
-        </a>
-      </div>
-    </div>
+					</ui:repeat>
+		  	</div>
+	      
+	      
+	      <div class="gesamt">
+	        <h2> #{cartHandler.numberItems} Artikel | #{cartHandler.total} €</h2>
+	        <a href="checkout-shipping.html">
+	          <button class="kasse-button">Zur Kasse</button>
+	        </a>
+	      </div>
+	    </div>
+    </h:form> 
   </div>
 
 

@@ -8,6 +8,8 @@ import java.util.List;
 import org.jose4j.base64url.Base64;
 import org.primefaces.shaded.commons.io.IOUtils;
 
+import JSF.Item;
+
 public class DataHelper {
 	
 	public List<String> stringValuesToList(String s){
@@ -34,6 +36,15 @@ public class DataHelper {
 			e.printStackTrace();
 		}
 		return base64;
+	}
+	
+	public int findVal(List<Item> list, Item target) {
+		for(int i = 0; i < list.size(); i++) {
+			if(list.get(i).equals(target)) {
+				return i;
+			}
+		}
+		return -1;
 	}
 
 }

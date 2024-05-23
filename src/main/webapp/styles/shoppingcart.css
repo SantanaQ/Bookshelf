@@ -61,6 +61,14 @@ p{
   color: rgb(85, 85, 85);
 }
 
+.pi-plus{
+	color: rgb(85, 85, 85);
+}
+
+.pi-minus{
+	color: rgb(85, 85, 85);
+}
+
 .preis-box{
   width: 20%;
   text-align: end;
