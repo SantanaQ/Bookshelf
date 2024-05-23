@@ -1,8 +1,6 @@
 package JSF;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,7 +33,6 @@ public class ShoppingcartHandler implements Serializable{
 			total += b.getPreis().doubleValue();
 			Item i = new Item(b, 1);
 			book = i;
-			System.out.println(book.getBuch().getTitel());
 			books.add(i);
 		}
 	}
@@ -57,7 +54,7 @@ public class ShoppingcartHandler implements Serializable{
 		Buch buch = dbstatements.getBook(isbn);
 		Item item = new Item(buch , 1);
 		numberItems += 1;
-		addTotal(buch.getPreis().doubleValue());
+		total += buch.getPreis().doubleValue();
 		books.add(item);
 	}
 	
@@ -73,14 +70,14 @@ public class ShoppingcartHandler implements Serializable{
 				break;
 			}
 		}
-		subTotal(price);
+		total -= price;
 		numberItems -= amount;
 		books.remove(remove);
 	}
 
 	public void addAmount(Item item) {
 		numberItems++;
-		addTotal(item.getBuch().getPreis().doubleValue());
+		total += item.getBuch().getPreis().doubleValue();
 		DataHelper hlp = new DataHelper();
 		books.get(hlp.findVal(books, item)).setAnzahl(item.getAnzahl() + 1);
 		
@@ -91,26 +88,9 @@ public class ShoppingcartHandler implements Serializable{
 			return;
 		}
 		numberItems--;
-		subTotal(item.getBuch().getPreis().doubleValue());
+		total -= item.getBuch().getPreis().doubleValue();
 		DataHelper hlp = new DataHelper();
 		books.get(hlp.findVal(books, item)).setAnzahl(item.getAnzahl() - 1);
-	}
-	
-	private double round(double value, int places) {
-	    if (places < 0) throw new IllegalArgumentException();
-	    BigDecimal bd = BigDecimal.valueOf(value);
-	    bd = bd.setScale(places, RoundingMode.HALF_UP);
-	    return bd.doubleValue();
-	}
-	
-	private void addTotal(double price) {
-		total += price;
-		total = round(total, 2);
-	}
-	
-	private void subTotal(double price) {
-		total -= price;
-		total = round(total, 2);	
 	}
 
 }

@@ -67,9 +67,12 @@
 								<p>Sofort lieferbar</p>
 							</div>
 							<div class="preis-box">
-								<h:outputText value="#{item.buch.preis}">
-									<f:convertNumber type="currency" currencySymbol="€" locale="de-DE"/>
-								</h:outputText>
+								<h2>
+									<h:outputText value="#{item.buch.preis}">
+										<f:convertNumber type="currency" currencySymbol="€"
+											locale="de-DE" />
+									</h:outputText>
+								</h2>
 								<div class="anzahl-box">
 									<p class="anzahl-title">Anzahl</p>
 									<p:commandLink type="button"
