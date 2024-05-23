@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
 
@@ -21,20 +20,20 @@ public class ShoppingcartHandler implements Serializable{
 	private double total = 0;
 	private int numberItems = 0;
 	private List<Item> books = new ArrayList<>();
-	private Item book = new Item();
+	private Item book;
+	private String newISBN;
 	
-	@PostConstruct
-	public void init(){
-		DatabaseStatements dbstatements = new DatabaseStatements();
-		books = new ArrayList<>();
-		List<Buch> buecher = dbstatements.getBooks("Roman");
-		for(Buch b : buecher) {
-			numberItems++;
-			total += b.getPreis().doubleValue();
-			Item i = new Item(b, 1);
-			book = i;
-			books.add(i);
+	public void init() {
+		for(Item b : books) {
+			if(b.getBuch().getIsbn().equals(newISBN)) {
+				return;
+			}
 		}
+		if(newISBN != null) {
+			addNew();
+			setNewISBN(null);	
+		}
+		
 	}
 	
 	public List<Item> getBooks() {
@@ -48,17 +47,14 @@ public class ShoppingcartHandler implements Serializable{
 	public int getNumberItems() {
 		return numberItems;
 	}
-
-	public void addNew(String isbn) {
-		DatabaseStatements dbstatements = new DatabaseStatements();
-		Buch buch = dbstatements.getBook(isbn);
-		Item item = new Item(buch , 1);
+	
+	public void addNew() {
 		numberItems += 1;
-		total += buch.getPreis().doubleValue();
-		books.add(item);
+		total += book.getBuch().getPreis().doubleValue();
+		books.add(book);
 	}
 	
-	public void delete(Item item) {
+	public String delete(Item item) {
 		double price = 0;
 		double amount = 0;
 		Item remove = null;
@@ -73,6 +69,7 @@ public class ShoppingcartHandler implements Serializable{
 		total -= price;
 		numberItems -= amount;
 		books.remove(remove);
+		return "/shoppingcart.xhtml?isbn=null";
 	}
 
 	public void addAmount(Item item) {
@@ -91,6 +88,18 @@ public class ShoppingcartHandler implements Serializable{
 		total -= item.getBuch().getPreis().doubleValue();
 		DataHelper hlp = new DataHelper();
 		books.get(hlp.findVal(books, item)).setAnzahl(item.getAnzahl() - 1);
+	}
+
+	public String getNewISBN() {
+		return newISBN;
+	}
+
+	public void setNewISBN(String newISBN) {
+		this.newISBN = newISBN;
+		DatabaseStatements dbstatements = new DatabaseStatements();
+		Buch b = dbstatements.getBook(newISBN);
+		book = new Item(b, 1);
+		init();
 	}
 
 }

@@ -3,9 +3,9 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="./styles/bookdetails.css">
     <link rel="stylesheet" href="./styles/header.css">
     <link rel="stylesheet" href="./styles/general.css">
-    <link rel="stylesheet" href="./styles/bookdetails.css">
 
     <link rel="icon" type="image/x-icon" href="https://github.com/SantanaQ/Internet-Technologien/blob/main/images/icon.png?raw=true">
 
@@ -46,7 +46,7 @@
     </div>
     <div class="text-box">
       <div class="title">
-        <h1 th:text="${titel}"></h1>
+        <h2 th:text="${titel}"></h2>
       </div>
       <div class="autor">
         <h3 th:text="${autor}"></h3>
@@ -63,7 +63,8 @@
         <p class="mwst">inkl. gesetzl. MwSt.</p>
       </div>
       <div class="warenkorb-box">
-        <button class="warenkorb-hinzufuegen-button">In den Warenkorb</button>
+      		<button class="warenkorb-hinzufuegen-button"><a class="warenkorb-link" th:href="@{/shoppingcart.xhtml(isbn=${isbn})}"> In den Warenkorb</a></button>
+
       </div>
       <div class="isbn-box">
         <p class="isbn" >ISBN <span th:text="${isbn}"></span></p>
