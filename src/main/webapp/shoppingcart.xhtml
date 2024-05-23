@@ -43,7 +43,7 @@
   <!--Ende Header-->
 
 
-  <div class="main-content">
+  <div class="main-content">  	
    	<h:form id="form">
 	    <div class="warenkorb-ueberschrift-box">
 	      <h1>Ihr Warenkorb</h1>
@@ -67,7 +67,9 @@
 								<p>Sofort lieferbar</p>
 							</div>
 							<div class="preis-box">
-								<h2>#{item.buch.preis} €</h2>
+								<h:outputText value="#{item.buch.preis}">
+									<f:convertNumber type="currency" currencySymbol="€" locale="de-DE"/>
+								</h:outputText>
 								<div class="anzahl-box">
 									<p class="anzahl-title">Anzahl</p>
 									<p:commandLink type="button"
@@ -107,7 +109,12 @@
 	      
 	      
 	      <div class="gesamt">
-	        <h2> #{cartHandler.numberItems} Artikel | #{cartHandler.total} €</h2>
+	        <h2> #{cartHandler.numberItems} Artikel | 				
+	        					<h:outputText value="#{cartHandler.total}">
+									<f:convertNumber type="currency" currencySymbol="€" locale="de-DE"/>
+								</h:outputText>
+	        </h2>
+	        
 	        <a href="checkout-shipping.html">
 	          <button class="kasse-button">Zur Kasse</button>
 	        </a>
