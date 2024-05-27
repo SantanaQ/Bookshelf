@@ -9,6 +9,7 @@ public class Item implements Serializable{
 	private static final long serialVersionUID = 1L;
 	private Buch buch;
 	private int anzahl;
+	private double buchSumme = 0;
 	
 	public Item() {
 	}
@@ -33,5 +34,14 @@ public class Item implements Serializable{
 	public void setAnzahl(int anzahl) {
 		this.anzahl = anzahl;
 	}
+
+	public double getBuchSumme() {
+		return buchSumme;
+	}
+
+	public void setBuchSumme(double buchSumme) {
+		this.buchSumme = buchSumme;
+	}
+
 
 }

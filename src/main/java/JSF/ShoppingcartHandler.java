@@ -1,6 +1,7 @@
 package JSF;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,21 +23,25 @@ public class ShoppingcartHandler implements Serializable{
 	private List<Item> books = new ArrayList<>();
 	private Item book;
 	private String newISBN;
-	
+
 	public void init() {
+		// wenn Buch bereits vorhanden, keine Initialisierung
 		for(Item b : books) {
 			if(b.getBuch().getIsbn().equals(newISBN)) {
 				return;
 			}
 		}
+		// Nur wenn URL Parameter vorhanden, füge Buch neu hinzu
 		if(newISBN != null) {
 			addNew();
 			setNewISBN(null);	
 		}
-		
 	}
 	
 	public List<Item> getBooks() {
+		if(total < 0.1) {
+			total = 0;
+		}
 		return books;
 	}
 	
@@ -51,16 +56,15 @@ public class ShoppingcartHandler implements Serializable{
 	public void addNew() {
 		numberItems += 1;
 		total += book.getBuch().getPreis().doubleValue();
+		book.setBuchSumme(book.getBuch().getPreis().doubleValue());
 		books.add(book);
 	}
 	
 	public String delete(Item item) {
 		double price = 0;
 		double amount = 0;
-		Item remove = null;
 		for (Item i : books) {
 			if(i.equals(item)) {
-				remove = i;
 				price = i.getAnzahl() * i.getBuch().getPreis().doubleValue();
 				amount = i.getAnzahl();
 				break;
@@ -68,16 +72,15 @@ public class ShoppingcartHandler implements Serializable{
 		}
 		total -= price;
 		numberItems -= amount;
-		books.remove(remove);
+		books.remove(item);
 		return "/shoppingcart.xhtml?isbn=null";
 	}
 
 	public void addAmount(Item item) {
 		numberItems++;
 		total += item.getBuch().getPreis().doubleValue();
-		DataHelper hlp = new DataHelper();
-		books.get(hlp.findVal(books, item)).setAnzahl(item.getAnzahl() + 1);
-		
+		item.setAnzahl(item.getAnzahl()+1);
+		item.setBuchSumme(item.getBuchSumme() + item.getBuch().getPreis().doubleValue());
 	}
 	
 	public void reduceAmount(Item item) {
@@ -86,8 +89,8 @@ public class ShoppingcartHandler implements Serializable{
 		}
 		numberItems--;
 		total -= item.getBuch().getPreis().doubleValue();
-		DataHelper hlp = new DataHelper();
-		books.get(hlp.findVal(books, item)).setAnzahl(item.getAnzahl() - 1);
+		item.setAnzahl(item.getAnzahl()-1);
+		item.setBuchSumme(item.getBuchSumme() - item.getBuch().getPreis().doubleValue());
 	}
 
 	public String getNewISBN() {

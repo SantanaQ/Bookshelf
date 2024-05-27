@@ -71,28 +71,29 @@
 							</div>
 							<div class="preis-box">
 								<h2>
-									<h:outputText value="#{item.buch.preis}">
-										<f:convertNumber type="currency" currencySymbol="€"
-											locale="de-DE" />
+									<h:outputText value="#{item.buchSumme}" process="@form">
+										<f:convertNumber type="currency" currencySymbol="€"/>	
 									</h:outputText>
 								</h2>
 								<div class="anzahl-box">
 									<p class="anzahl-title">Anzahl</p>
 									<p:commandLink type="button"
+										process="@form"
 										action="#{cartHandler.addAmount(item)}"
 										class="anzahl-button"
 										update="form">
-										<f:ajax execute="@form" render="@form"></f:ajax>
+										<f:ajax render="@form"></f:ajax>
 										<center>
 											<i class="pi pi-plus"></i>
 										</center>
 									</p:commandLink>
 									<p class="anzahl-title">#{item.anzahl}</p>
 									<p:commandLink type="button"
+										process="@form"
 										action="#{cartHandler.reduceAmount(item)}" 
 										class="anzahl-button"
 										update="form">
-										<f:ajax execute="@form" render="@form"></f:ajax>
+										<f:ajax render="@form"></f:ajax>
 										<center>
 											<i class="pi pi-minus"></i>
 										</center>
@@ -100,9 +101,10 @@
 								</div>
 								<div class="delete-from-shoppingcart">
 									<p:commandLink type="button"
+										process="@form"
 										action="#{cartHandler.delete(item)}"
-										class="delete-item-button" update="form">
-										<f:ajax execute="@form" render="@form"></f:ajax>
+										class="delete-item-button" >
+										<f:ajax execute="cartHandler.delete(item)" render="@form"></f:ajax>
 										<center>
 											<i class="pi pi-trash" style="font-size: 2rem"></i>
 										</center>

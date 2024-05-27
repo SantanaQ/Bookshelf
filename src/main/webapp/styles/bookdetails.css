@@ -2,6 +2,14 @@ a{
 	color: white;
 }
 
+a:hover{
+	color: black;
+}
+
+.warenkorb-link:hover{
+	color: black;
+}
+
 .main-content{
     margin: auto;
     width: 50%;
