@@ -84,9 +84,11 @@
 							<p><span th:text="${buch.preis}"></span> €</p>
 						</div>
 						<div class="shoppingcart">
+						<a class="warenkorb-link" style="color:white" th:href="@{/shoppingcart.xhtml(isbn=${buch.isbn})}">
 							<button class="mini-warenkorb-button">
 								<ion-icon name="cart-outline" class="mini-warenkorb"></ion-icon>
 							</button>
+						</a>
 						</div>
 					</div>
 				</div>
