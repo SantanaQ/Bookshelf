@@ -1,15 +1,18 @@
 package JSF;
 
+import java.io.IOException;
 import java.io.Serializable;
-import java.sql.Date;
+import java.util.Date;
+import java.text.ParseException;
 
-import javax.inject.Named;
+import javax.inject.Named;//
 
 import database.DatabaseStatements;
 import objects.Kunde;
 
 import javax.enterprise.context.RequestScoped;
-import javax.enterprise.context.SessionScoped;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 
 @Named("regHandler")
 @RequestScoped
@@ -25,12 +28,14 @@ public class RegristrationHandler implements Serializable{
 	private String ort;
 	private String email;
 	private String passwort;
+	private String confirmPasswort;
 	
 	
-	public void register() {
+	public void register() throws IOException {
 		Kunde neuerKunde = new Kunde(vorname, nachname, geburtsdatum, adresse, plz, ort, email, passwort);
 		DatabaseStatements stmts = new DatabaseStatements();
 		stmts.addKunde(neuerKunde);
+		FacesContext.getCurrentInstance().getExternalContext().redirect("ProductGroups");
 	}
 
 	public String getVorname() {
@@ -58,7 +63,7 @@ public class RegristrationHandler implements Serializable{
 	}
 
 
-	public void setGeburtsdatum(Date geburtsdatum) {
+	public void setGeburtsdatum(Date geburtsdatum) throws ParseException {//
 		this.geburtsdatum = geburtsdatum;
 	}
 
@@ -102,7 +107,6 @@ public class RegristrationHandler implements Serializable{
 		this.email = email;
 	}
 
-
 	public String getPasswort() {
 		return passwort;
 	}
@@ -112,7 +116,22 @@ public class RegristrationHandler implements Serializable{
 		this.passwort = passwort;
 	}
 
+	public String getConfirmPasswort() {
+		return confirmPasswort;
+	}
 
+	public void setConfirmPasswort(String confirmPasswort) {
+		this.confirmPasswort = confirmPasswort;
+	}
+
+	public String errMsg(String id) {
+		switch (id) {
+			case "pw1":
+				
+		}
+		FacesContext.getCurrentInstance().addMessage("pw1", new FacesMessage("Passwort muss mindestens 8 Zeichen enthalten."));
+		return "";
+	}
 
 
 	

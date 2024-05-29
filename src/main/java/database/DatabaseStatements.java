@@ -3,6 +3,7 @@ package database;
 import java.io.InputStream;
 import java.math.BigDecimal;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -215,14 +216,15 @@ public class DatabaseStatements {
 	}
 	
 	public void addKunde(Kunde kunde) {
+		Date kundenGeburtstag = new Date(kunde.getGeburtsdatum().getTime() );
 		try {
 			con = DatabaseConnection.initializeDatabase();
 			PreparedStatement stmt = con.prepareStatement("INSERT INTO Kunde "
-					+ "(Vorname, Nachname, Geburtsdatum, Adresse, PLZ, Ort, eMail, Passwort  "
-					+ "VALUES(?,?,?,?,?,?,?,?");
+					+ "(Vorname, Nachname, Geburtsdatum, Adresse, PLZ, Ort, eMail, Passwort)  "
+					+ "VALUES(?,?,?,?,?,?,?,?)");
 			stmt.setString(1, kunde.getVorname());
 			stmt.setString(2, kunde.getNachname());
-			stmt.setDate(3, kunde.getGeburtsdatum());
+			stmt.setDate(3, kundenGeburtstag);
 			stmt.setString(4, kunde.getAdresse());
 			stmt.setString(5, kunde.getPlz());
 			stmt.setString(6, kunde.getOrt());

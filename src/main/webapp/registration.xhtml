@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="./styles/header.css"/>
     <link rel="stylesheet" href="./styles/general.css"/>
     <link rel="stylesheet" href="./styles/registration.css"/>
+    <h:outputStylesheet name="primeicons/primeicons.css" library="primefaces" />
 
     <link rel="icon" type="image/x-icon" href="https://github.com/SantanaQ/Internet-Technologien/blob/main/images/icon.png?raw=true"/>
     <title>Bookshelf - Registrierung</title>
@@ -42,63 +43,103 @@
 
   <!-- Start Registration-->
   <section class="center">
-    <h1>Registration</h1>
-    <h:form method="post">
+    <h1>Registrierung</h1>
+    <h:form id="form">
       <div class="txt_field">
         <div class="control">
-          <input type="text" required placeholder="Vorname">
+         	 <h:inputText id="vorname" value="#{regHandler.vorname}" required="true" maxlength="50"
+         	 requiredMessage="Bitte geben Sie ihren Vornamen an."
+         	 validatorMessage="Der Name darf keine Zahlen enthalten und muss mit einem Großbuchstaben beginnen.">
+         	 <f:validateRegex pattern="^[A-Z][a-zA-Z]*$"/>
+         	 </h:inputText>
+         	 <h:message for="vorname"/>
+         	 <p:watermark value="Vorname" for="vorname"></p:watermark>
         </div>
       </div>
 
       <div class="txt_field">
         <div class="control">
-          <input type="text" required placeholder="Nachname">
+        	<h:inputText id="nachname" value="#{regHandler.nachname}" required="true" maxlength="50"
+        	requiredMessage="Bitte geben Sie ihren Nachnamen an."
+        	validatorMessage="Der Name darf keine Zahlen enthalten und muss mit einem Großbuchstaben beginnen.">
+        	<f:validateRegex pattern="^[A-Z][a-zA-Z]*$"/>
+        	</h:inputText>
+        	<h:message for="nachname"/>
+        	<p:watermark value="Nachname" for="nachname"></p:watermark>
         </div>
       </div>
 
       <div class="txt_field">
         <div class="control">
-          <input type="date" required placeholder="Geburtsdatum">
+          <h:inputText id="geburtsdatum" value="#{regHandler.geburtsdatum}" required="true"
+          requiredMessage="Bitte geben Sie ihr Geburtsdatum an."
+          validatorMessage="Das Geburtsdatum muss folgendes Muster haben: DD-MM-YYYY z.B. 31-12-1999 und ein valides Datum sein."
+          label="Geburtsdatum">
+          	<f:validateRegex pattern="^(0[1-9]|[12][0-9]|3[01])-(0[1-9]|1[1,2])-(19|20)\d{2}$"/>
+          	<f:convertDateTime pattern="dd-MM-yyyy"/>
+          	<h:message for="geburtsdatum"/>
+        	<p:watermark value="Geburtsdatum" for="geburtsdatum"></p:watermark>
+          </h:inputText>
         </div>
       </div>
 
       <div class="txt_field">
         <div class="control">
-          <input type="text" required placeholder="Adresse">
+        	<h:inputText id="adresse" value="#{regHandler.adresse}" required="true">
+        	</h:inputText>
+			<h:message for="adresse"/>
+        	<p:watermark value="Adresse (Straße Hausnummer)" for="adresse"></p:watermark>
         </div>
       </div>
 
       <div class="txt_field">
         <div class="control">
-          <input type="text" required placeholder="PLZ">
+        	<h:inputText id="plz" value="#{regHandler.plz}" required="true" maxlength="5"></h:inputText>
+        	<p:watermark value="PLZ" for="plz"></p:watermark>
         </div>
       </div>
 
       <div class="txt_field">
         <div class="control">
-          <input type="text" required placeholder="Ort">
+        	<h:inputText id="ort" value="#{regHandler.ort}" required="true"></h:inputText>
+        	<p:watermark value="Ort" for="ort"></p:watermark>
         </div>
       </div>
 
       <div class="txt_field">
         <div class="control">
-          <input type="email" required placeholder="E-Mail eingeben">
+        	<h:inputText id="email" value="#{regHandler.email}" required="true"></h:inputText>
+        	<p:watermark value="E-Mail" for="email"></p:watermark>        	
         </div>
       </div>
 
       <div class="txt_field">
         <div class="control">
-          <input type="password" required placeholder="Password eingeben">
+        	<h:inputSecret id="pw1" value="#{regHandler.passwort}" required="true" maxlength="15" 
+        	binding="#{passwordComponent}"
+        	requiredMessage="Bitte geben Sie ein Passwort an."
+        	validatorMessage="Das Passwort muss zwischen 8 und 15 Zeichen enthalten.">
+				<f:validateLength  minimum="8"  maximum="15"/>
+        	</h:inputSecret>
+        	<h:message for="pw1"/>
+        	<p:watermark value="Passwort" for="pw1"></p:watermark>
         </div>
       </div>
 
       <div class="txt_field">
         <div class="control">
-          <input type="password" required placeholder="Password wiederholen">
+             <h:inputSecret id="pw2" value="#{regHandler.confirmPasswort}" required="true" maxlength="15"
+             requiredMessage="Bitte bestätigen Sie das angegebene Passwort."
+             validatorMessage="Die angegebenen Passwörter stimmen nicht überein.">
+             <f:validator validatorId="validateEqual" />
+    		 <f:attribute name="otherValue" value="#{passwordComponent.value}" /> 
+        	 </h:inputSecret>
+        	<h:message for="pw2"/>
+        	<p:watermark value="Passwort wiederholen" for="pw2"></p:watermark>
         </div>
       </div>
 
-      <input type="submit" value="Registrieren">
+     <h:commandButton value="Registrieren" action="#{regHandler.register}"></h:commandButton>
 
       <div class="user_signup">
         Bereits einen Account? <a href="login.html">Login</a>
@@ -108,8 +149,5 @@
   </section>
   <!--End Registration-->
 
-  <!--Icon source-->
-  <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
-  <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
   </h:body>
 </html>
