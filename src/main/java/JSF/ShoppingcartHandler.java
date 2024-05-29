@@ -1,7 +1,6 @@
 package JSF;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,7 +8,6 @@ import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
 
 import database.DatabaseStatements;
-import helpers.DataHelper;
 import objects.Buch;
 
 @Named("cartHandler")
@@ -27,7 +25,7 @@ public class ShoppingcartHandler implements Serializable{
 	public void init() {
 		// wenn Buch bereits vorhanden, keine Initialisierung
 		for(Item b : books) {
-			if(b.getBuch().getIsbn().equals(newISBN)) {
+			if(b.getBuch().getIsbn().equals(newISBN)) {	
 				return;
 			}
 		}

@@ -12,11 +12,12 @@ import java.util.List;
 
 import helpers.DataHelper;
 import objects.Buch;
+import objects.Kunde;
 
 
 public class DatabaseStatements {
 	
-	private static Connection con; //
+	private static Connection con;
 
 	public void addBook(Buch buch) {
 		PreparedStatement stmt = null;
@@ -211,6 +212,29 @@ public class DatabaseStatements {
 			e.printStackTrace();
 		}
 		return isbns;
+	}
+	
+	public void addKunde(Kunde kunde) {
+		try {
+			con = DatabaseConnection.initializeDatabase();
+			PreparedStatement stmt = con.prepareStatement("INSERT INTO Kunde "
+					+ "(Vorname, Nachname, Geburtsdatum, Adresse, PLZ, Ort, eMail, Passwort  "
+					+ "VALUES(?,?,?,?,?,?,?,?");
+			stmt.setString(1, kunde.getVorname());
+			stmt.setString(2, kunde.getNachname());
+			stmt.setDate(3, kunde.getGeburtsdatum());
+			stmt.setString(4, kunde.getAdresse());
+			stmt.setString(5, kunde.getPlz());
+			stmt.setString(6, kunde.getOrt());
+			stmt.setString(7, kunde.getEmail());
+			stmt.setString(8, kunde.getPasswort());
+			stmt.executeUpdate();
+			con.close();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 	
 }

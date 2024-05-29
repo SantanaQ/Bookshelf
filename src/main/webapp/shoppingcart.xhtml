@@ -33,7 +33,7 @@
         <a href="login.html">
           <button class="login">Login</button>
         </a>
-        <a href="registration.html">
+        <a href="registration.xhtml">
           <button class="signup">Sign Up</button>
         </a>
         <a href="shoppingcart.xhtml">
@@ -103,7 +103,8 @@
 									<p:commandLink type="button"
 										process="@form"
 										action="#{cartHandler.delete(item)}"
-										class="delete-item-button" >
+										class="delete-item-button"
+										update="form">
 										<f:ajax execute="cartHandler.delete(item)" render="@form"></f:ajax>
 										<center>
 											<i class="pi pi-trash" style="font-size: 2rem"></i>
