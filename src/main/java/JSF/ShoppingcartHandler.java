@@ -1,13 +1,16 @@
 package JSF;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.enterprise.context.SessionScoped;
+import javax.faces.context.FacesContext;
 import javax.inject.Named;
 
 import database.DatabaseStatements;
+import errorhandling.AddBookErrorHandling;
 import objects.Buch;
 
 @Named("cartHandler")
@@ -22,7 +25,7 @@ public class ShoppingcartHandler implements Serializable{
 	private Item book;
 	private String newISBN;
 
-	public void init() {
+	public void init() throws IOException {
 		// wenn Buch bereits vorhanden, keine Initialisierung
 		for(Item b : books) {
 			if(b.getBuch().getIsbn().equals(newISBN)) {	
@@ -58,7 +61,7 @@ public class ShoppingcartHandler implements Serializable{
 		books.add(book);
 	}
 	
-	public String delete(Item item) {
+	public void delete(Item item) throws IOException {
 		double price = 0;
 		double amount = 0;
 		for (Item i : books) {
@@ -71,7 +74,7 @@ public class ShoppingcartHandler implements Serializable{
 		total -= price;
 		numberItems -= amount;
 		books.remove(item);
-		return "/shoppingcart.xhtml?isbn=null";
+		FacesContext.getCurrentInstance().getExternalContext().redirect("shoppingcart.xhtml");
 	}
 
 	public void addAmount(Item item) {
@@ -95,10 +98,13 @@ public class ShoppingcartHandler implements Serializable{
 		return newISBN;
 	}
 
-	public void setNewISBN(String newISBN) {
+	public void setNewISBN(String newISBN) throws IOException {
 		this.newISBN = newISBN;
 		DatabaseStatements dbstatements = new DatabaseStatements();
 		Buch b = dbstatements.getBook(newISBN);
+		if(b == null) {
+			return;
+		}
 		book = new Item(b, 1);
 		init();
 	}

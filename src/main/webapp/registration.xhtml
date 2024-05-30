@@ -85,7 +85,10 @@
 
       <div class="txt_field">
         <div class="control">
-        	<h:inputText id="adresse" value="#{regHandler.adresse}" required="true">
+        	<h:inputText id="adresse" value="#{regHandler.adresse}" required="true"
+        	requiredMessage="Bitte geben Sie eine Adresse an."
+        	validatorMessage="Die Adresse muss aus einer Straße gefolgt von einer Hausnummer bestehen.">
+        	<f:validateRegex pattern="^[A-Z][a-zA-Z]*[ ][0-9]+[a-zA-Z]*$"/>
         	</h:inputText>
 			<h:message for="adresse"/>
         	<p:watermark value="Adresse (Straße Hausnummer)" for="adresse"></p:watermark>
@@ -94,21 +97,36 @@
 
       <div class="txt_field">
         <div class="control">
-        	<h:inputText id="plz" value="#{regHandler.plz}" required="true" maxlength="5"></h:inputText>
+        	<h:inputText id="plz" value="#{regHandler.plz}" required="true" maxlength="5"
+        	requiredMessage="Bitte geben Sie ihre Postleitzahl an."
+        	validatorMessage="Die PLZ muss aus 5 Zahlen bestehen.">
+        	<f:validateRegex pattern="^[0-9]{5}$"/>
+        	</h:inputText>
+        	<h:message for="plz"/>
         	<p:watermark value="PLZ" for="plz"></p:watermark>
         </div>
       </div>
 
       <div class="txt_field">
         <div class="control">
-        	<h:inputText id="ort" value="#{regHandler.ort}" required="true"></h:inputText>
+        	<h:inputText id="ort" value="#{regHandler.ort}" required="true"
+        	requiredMessage="Bitte geben Sie ihren Wohnort an."
+        	validatorMessage="Der Ort darf nur aus Buchstaben bestehen und muss mit einem Großbuchstaben beginnen.">
+        	<f:validateRegex pattern="^[A-Z][a-zA-Z -]*$"/>
+        	</h:inputText>
+        	<h:message for="ort"/>
         	<p:watermark value="Ort" for="ort"></p:watermark>
         </div>
       </div>
 
       <div class="txt_field">
         <div class="control">
-        	<h:inputText id="email" value="#{regHandler.email}" required="true"></h:inputText>
+        	<h:inputText id="email" value="#{regHandler.email}" required="true"
+        	requiredMessage="Bitte geben Sie eine E-Mail Adresse an."
+        	validatorMessage="Die E-Mail muss folgendes Format haben: z.B. example@service.com">
+        	<f:validateRegex pattern="^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$"/>
+        	</h:inputText>
+        	<h:message for="email"/>
         	<p:watermark value="E-Mail" for="email"></p:watermark>        	
         </div>
       </div>
