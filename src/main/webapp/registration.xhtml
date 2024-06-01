@@ -52,7 +52,7 @@
          	 validatorMessage="Der Name darf keine Zahlen enthalten und muss mit einem Großbuchstaben beginnen.">
          	 <f:validateRegex pattern="^[A-Z][a-zA-Z]*$"/>
          	 </h:inputText>
-         	 <h:message for="vorname"/>
+         	 <h:message class="error" for="vorname"/>
          	 <p:watermark value="Vorname" for="vorname"></p:watermark>
         </div>
       </div>
@@ -64,7 +64,7 @@
         	validatorMessage="Der Name darf keine Zahlen enthalten und muss mit einem Großbuchstaben beginnen.">
         	<f:validateRegex pattern="^[A-Z][a-zA-Z]*$"/>
         	</h:inputText>
-        	<h:message for="nachname"/>
+        	<h:message class="error" for="nachname"/>
         	<p:watermark value="Nachname" for="nachname"></p:watermark>
         </div>
       </div>
@@ -75,9 +75,9 @@
           requiredMessage="Bitte geben Sie ihr Geburtsdatum an."
           validatorMessage="Das Geburtsdatum muss folgendes Muster haben: DD-MM-YYYY z.B. 31-12-1999 und ein valides Datum sein."
           label="Geburtsdatum">
-          	<f:validateRegex pattern="^(0[1-9]|[12][0-9]|3[01])-(0[1-9]|1[1,2])-(19|20)\d{2}$"/>
+          	<f:validateRegex pattern="\d{2}-\d{2}-\d{4}$"/>
           	<f:convertDateTime pattern="dd-MM-yyyy"/>
-          	<h:message for="geburtsdatum"/>
+          	<h:message class="error" for="geburtsdatum"/>
         	<p:watermark value="Geburtsdatum" for="geburtsdatum"></p:watermark>
           </h:inputText>
         </div>
@@ -90,7 +90,7 @@
         	validatorMessage="Die Adresse muss aus einer Straße gefolgt von einer Hausnummer bestehen.">
         	<f:validateRegex pattern="^[A-Z][a-zA-Z]*[ ][0-9]+[a-zA-Z]*$"/>
         	</h:inputText>
-			<h:message for="adresse"/>
+			<h:message class="error" for="adresse"/>
         	<p:watermark value="Adresse (Straße Hausnummer)" for="adresse"></p:watermark>
         </div>
       </div>
@@ -102,7 +102,7 @@
         	validatorMessage="Die PLZ muss aus 5 Zahlen bestehen.">
         	<f:validateRegex pattern="^[0-9]{5}$"/>
         	</h:inputText>
-        	<h:message for="plz"/>
+        	<h:message class="error" for="plz"/>
         	<p:watermark value="PLZ" for="plz"></p:watermark>
         </div>
       </div>
@@ -114,7 +114,7 @@
         	validatorMessage="Der Ort darf nur aus Buchstaben bestehen und muss mit einem Großbuchstaben beginnen.">
         	<f:validateRegex pattern="^[A-Z][a-zA-Z -]*$"/>
         	</h:inputText>
-        	<h:message for="ort"/>
+        	<h:message class="error" for="ort"/>
         	<p:watermark value="Ort" for="ort"></p:watermark>
         </div>
       </div>
@@ -126,7 +126,7 @@
         	validatorMessage="Die E-Mail muss folgendes Format haben: z.B. example@service.com">
         	<f:validateRegex pattern="^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$"/>
         	</h:inputText>
-        	<h:message for="email"/>
+        	<h:message class="error" for="email"/>
         	<p:watermark value="E-Mail" for="email"></p:watermark>        	
         </div>
       </div>
@@ -139,7 +139,7 @@
         	validatorMessage="Das Passwort muss zwischen 8 und 15 Zeichen enthalten.">
 				<f:validateLength  minimum="8"  maximum="15"/>
         	</h:inputSecret>
-        	<h:message for="pw1"/>
+        	<h:message class="error" for="pw1"/>
         	<p:watermark value="Passwort" for="pw1"></p:watermark>
         </div>
       </div>
@@ -152,7 +152,7 @@
              <f:validator validatorId="validateEqual" />
     		 <f:attribute name="otherValue" value="#{passwordComponent.value}" /> 
         	 </h:inputSecret>
-        	<h:message for="pw2"/>
+        	<h:message class="error" for="pw2"/>
         	<p:watermark value="Passwort wiederholen" for="pw2"></p:watermark>
         </div>
       </div>

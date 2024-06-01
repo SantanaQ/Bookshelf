@@ -63,7 +63,7 @@ public class RegristrationHandler implements Serializable{
 	}
 
 
-	public void setGeburtsdatum(Date geburtsdatum) throws ParseException {//
+	public void setGeburtsdatum(Date geburtsdatum) throws ParseException {
 		this.geburtsdatum = geburtsdatum;
 	}
 
@@ -124,16 +124,5 @@ public class RegristrationHandler implements Serializable{
 		this.confirmPasswort = confirmPasswort;
 	}
 
-	public String errMsg(String id) {
-		switch (id) {
-			case "pw1":
-				
-		}
-		FacesContext.getCurrentInstance().addMessage("pw1", new FacesMessage("Passwort muss mindestens 8 Zeichen enthalten."));
-		return "";
-	}
-
-
-	
 	
 }

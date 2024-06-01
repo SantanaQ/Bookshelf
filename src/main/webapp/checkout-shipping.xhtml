@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <link rel="stylesheet" href="./styles/header.css"/>
+    <link rel="stylesheet" href="./styles/general.css"/>
+    <link rel="stylesheet" href="./styles/checkout.css"/>
+
+    <link rel="icon" type="image/x-icon"
+          href="https://github.com/SantanaQ/Internet-Technologien/blob/main/images/icon.png?raw=true"/>
+    <h:outputStylesheet name="primeicons/primeicons.css" library="primefaces" />
+    <title>Bookshelf - Kasse</title>
+</h:head>
+<h:body>
+  <!--Anfang Header-->
+  <div class="headerr">
+    <div class="leftt"></div>
+    <div class="items">
+      <div class="logo-box">
+        <a href="./ProductGroups" method="get">
+          <img class="logo" src="https://github.com/SantanaQ/Internet-Technologien/blob/main/images/logo.png?raw=true" alt="logo"/>
+        </a>
+      </div>
+      <div class="buttons">
+        <a href="login.html">
+          <button class="login">Login</button>
+        </a>
+        <a href="registration.xhtml">
+          <button class="signup">Sign Up</button>
+        </a>
+        <a href="shoppingcart.xhtml">
+          <button class="warenkorb-button"><i class="pi pi-shopping-cart" style="font-size: 2rem"></i></button>
+        </a>
+      </div>
+    </div>
+    <div class="rightt"></div>
+  </div>
+  <!--Ende Header-->
+
+<div class="main-block">
+
+    <div class="progress-box">
+        <div class="stepper-wrapper">
+            <div class="stepper-item active">
+                <div class="step-counter">1</div>
+                <div class="step-name">Adresse Kontakt</div>
+            </div>
+            <div class="stepper-item">
+                <div class="step-counter">2</div>
+                <div class="step-name">Zahlungsmethode</div>
+            </div>
+            <div class="stepper-item">
+                <div class="step-counter">3</div>
+                <div class="step-name">Bestellbestätigung</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="info">
+
+    <div class="links">
+        <div class="EingabeAdresse">
+            <h1>Lieferadresse</h1>
+            <h:form action="checkout-payment.html">
+            <table class="liefern">
+                <tr>
+                    <td colspan="2">
+                        <label for="anrede"> Anrede: </label>
+                        <select name="Anrede" id="anrede">
+                            <option value="Herr">Herr</option>
+                            <option value="Frau">Frau</option>
+                        </select>
+                    </td>
+                    <td rowspan="2">
+
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="1"><input class="input" type="text" required="true" placeholder="Vorname"/></td>
+                    <td colspan="1"><input class="input" type="text" required="true" placeholder="Nachname"/></td>
+                </tr>
+                <tr>
+                    <td><input class="input" type="text" required="true" placeholder="Adresse"/></td>
+                    <td><input class="input" type="text" required="true" placeholder="Hausnummer"/></td>
+                </tr>
+
+                <tr>
+                    <td colspan="2"><input class="input" type="text" required="true" placeholder="Land"/></td>
+                </tr>
+                <tr>
+                    <td><input class="input" type="text" required="true" placeholder="PLZ"/></td>
+                    <td><input class="input" type="text" required="true" placeholder="Ort"/></td>
+                </tr>
+
+            </table>
+            <br/>
+            <input type="submit" value="Weiter"/>
+            </h:form>
+        </div>
+    </div>
+
+<div class="Bestellübersicht">
+    <div class="zentral">
+        <h1>Bestellübersicht</h1>
+    </div>
+    <div class="row">
+        <div class="left">Artikel</div>
+        <div class="right">20€</div>
+    </div>
+    <div class="row">
+        <div class="left">Versandkosten</div>
+        <div class="right">3.99€</div>
+    </div>
+    <div class="row">
+        <div class="left"><h4>Gesamtsumme</h4></div>
+        <div class="right"><h4>100€</h4></div>
+    </div>
+</div>
+</div>
+
+
+</h:body>
+</html>

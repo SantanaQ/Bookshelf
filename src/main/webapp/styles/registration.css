@@ -2,16 +2,17 @@ body{
     background-color: rgb(248, 248, 248);
     font-family: 'Roboto';
     margin: 0;
-    padding-bottom: 1000px;
 }
 .center{
     margin: auto;
     margin-top: 10px;
     width: 500px;
-    height: 850px;
+	min-height: 100px;
+	overflow: hidden;
     border: 3px groove lightgrey;
     border-radius: 2px;
-    background-color: lightgrey;
+    background-color: whitesmoke;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
 
 .center h1 {
@@ -61,7 +62,7 @@ input[type="submit"]:hover{
     margin: 30px 0;
     text-align: center;
     font-size: 16px;
-    color: white;
+    color: lightgray;
 }
 .user_signup a{
     color: rgb(0, 81, 255);
@@ -69,4 +70,9 @@ input[type="submit"]:hover{
 }
 .user_signup a:hover{
     text-decoration: underline;
+}
+
+.error{
+	font-size: 12px;
+	color: red;
 }
