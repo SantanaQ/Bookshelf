@@ -71,6 +71,18 @@ public class LoginHandler implements Serializable {
 		this.kunde = k;
 	}
 	
+	public String includeHeader() {
+		if(FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("user") != null) {
+			return "header-logged-in.xhtml";
+		}else
+			return "header.xhtml";
+	}
+	
+	public void logout() throws IOException {
+		FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("user", null);
+		kunde = null;
+		FacesContext.getCurrentInstance().getExternalContext().redirect("login.xhtml");
+	}
 	
 	
 }

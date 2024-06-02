@@ -26,15 +26,13 @@
         </a>
       </div>
       <div class="buttons">
-        <a href="login.xhtml">
-          <button class="login">Login</button>
-        </a>
-        <a href="registration.xhtml">
-          <button class="signup">Sign Up</button>
-        </a>
+      <p style="margin: 0;margin-right: 40px;display: flex;justify-content: center;align-items: center;font-style:italic">Willkommen, #{loginHandler.kunde.vorname}!</p>
         <a href="shoppingcart.xhtml">
           <button class="warenkorb-button"><i class="pi pi-shopping-cart" style="font-size: 2rem"></i></button>
         </a>
+        <h:form>
+       		<h:commandLink styleClass="login" type="button" action="#{loginHandler.logout}"><div>Logout</div></h:commandLink>
+        </h:form>
       </div>
     </div>
     <div class="rightt"></div>

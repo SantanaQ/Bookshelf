@@ -19,10 +19,11 @@
   <f:metadata>
   	<f:viewParam name="isbn" value="#{cartHandler.newISBN}"/>
   </f:metadata>
-  <f:view>
   <h:body>
 	
-	<ui:insert name="header-logged-out"/>
+	<ui:insert name="header">
+		<ui:include src="#{loginHandler.includeHeader()}"/>
+	</ui:insert>
 
 
   <div class="main-content">  	
@@ -120,6 +121,5 @@
 
 
 </h:body>
-</f:view>
 </html>
 

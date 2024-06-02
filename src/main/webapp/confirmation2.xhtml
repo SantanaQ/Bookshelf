@@ -18,30 +18,9 @@
     <title>Bookshelf - Bestellbestätigung</title>
   </h:head>
   <h:body>
-  <!--Anfang Header-->
-  <div class="headerr">
-    <div class="leftt"></div>
-    <div class="items">
-      <div class="logo-box">
-        <a href="./ProductGroups" method="get">
-          <img class="logo" src="https://github.com/SantanaQ/Internet-Technologien/blob/main/images/logo.png?raw=true" alt="logo"/>
-        </a>
-      </div>
-      <div class="buttons">
-        <a href="login.xhtml">
-          <button class="login">Login</button>
-        </a>
-        <a href="registration.xhtml">
-          <button class="signup">Sign Up</button>
-        </a>
-        <a href="shoppingcart.xhtml">
-          <button class="warenkorb-button"><i class="pi pi-shopping-cart" style="font-size: 2rem"></i></button>
-        </a>
-      </div>
-    </div>
-    <div class="rightt"></div>
-  </div>
-  <!--Ende Header-->
+	<ui:insert name="header">
+		<ui:include src="#{loginHandler.includeHeader()}"/>
+	</ui:insert>
 
   <!--Anfang-->
 

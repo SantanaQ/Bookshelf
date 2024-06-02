@@ -18,7 +18,11 @@ public class ValidatePassword  implements Validator<Object>  {
 		Object mail = component.getAttributes().get("mail");
 		DatabaseStatements stmt = new DatabaseStatements();
     	Kunde k = stmt.getKunde((String) mail);
-    	String password = k.getPasswort();
+    	String password = null;
+    	if(k != null) {
+        	password = k.getPasswort();
+    	}
+
 		
 		if(pw == null || mail == null) {
 			return;

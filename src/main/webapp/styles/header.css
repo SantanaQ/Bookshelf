@@ -179,6 +179,10 @@ button{
   float: right;
   margin: 10px;
   font-weight: bold;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
 }
 
 .login:hover{
@@ -201,4 +205,10 @@ button{
   background-color: white;
   border: none;
   margin: 5px;
+}
+
+.logout{
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
