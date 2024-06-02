@@ -1,0 +1,155 @@
+.main-block{
+    width: 70%;
+    height: 100%;
+    padding: 10px;
+
+    background-color: white;
+    border: 10px solid white;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 20px;
+    border-radius: 50px;
+
+}
+
+.zentral{
+    display: flex;
+    justify-content: center;
+}
+.but-confirm{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: auto;
+    margin-right: auto;
+
+}
+
+.confirm{
+	margin: 10px;
+}
+
+.confirm-button{
+    background-color: rgb(0, 81, 255);
+    color: white;
+    border: 1px solid rgb(0, 81, 255);;
+    width: 110px;
+    height: 50px;
+    border-radius: 15px;
+    float: right;
+    margin: 10px;
+    font-weight: bold;
+    text-shadow: 2px 2px 10px #5f5f5f;
+}
+
+
+.zurück{
+    background-color: rgb(0, 81, 255);
+    color: white;
+    border: 1px solid rgb(0, 81, 255);;
+    width: 180px;
+    height: 50px;
+    border-radius: 15px;
+    float: right;
+    margin: 10px;
+    font-weight: bold;
+    text-shadow: 2px 2px 10px #5f5f5f;
+
+}
+
+.info{
+    width: 70%;
+    height: 100%;
+    display: flex;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 20px;
+    background: white;
+    border: 10px solid white;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+    border-radius: 50px;
+    padding: 10px;
+
+}
+.adresse{
+    width: 25%;
+    height: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: left;
+}
+.Tabelle{
+    width: 65%;
+    height: 100%;
+    padding: 10px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 40px;
+    background: white;
+    border: 10px solid white;
+    border-radius: 50px;
+
+}
+
+.Zsfg{
+    width: 25%;
+    height: 100%;
+    padding: 10px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 40px;
+    background: white;
+    border: 10px solid white;
+    border-radius: 50px;
+}
+.produkte {
+    width: 100%;
+    height: 100%;
+    padding: 10px;
+    text-align: left;
+    background: white;
+    margin-left: auto;
+    margin-right: auto;
+
+}
+
+.text {
+    flex-grow: 1;
+}
+
+.produkt-info{
+    display: flex;
+    align-items: center;
+}
+.produkt-info img {
+    max-width: 10%;
+    height: auto;
+    margin-right: 10px;
+}
+
+.col-Pr {
+    width: auto;
+}
+.col-Me {
+    width: 15%;
+}
+
+.col-Su {
+    width: 15%;
+}
+
+.row{
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+
+}
+.left {
+    flex: 1;
+    text-align: left;
+}
+.right{
+    flex: 1;
+    text-align: right;
+}
+

@@ -24,7 +24,8 @@ public class ShoppingcartHandler implements Serializable{
 	private List<Item> books = new ArrayList<>();
 	private Item book;
 	private String newISBN;
-
+	private boolean checkout = false;
+	
 	public void init() throws IOException {
 		// wenn Buch bereits vorhanden, keine Initialisierung
 		for(Item b : books) {
@@ -111,8 +112,17 @@ public class ShoppingcartHandler implements Serializable{
 	
 	public void checkout() throws IOException {
 		if(!books.isEmpty()) {
+			setCheckout(true);
 			FacesContext.getCurrentInstance().getExternalContext().redirect("checkout-shipping.xhtml");
-		}//
+		}
+	}
+
+	public boolean isCheckout() {
+		return checkout;
+	}
+
+	public void setCheckout(boolean checkout) {
+		this.checkout = checkout;
 	}
 
 }

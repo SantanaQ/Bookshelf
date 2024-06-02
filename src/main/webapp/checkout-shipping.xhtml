@@ -27,7 +27,7 @@
         </a>
       </div>
       <div class="buttons">
-        <a href="login.html">
+        <a href="login.xhtml">
           <button class="login">Login</button>
         </a>
         <a href="registration.xhtml">
@@ -43,7 +43,6 @@
   <!--Ende Header-->
 
 <div class="main-block">
-
     <div class="progress-box">
         <div class="stepper-wrapper">
             <div class="stepper-item active">
@@ -100,7 +99,11 @@
 
             </table>
             <br/>
-            <input type="submit" value="Weiter"/>
+            <div class="link">
+	        	<h:commandLink type="button" action="checkout-payment.xhtmll">
+	        		<div class="weiter-button">Weiter</div>
+	        	</h:commandLink>
+	        </div>
             </h:form>
         </div>
     </div>

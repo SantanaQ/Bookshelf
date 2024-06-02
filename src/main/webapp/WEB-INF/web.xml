@@ -10,6 +10,23 @@
 		<url-pattern>*.xhtml</url-pattern>
 	</servlet-mapping>
 
+<filter>
+	<display-name>AuthorizationFilter</display-name>
+    <filter-name>AuthorizationFilter</filter-name>
+    <filter-class>LoginHandling.AuthorizationFilter</filter-class>
+</filter>
+<filter-mapping>
+    <filter-name>AuthorizationFilter</filter-name>
+    <url-pattern>/checkout-shipping.xhtml</url-pattern>
+    <url-pattern>/checkout-payment.xhtml</url-pattern>
+    <url-pattern>/confirmation1.xhtml</url-pattern>
+    <url-pattern>/confirmation2.xhtml</url-pattern>   
+    <dispatcher>REQUEST</dispatcher>
+    <dispatcher>FORWARD</dispatcher>
+</filter-mapping>
+
+
+
   
   <servlet>
     <description></description>

@@ -4,71 +4,90 @@
 	xmlns:f="http://xmlns.jcp.org/jsf/core"
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
-  <h:head>
-    <meta charset="utf-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1"/>
-    <link rel="stylesheet" href="./styles/header.css"/>
-    <link rel="stylesheet" href="./styles/general.css"/>
-    <link rel="stylesheet" href="./styles/login.css"/>
-    
-    <h:outputStylesheet name="primeicons/primeicons.css" library="primefaces" />
-    
-    <link rel="icon" type="image/x-icon" href="https://github.com/SantanaQ/Internet-Technologien/blob/main/images/icon.png?raw=true"/>
+<h:head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<link rel="stylesheet" href="./styles/header.css" />
+	<link rel="stylesheet" href="./styles/general.css" />
+	<link rel="stylesheet" href="./styles/login.css" />
+
+	<h:outputStylesheet name="primeicons/primeicons.css"
+		library="primefaces" />
+
+	<link rel="icon" type="image/x-icon"
+		href="https://github.com/SantanaQ/Internet-Technologien/blob/main/images/icon.png?raw=true" />
 
 
-    <title>Bookshelf - Login</title>
-  </h:head>
-  <h:body>
-  <!--Anfang Header-->
-  <div class="headerr">
-    <div class="leftt"></div>
-    <div class="items">
-      <div class="logo-box">
-        <a href="./ProductGroups" method="get">
-          <img class="logo" src="https://github.com/SantanaQ/Internet-Technologien/blob/main/images/logo.png?raw=true" alt="logo"/>
-        </a>
-      </div>
-      <div class="buttons">
-        <a href="login.xhtml">
-          <button class="login">Login</button>
-        </a>
-        <a href="registration.xhtml">
-          <button class="signup">Sign Up</button>
-        </a>
-        <a href="shoppingcart.xhtml">
-          <button class="warenkorb-button"><i class="pi pi-shopping-cart" style="font-size: 2rem"></i></button>
-        </a>
-      </div>
-    </div>
-    <div class="rightt"></div>
-  </div>
-  <!--Ende Header-->
+	<title>Bookshelf - Login</title>
+</h:head>
+<h:body>
+	<!--Anfang Header-->
+	<div class="headerr">
+		<div class="leftt"></div>
+		<div class="items">
+			<div class="logo-box">
+				<a href="./ProductGroups" method="get"> <img class="logo"
+					src="https://github.com/SantanaQ/Internet-Technologien/blob/main/images/logo.png?raw=true"
+					alt="logo" />
+				</a>
+			</div>
+			<div class="buttons">
+				<a href="login.xhtml">
+					<button class="login">Login</button>
+				</a> <a href="registration.xhtml">
+					<button class="signup">Sign Up</button>
+				</a> <a href="shoppingcart.xhtml">
+					<button class="warenkorb-button">
+						<i class="pi pi-shopping-cart" style="font-size: 2rem"></i>
+					</button>
+				</a>
+			</div>
+		</div>
+		<div class="rightt"></div>
+	</div>
+	<!--Ende Header-->
 
-  <!-- Start Login-->
-  <section class="center">
-    <h1>Login</h1>
-    <h:form method="post">
-      <div class="txt_field">
-        <div class="control">
-          <input type="text" required="true" placeholder="E-Mail"/>
-        </div>
-      </div>
+	<!-- Start Login-->
+	<section class="center">
+		<h1>Login</h1>
+		<h:form method="post">
+			<div class="txt_field">
+				<div class="control">
+					<h:inputText id="email" value="#{loginHandler.email}"
+						required="true"
+						requiredMessage="Bitte geben Sie Ihre E-Mail Adresse ein."
+						validatorMessage="Es existiert kein Account mit der angegebenen E-Mail Adresse."
+						binding="#{mailComponent}">
+						<f:validator validatorId="validateMailExists" />
+					</h:inputText>
+					<h:message class="error" for="email" />
+					<p:watermark value="E-Mail" for="email"></p:watermark>
+				</div>
+			</div>
 
-      <div class="txt_field">
-        <div class="control">
-          <input type="password" required="true" placeholder="Password"/>
-        </div>
-      </div>
+			<div class="txt_field">
+				<div class="control">
+					<h:inputSecret id="passwort" value="#{loginHandler.passwort}"
+						required="true"
+						requiredMessage="Bitte geben Sie Ihr Passwort ein."
+						validatorMessage="Das angegebene Passwort ist nicht korrekt.">
+						<f:validator validatorId="validatePassword" />
+						<f:attribute name="mail" value="#{mailComponent.value}" />
+					</h:inputSecret>
+					<h:message class="error" for="passwort" />
+					<p:watermark value="Passwort" for="passwort"></p:watermark>
+				</div>
+			</div>
 
-      <input type="submit" value="Login"/>
+			<h:commandButton value="Login" action="#{loginHandler.login}"></h:commandButton>
 
-      <div class="user_signup">
-        Kein Account? <a href="registration.xhtml">Registrieren</a>
-      </div>
+			<div class="user_signup">
+				Kein Account? <a href="registration.xhtml">Registrieren</a>
+			</div>
 
-    </h:form>
-  </section>
-  <!--End Login-->
+		</h:form>
+	</section>
+	<!--End Login-->
 
-  </h:body>
+</h:body>
 </html>

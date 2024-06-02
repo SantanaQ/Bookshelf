@@ -73,10 +73,9 @@
         <div class="control">
           <h:inputText id="geburtsdatum" value="#{regHandler.geburtsdatum}" required="true"
           requiredMessage="Bitte geben Sie ihr Geburtsdatum an."
-          validatorMessage="Das Geburtsdatum muss folgendes Muster haben: DD-MM-YYYY z.B. 31-12-1999 und ein valides Datum sein."
+          validatorMessage="Das Geburtsdatum muss folgendes Muster haben: DD.MM.YYYY z.B. 31.12.1999 und ein valides Datum sein."
           label="Geburtsdatum">
-          	<f:validateRegex pattern="\d{2}-\d{2}-\d{4}$"/>
-          	<f:convertDateTime pattern="dd-MM-yyyy"/>
+          	<f:convertDateTime pattern="dd.MM.yyyy"/>
           	<h:message class="error" for="geburtsdatum"/>
         	<p:watermark value="Geburtsdatum" for="geburtsdatum"></p:watermark>
           </h:inputText>

@@ -28,7 +28,7 @@
         </a>
       </div>
       <div class="buttons">
-        <a href="login.html">
+        <a href="login.xhtml">
           <button class="login">Login</button>
         </a>
         <a href="registration.xhtml">
@@ -99,7 +99,11 @@
                         <td><input class="input" type="text"  placeholder="Prüfnr. (3 Ziffern)"/></td>
                     </tr>
                 </table>
-                <input type="submit" value="Weiter" />
+               <div class="link">
+		        	<h:commandLink type="button" action="confirmation1.xhtml">
+		        		<div class="weiter-button">Weiter</div>
+		        	</h:commandLink>
+	       	   </div>
             </h:form>
         </div>
     </div>

@@ -9,6 +9,11 @@
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
 
+.error{
+	font-size: 12px;
+	color: red;
+}
+
 .center h1 {
     text-align: center;
     height: 40px;
@@ -59,7 +64,7 @@ input[type="submit"]:hover{
     color: lightgray;
 }
 .user_signup a{
-    color: dodgerblue;
+    color: rgb(0, 81, 255);
     text-decoration: none;
 }
 .user_signup a:hover{

@@ -239,4 +239,32 @@ public class DatabaseStatements {
 		}
 	}
 	
+	public Kunde getKunde(String email) {
+		Kunde kunde = null;
+		try {
+			con = DatabaseConnection.initializeDatabase();
+			PreparedStatement stmt = con.prepareStatement("SELECT * FROM Kunde WHERE eMail = ?");
+			stmt.setString(1, email);
+			ResultSet rs = stmt.executeQuery();
+			if(rs.next()) {
+				String vorname = rs.getString("Vorname");
+				String nachname = rs.getString("Nachname");
+				Date geburtsdatum = rs.getDate("Geburtsdatum");
+				String adresse = rs.getString("Adresse");
+				String plz = rs.getString("PLZ");
+				String ort = rs.getString("Ort");
+				String eMail = rs.getString("eMail");
+				String passwort = rs.getString("passwort");
+				kunde = new Kunde(vorname, nachname, (java.util.Date) geburtsdatum, adresse, plz, ort, eMail, passwort);
+			}
+			con.close();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return kunde;
+
+	}
+	
 }
