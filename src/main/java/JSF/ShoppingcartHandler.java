@@ -108,5 +108,11 @@ public class ShoppingcartHandler implements Serializable{
 		book = new Item(b, 1);
 		init();
 	}
+	
+	public void checkout() throws IOException {
+		if(!books.isEmpty()) {
+			FacesContext.getCurrentInstance().getExternalContext().redirect("checkout-shipping.xhtml");
+		}//
+	}
 
 }

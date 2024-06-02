@@ -134,8 +134,13 @@ p{
   vertical-align: middle;
 }
 
+.link{
+	margin:auto;
+	width: 90%;
+	text-align: center;
+}
+
 .kasse-button{
-  width: 90%;
   height: 50px;
   background-color: rgb(0, 81, 255);
   border: none;
@@ -143,6 +148,9 @@ p{
   color: white;
   font-weight: bold;
   font-size: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .kasse-button:hover{

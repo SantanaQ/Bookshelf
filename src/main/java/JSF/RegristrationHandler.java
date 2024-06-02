@@ -35,7 +35,7 @@ public class RegristrationHandler implements Serializable{
 		Kunde neuerKunde = new Kunde(vorname, nachname, geburtsdatum, adresse, plz, ort, email, passwort);
 		DatabaseStatements stmts = new DatabaseStatements();
 		stmts.addKunde(neuerKunde);
-		FacesContext.getCurrentInstance().getExternalContext().redirect("ProductGroups");
+		FacesContext.getCurrentInstance().getExternalContext().redirect("login.xhtml");
 	}
 
 	public String getVorname() {

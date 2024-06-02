@@ -122,10 +122,18 @@
 									<f:convertNumber type="currency" currencySymbol="€" locale="de-DE"/>
 								</h:outputText>
 	        </h2>
-	        
+	        <div class="link">
+	        	<h:commandLink type="button" action="#{cartHandler.checkout()}">
+	        		<div class="kasse-button">Zur Kasse</div>
+	        	</h:commandLink>
+	        </div>
+
+	        <!-- <h:link outcome="checkout-shipping.xhtml">
+	        <button class="kasse-button">Zur Kasse</button>
+	        </h:link>
 	        <a href="checkout-shipping.xhtml">
 	          <button class="kasse-button">Zur Kasse</button>
-	        </a>
+	        </a> -->
 	      </div>
 	    </div>
     </h:form> 
