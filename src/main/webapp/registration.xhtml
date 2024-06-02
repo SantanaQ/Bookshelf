@@ -66,7 +66,7 @@
         	<h:inputText id="adresse" value="#{regHandler.adresse}" required="true"
         	requiredMessage="Bitte geben Sie eine Adresse an."
         	validatorMessage="Die Adresse muss aus einer Straße gefolgt von einer Hausnummer bestehen.">
-        	<f:validateRegex pattern="^[A-Z][a-zA-Z]*[ ][0-9]+[a-zA-Z]*$"/>
+        	<f:validateRegex pattern="^[A-Z][a-zA-Zß ]*[0-9]+[a-zA-Z]*$"/>
         	</h:inputText>
 			<h:message class="error" for="adresse"/>
         	<p:watermark value="Adresse (Straße Hausnummer)" for="adresse"></p:watermark>

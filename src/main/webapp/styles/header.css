@@ -146,7 +146,7 @@ button{
 
 .buttons{
   display:flex;
-  width: 30%;
+  width: 40%;
   justify-content: end;
 }
 

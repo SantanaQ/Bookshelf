@@ -113,7 +113,7 @@ public class ShoppingcartHandler implements Serializable{
 	public void checkout() throws IOException {
 		if(!books.isEmpty()) {
 			setCheckout(true);
-			FacesContext.getCurrentInstance().getExternalContext().redirect("checkout-shipping.xhtml");
+			FacesContext.getCurrentInstance().getExternalContext().redirect("checkout.xhtml");
 		}
 	}
 

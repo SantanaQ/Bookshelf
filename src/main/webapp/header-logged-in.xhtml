@@ -26,12 +26,12 @@
         </a>
       </div>
       <div class="buttons">
-      <p style="margin: 0;margin-right: 40px;display: flex;justify-content: center;align-items: center;font-style:italic">Willkommen, #{loginHandler.kunde.vorname}!</p>
+      <p style="margin: 0;margin-right: 5px;display: flex;justify-content: center;align-items: center;font-style:italic">Willkommen, #{loginHandler.kunde.vorname}!</p>
         <a href="shoppingcart.xhtml">
           <button class="warenkorb-button"><i class="pi pi-shopping-cart" style="font-size: 2rem"></i></button>
         </a>
         <h:form>
-       		<h:commandLink styleClass="login" type="button" action="#{loginHandler.logout}"><div>Logout</div></h:commandLink>
+       		<h:commandLink style="display: flex" class="login" type="button" action="#{loginHandler.logout}"><div>Logout</div></h:commandLink>
         </h:form>
       </div>
     </div>
