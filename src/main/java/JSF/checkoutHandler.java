@@ -164,12 +164,16 @@ public class checkoutHandler implements Serializable{
 	}
 
 	public int getBestellNr() {
+		return bestellNr;
+	}
+	
+	public void setBestellNr() {
 		DatabaseStatements stmts = new DatabaseStatements();
 		int nr = stmts.setBestellNr();
 		if(nr > 1) {
-			return stmts.setBestellNr() - 1;
+			this.bestellNr =  stmts.setBestellNr();
 		}else
-			return 1;
+			this.bestellNr = 1;
 	}
 	
 	public void toConfirm() throws IOException {
@@ -192,7 +196,10 @@ public class checkoutHandler implements Serializable{
 	}
 
 	public void buyNow() throws IOException {
-		// TODO: Bestellung in DB eintragen
+		// BestellNr festhalten
+		setBestellNr();
+		
+		// Bestellung in DB eintragen
 		DatabaseStatements stmts = new DatabaseStatements();
 		Date today = new Date();
 		Bestellung bestellung = new Bestellung(loginHandler.getKunde(), cartHandler.getBooks(), today, zahlungsmethode);
