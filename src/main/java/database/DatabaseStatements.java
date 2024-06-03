@@ -327,7 +327,7 @@ public class DatabaseStatements {
 		}
 	}
 	
-	private int setBestellNr() {
+	public int setBestellNr() {
 		int bestellNr = -1;
 		try {
 			con = DatabaseConnection.initializeDatabase();
@@ -363,5 +363,6 @@ public class DatabaseStatements {
 			e.printStackTrace();
 		}
 	}
+	
 	
 }

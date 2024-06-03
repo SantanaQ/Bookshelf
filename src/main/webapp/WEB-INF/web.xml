@@ -17,7 +17,7 @@
 </filter>
 <filter-mapping>
     <filter-name>AuthorizationFilter</filter-name>
-    <url-pattern>/checkout-shipping.xhtml</url-pattern>
+    <url-pattern>/checkout.xhtml</url-pattern>
     <url-pattern>/checkout-payment.xhtml</url-pattern>
     <url-pattern>/confirmation1.xhtml</url-pattern>
     <url-pattern>/confirmation2.xhtml</url-pattern>   

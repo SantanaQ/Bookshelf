@@ -36,7 +36,7 @@ public class checkoutHandler implements Serializable{
 	private Date gueltigkeit;
 	private String pruefnummer;
 	
-	private String bestellNr;
+	private int bestellNr;
 	
 	@Inject
 	private LoginHandler loginHandler;
@@ -163,6 +163,15 @@ public class checkoutHandler implements Serializable{
 		FacesContext.getCurrentInstance().getExternalContext().redirect("checkout-payment.xhtml");
 	}
 
+	public int getBestellNr() {
+		DatabaseStatements stmts = new DatabaseStatements();
+		int nr = stmts.setBestellNr();
+		if(nr > 1) {
+			return stmts.setBestellNr() - 1;
+		}else
+			return 1;
+	}
+	
 	public void toConfirm() throws IOException {
 		if(zahlungsmethode == null  &&  !zahlungsmethode.equals("Rechnung") && !zahlungsmethode.equals("Kreditkarte")) {
 			return;
@@ -195,6 +204,8 @@ public class checkoutHandler implements Serializable{
 		cartHandler.setTotal(0);
 		FacesContext.getCurrentInstance().getExternalContext().redirect("confirmation2.xhtml");
 	}
+
+
 
 
 
