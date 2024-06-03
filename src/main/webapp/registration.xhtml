@@ -54,10 +54,10 @@
           requiredMessage="Bitte geben Sie ihr Geburtsdatum an."
           validatorMessage="Das Geburtsdatum muss folgendes Muster haben: DD.MM.YYYY z.B. 31.12.1999 und ein valides Datum sein."
           label="Geburtsdatum">
-          	<f:convertDateTime pattern="dd.MM.yyyy"/>
-          	<h:message class="error" for="geburtsdatum"/>
-        	<p:watermark value="Geburtsdatum" for="geburtsdatum"></p:watermark>
+          <f:convertDateTime pattern="dd.MM.yyyy"/>
           </h:inputText>
+          <h:message class="error" for="geburtsdatum"/>
+          <p:watermark value="Geburtsdatum" for="geburtsdatum"></p:watermark>
         </div>
       </div>
 
@@ -115,7 +115,7 @@
         	binding="#{passwordComponent}"
         	requiredMessage="Bitte geben Sie ein Passwort an."
         	validatorMessage="Das Passwort muss zwischen 8 und 15 Zeichen enthalten.">
-				<f:validateLength  minimum="8"  maximum="15"/>
+			<f:validateLength  minimum="8"  maximum="15"/>
         	</h:inputSecret>
         	<h:message class="error" for="pw1"/>
         	<p:watermark value="Passwort" for="pw1"></p:watermark>

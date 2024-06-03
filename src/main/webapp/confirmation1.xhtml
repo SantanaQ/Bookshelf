@@ -60,33 +60,25 @@
 				<tr>
 					<td colspan="3"><hr /></td>
 				</tr>
-
+				<ui:repeat value="#{cartHandler.books}" var="item">
 				<tr>
 					<td>
 						<div class="produkt-info">
-							<img class="img"
-								src="https://github.com/SantanaQ/Internet-Technologien/blob/main/images/a-song-of-ice-and-fire-01-a-game-of-thrones-taschenbuch-george-r-r-martin-englisch.webp?raw=true"
-								alt="george-r-r-martin-a-game-of-thrones" />
-							<div class="text">Produktname, Autor, Artikelnummer, ...</div>
+							<h:graphicImage value="data:image/jpg;base64,#{item.buch.b64Cover}" />
+							<div class="text">
+								<p style="font-weight: bold">#{item.buch.titel}</p>
+								<p>von #{item.buch.autor}</p>								
+							</div>
 						</div>
 					</td>
-					<td>1</td>
-					<td>24€</td>
-				</tr>
-
-				<tr>
+					<td>#{item.anzahl}</td>
 					<td>
-						<div class="produkt-info">
-							<img
-								src="../images/edgar-allan-poe-die-besten-geschichten-taschenbuch-edgar-allan-poe.webp"
-								height="2000" width="1305" />
-							<div class="text">Produktname, Autor, Artikelnummer, ...</div>
-						</div>
+						<h:outputText value="#{item.buchSumme}">
+							<f:convertNumber type="currency" currencySymbol="€"/>
+						</h:outputText>
 					</td>
-					<td>1</td>
-					<td>16€</td>
 				</tr>
-
+				</ui:repeat>
 			</table>
 		</div>
 
@@ -96,40 +88,47 @@
 			</div>
 			<div class="row">
 				<div class="left">Summe</div>
-				<div class="right">63€</div>
+				<div class="right">
+					<h:outputText value="#{cartHandler.total}">
+						<f:convertNumber type="currency" currencySymbol="€"/>
+					</h:outputText>
+				</div>
 			</div>
 			<div class="row">
 				<div class="left">Versandkosten</div>
-				<div class="right">3.99€</div>
+				<div class="right">
+					<h:outputText value="#{cartHandler.versandkosten}">
+						<f:convertNumber type="currency" currencySymbol="€"/>
+					</h:outputText>
+				</div>
 			</div>
 			<div class="row">
 				<div class="left">
 					<h4>Gesamtsumme</h4>
 				</div>
 				<div class="right">
-					<h4>100€</h4>
+					<h4>
+						<h:outputText value="#{cartHandler.gesamt}">
+							<f:convertNumber type="currency" currencySymbol="€"/>
+						</h:outputText>
+					</h4>
 				</div>
 			</div>
 			<h:form>
 				<div class="row">
 					<div class="but-confirm">
 						<div class="link">
-							<h:commandLink type="button" action="checkout-payment.xhtml">
+							<h:commandLink type="button" action="#{checkoutHandler.toPayment()}">
 								<div class="weiter-button confirm">Zurück</div>
 							</h:commandLink>
 						</div>
-						<!--            <a href="checkout-payment.html">
-          <button class="confirm-button">Zurück</button>
-          </a>-->
+						
 
 						<div class="link">
-							<h:commandLink type="button" action="confirmation2.xhtml">
+							<h:commandLink type="button" action="#{checkoutHandler.buyNow()}">
 								<div class="weiter-button confirm">Kauf bestätigen</div>
 							</h:commandLink>
 						</div>
-						<!--           <a href="confirmation2.html">
-          <button class="confirm-button">Kauf bestätigen</button>
-          </a> -->
 					</div>
 				</div>
 			</h:form>
@@ -141,17 +140,17 @@
 		<div class="adresse">
 			<h4>Rechnungsadresse</h4>
 			<hr />
-			Vorname, Name Adresse<br /> <br /> Postleitzahl, Ort<br /> Land
+			#{loginHandler.kunde.vorname}, #{loginHandler.kunde.nachname} <br/> #{loginHandler.kunde.adresse} <br /> #{loginHandler.kunde.plz}, #{loginHandler.kunde.ort}
 		</div>
 		<div class="adresse">
 			<h4>Lieferadresse</h4>
 			<hr />
-			Vorname, Name Adresse<br /> <br /> Postleitzahl, Ort<br /> Land
+			#{checkoutHandler.vorname}, #{checkoutHandler.nachname} <br/> #{checkoutHandler.adresse} <br /> #{checkoutHandler.plz}, #{checkoutHandler.ort}
 		</div>
 		<div class="adresse">
 			<h4>Informationen</h4>
 			<hr />
-			<b>Zahlungsart:</b> PayPal <br /> <br /> <b>Versandart:</b> DHL
+			<b>Zahlungsart:</b> #{checkoutHandler.zahlungsmethode} <br /> <br /> <b>Versandart:</b> DHL (Standard)
 		</div>
 	</div>
 	<!--Ende-->

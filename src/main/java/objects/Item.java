@@ -1,8 +1,6 @@
-package JSF;
+package objects;
 
 import java.io.Serializable;
-
-import objects.Buch;
 
 public class Item implements Serializable{
 

@@ -1,10 +1,13 @@
 package objects;
 
+import java.io.Serializable;
 import java.util.Date;
 
 
-public class Kunde {
+public class Kunde implements Serializable{
 
+	private static final long serialVersionUID = 1L;
+	
 	private String vorname;
 	private String nachname;
 	private Date geburtsdatum;

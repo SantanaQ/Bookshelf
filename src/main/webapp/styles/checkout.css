@@ -25,10 +25,13 @@ h2{
   margin-bottom: 10px;
 }
 
-.liefern{
-  width: 100%;
 
+.liefern{
+  margin-top: 20px;
+  margin-bottom: 12px;
+  width: 100%;
 }
+
 select{
   width: 20%;
 }
@@ -324,4 +327,25 @@ input[type="submit"]:hover{
   display: flex;
   justify-content: space-between;
   width: 100%;
+}
+
+.error{
+	font-size: 12px;
+	color: red;
+}
+
+.zahlungsmethode-button{
+	background-color: rgb(0, 81, 255);
+	border-radius: 25px;
+	width: 200px;
+	height: 40px;
+	margin-top: 10px;
+	margin-right: 10px;
+	margin-left: 0;
+	margin-bottom: 25px;
+	padding: 10px;
+	font-size: 20px;
+	font-weight: bold;
+	box-shadow: 0px 2px 4px rgba(65, 65, 65, 0.3);
+	color: white;
 }

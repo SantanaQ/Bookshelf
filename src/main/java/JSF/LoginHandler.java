@@ -49,7 +49,7 @@ public class LoginHandler implements Serializable {
 		if(!cartHandler.isCheckout()) {
 			FacesContext.getCurrentInstance().getExternalContext().redirect("ProductGroups");
 		} else
-			FacesContext.getCurrentInstance().getExternalContext().redirect("checkout-shipping.xhtml");
+			FacesContext.getCurrentInstance().getExternalContext().redirect("checkout.xhtml");
 	}
 	
 

@@ -8,7 +8,7 @@ import java.util.List;
 import org.jose4j.base64url.Base64;
 import org.primefaces.shaded.commons.io.IOUtils;
 
-import JSF.Item;
+import objects.Item;
 
 public class DataHelper {
 	

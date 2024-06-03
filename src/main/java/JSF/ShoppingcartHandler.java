@@ -9,9 +9,9 @@ import javax.enterprise.context.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
 
-import database.DatabaseStatements;
-import errorhandling.AddBookErrorHandling;
+import database.DatabaseStatements;//
 import objects.Buch;
+import objects.Item;
 
 @Named("cartHandler")
 @SessionScoped
@@ -25,6 +25,9 @@ public class ShoppingcartHandler implements Serializable{
 	private Item book;
 	private String newISBN;
 	private boolean checkout = false;
+	
+	private final double versandkosten = 3.99;
+	private double gesamt;
 	
 	public void init() throws IOException {
 		// wenn Buch bereits vorhanden, keine Initialisierung
@@ -40,6 +43,10 @@ public class ShoppingcartHandler implements Serializable{
 		}
 	}
 	
+	public void setBooks(List<Item> books) {
+		this.books = books;
+	}
+	
 	public List<Item> getBooks() {
 		if(total < 0.1) {
 			total = 0;
@@ -47,8 +54,16 @@ public class ShoppingcartHandler implements Serializable{
 		return books;
 	}
 	
+	public void setTotal(double total) {
+		this.total = total;
+	}
+	
 	public double getTotal() {
 		return total;
+	}
+	
+	public void setNumberItems(int numberItems) {
+		this.numberItems = numberItems;
 	}
 	
 	public int getNumberItems() {
@@ -113,6 +128,7 @@ public class ShoppingcartHandler implements Serializable{
 	public void checkout() throws IOException {
 		if(!books.isEmpty()) {
 			setCheckout(true);
+			setGesamt();
 			FacesContext.getCurrentInstance().getExternalContext().redirect("checkout.xhtml");
 		}
 	}
@@ -123,6 +139,18 @@ public class ShoppingcartHandler implements Serializable{
 
 	public void setCheckout(boolean checkout) {
 		this.checkout = checkout;
+	}
+
+	public double getGesamt() {
+		return gesamt;
+	}
+
+	public void setGesamt() {
+		this.gesamt = total + versandkosten;
+	}
+
+	public double getVersandkosten() {
+		return versandkosten;
 	}
 
 }

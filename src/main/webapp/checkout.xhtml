@@ -60,26 +60,61 @@
                     </td>
                 </tr>
                 <tr>
-                    <td colspan="1"><input class="input" type="text" required="true" placeholder="Vorname"/></td>
-                    <td colspan="1"><input class="input" type="text" required="true" placeholder="Nachname"/></td>
+                    <td colspan="1">
+                    	<h:inputText class="input" id="vorname" initial="#{loginHandler.kunde.getVorname()}" value="#{checkoutHandler.vorname}" required="true"
+                    	requiredMessage="Bitte geben Sie einen Vornamen an."
+						validatorMessage="Der Name darf keine Zahlen enthalten und muss mit einem Großbuchstaben beginnen.">
+         				<f:validateRegex pattern="^[A-Z][a-zA-Z]*$"/>
+                    	</h:inputText>
+                    	<h:message class="error" for="vorname"/>
+        				<p:watermark value="Vorname" for="vorname"></p:watermark>                     	
+                    </td>
+                    <td colspan="1">
+                    	<h:inputText class="input" id="nachname" initial="#{loginHandler.kunde.nachname}" value="#{checkoutHandler.nachname}" required="true"
+                    	requiredMessage="Bitte geben Sie einen Nachnamen an."
+        				validatorMessage="Der Name darf keine Zahlen enthalten und muss mit einem Großbuchstaben beginnen.">
+        				<f:validateRegex pattern="^[A-Z][a-zA-Z]*$"/>                    	
+                    	</h:inputText>     
+                    	<h:message class="error" for="nachname"/>
+        				<p:watermark value="Nachname" for="nachname"></p:watermark>                     	               	
+                    </td>
                 </tr>
                 <tr>
-                    <td><input class="input" type="text" required="true" placeholder="Adresse"/></td>
-                    <td><input class="input" type="text" required="true" placeholder="Hausnummer"/></td>
+                    <td colspan="2">
+                    	<h:inputText class="input" id="adresse" initial="#{loginHandler.kunde.adresse}" value="#{checkoutHandler.adresse}" required="true"
+                    	requiredMessage="Bitte geben Sie eine Adresse an."
+                    	validatorMessage="Die Adresse muss aus einer Straße gefolgt von einer Hausnummer bestehen.">
+        				<f:validateRegex pattern="^[A-Z][a-zA-Zß ]*[0-9]+[a-zA-Z]*$"/>
+                    	</h:inputText>
+                    	<h:message class="error" for="adresse"/>
+        				<p:watermark value="Adresse (Straße Hausnummer)" for="adresse"></p:watermark>                   	                          
+                    </td>
                 </tr>
-
                 <tr>
-                    <td colspan="2"><input class="input" type="text" required="true" placeholder="Land"/></td>
-                </tr>
-                <tr>
-                    <td><input class="input" type="text" required="true" placeholder="PLZ"/></td>
-                    <td><input class="input" type="text" required="true" placeholder="Ort"/></td>
+                    <td>
+                    	<h:inputText class="input" id="plz" initial="#{loginHandler.kunde.plz}" value="#{checkoutHandler.plz}" required="true"
+                    	requiredMessage="Bitte geben Sie eine Postleitzahl an."
+                    	validatorMessage="Die PLZ muss aus 5 Zahlen bestehen.">
+        				<f:validateRegex pattern="^[0-9]{5}$"/>
+                    	</h:inputText>
+        				<h:message class="error" for="plz"/>
+        				<p:watermark value="PLZ" for="plz"></p:watermark>                    	                          
+                    </td>
+                    <td>
+                    	<h:inputText class="input" id="ort" initial="#{loginHandler.kunde.ort}" value="#{checkoutHandler.ort}" required="true"
+                    	requiredMessage="Bitte geben Sie einen Ort an."
+        				validatorMessage="Der Ort darf nur aus Buchstaben bestehen und muss mit einem Großbuchstaben beginnen.">
+        				<f:validateRegex pattern="^[A-Z][a-zA-Z -]*$"/>
+        				</h:inputText>
+        				<h:message class="error" for="ort"/>
+        				<p:watermark value="Ort" for="ort"></p:watermark>                                      
+                    </td>
                 </tr>
 
             </table>
             <br/>
             <div class="link">
-	        	<h:commandLink type="button" action="checkout-payment.xhtml">
+	        	<h:commandLink type="button" action="#{checkoutHandler.toPayment()}">
 	        		<div class="weiter-button">Weiter</div>
 	        	</h:commandLink>
 	        </div>
@@ -93,15 +128,15 @@
     </div>
     <div class="row">
         <div class="left">Artikel</div>
-        <div class="right">20€</div>
+        <div class="right"><h:outputText value="#{cartHandler.total}"><f:convertNumber type="currency" currencySymbol="€"/></h:outputText></div>
     </div>
     <div class="row">
         <div class="left">Versandkosten</div>
-        <div class="right">3.99€</div>
+        <div class="right"><h:outputText value="#{cartHandler.versandkosten}"><f:convertNumber type="currency" currencySymbol="€"/></h:outputText></div>
     </div>
     <div class="row">
         <div class="left"><h4>Gesamtsumme</h4></div>
-        <div class="right"><h4>100€</h4></div>
+        <div class="right"><h4> <h:outputText value="#{cartHandler.gesamt}"><f:convertNumber type="currency" currencySymbol="€"/></h:outputText></h4></div>
     </div>
 </div>
 </div>

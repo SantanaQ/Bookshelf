@@ -8,11 +8,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
-import helpers.DataHelper;
+import objects.Bestellung;
 import objects.Buch;
+import objects.Item;
 import objects.Kunde;
 
 
@@ -264,7 +264,104 @@ public class DatabaseStatements {
 			e.printStackTrace();
 		}
 		return kunde;
+	}
+	
+	public int getKundenNr(Kunde kunde) {
+		int kundenNr = -1;
+		try {
+			con = DatabaseConnection.initializeDatabase();
+			PreparedStatement stmt = con.prepareStatement("SELECT * FROM Kunde WHERE eMail = ?");
+			stmt.setString(1, kunde.getEmail());
+			ResultSet rs = stmt.executeQuery();
+			if(rs.next()) {
+				kundenNr = rs.getInt("KundenNr");
+			}
+			con.close();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return kundenNr;
+	}
+	
+	public int getBezahlmethodenNr(Bestellung bestellung) {
+		int bezahlmethodenNr = -1;
+		try {
+			con = DatabaseConnection.initializeDatabase();
+			PreparedStatement stmt = con.prepareStatement("SELECT * FROM Bezahlmethode WHERE Bezeichnung = ?");
+			stmt.setString(1, bestellung.getZahlungsmethode());
+			ResultSet rs = stmt.executeQuery();
+			if(rs.next()) {
+				bezahlmethodenNr = rs.getInt("BezahlmethodenNr");
+			}
+			con.close();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return bezahlmethodenNr;
+	}
+	
+	public void addBestellung(Bestellung bestellung) {
+		int kundenNr = getKundenNr(bestellung.getKunde());
+		int bezahlmethodenNr = getBezahlmethodenNr(bestellung);
+		int bestellNr = setBestellNr();
+		Date sqlDate = new Date(bestellung.getDatum().getTime());
+		try {
+			con = DatabaseConnection.initializeDatabase();
+			PreparedStatement stmt = con.prepareStatement("INSERT INTO Bestellung (BestellNr, Datum, KundenNr, BezahlmethodenNr) VALUES (?,?,?,?)");
+			stmt.setInt(1, bestellNr);
+			stmt.setDate(2,sqlDate);
+			stmt.setInt(3,kundenNr);
+			stmt.setInt(4,bezahlmethodenNr);
+			stmt.executeUpdate();
+			addBuchBestellung(bestellung, bestellNr);
+			con.close();
 
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	private int setBestellNr() {
+		int bestellNr = -1;
+		try {
+			con = DatabaseConnection.initializeDatabase();
+			PreparedStatement stmt = con.prepareStatement("SELECT * FROM Bestellung ORDER BY BestellNr DESC LIMIT 1");
+			ResultSet rs = stmt.executeQuery();
+			if(rs.next()) {
+				bestellNr = rs.getInt("BestellNr") + 1;
+			}else
+				bestellNr = 1;
+			con.close();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return bestellNr;
+	}
+	
+	private void addBuchBestellung(Bestellung bestellung, int bestellNr) {
+		try {
+			con = DatabaseConnection.initializeDatabase();
+			for(Item i : bestellung.getBooks()) {
+				PreparedStatement stmt = con.prepareStatement("INSERT INTO Buchbestellung (ISBN, BestellNr, Anzahl) VALUES (?,?,?)");
+				stmt.setString(1, i.getBuch().getIsbn());
+				stmt.setInt(2, bestellNr);
+				stmt.setInt(3, i.getAnzahl());
+				stmt.executeUpdate();
+			}
+			con.close();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 	
 }
