@@ -25,6 +25,11 @@ h2{
   margin-bottom: 10px;
 }
 
+.bold-big{
+	font-weight: bold;
+	font-size: 20px;
+}
+
 
 .liefern{
   margin-top: 20px;

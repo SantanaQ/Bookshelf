@@ -115,9 +115,65 @@
 						</tr>
 						<tr>
 							<td>
-								<h:outputText value="Zahlungsmethode 'Rechnung' ausgewählt." rendered="#{checkoutHandler.isRechnungszahlung()}"/>						
+								<h:outputText class="bold-big" value="Rechnungsadresse" rendered="#{checkoutHandler.isRechnungszahlung()}"/>						
 							</td>
 						</tr>
+						<tr>
+                    <td colspan="1">
+                    	<h:inputText class="input" id="vorname" initial="#{loginHandler.kunde.getVorname()}" value="#{checkoutHandler.r_vorname}" required="true"
+                    	requiredMessage="Bitte geben Sie einen Vornamen an."
+						validatorMessage="Der Name darf keine Zahlen enthalten und muss mit einem Großbuchstaben beginnen."
+						rendered="#{checkoutHandler.isRechnungszahlung()}">
+         				<f:validateRegex pattern="^[A-Z][a-zA-Z]*$"/>
+                    	</h:inputText>
+                    	<h:message class="error" for="vorname"/>
+        				<p:watermark value="Vorname" for="vorname"></p:watermark>                     	
+                    </td>
+                    <td colspan="1">
+                    	<h:inputText class="input" id="nachname" initial="#{loginHandler.kunde.nachname}" value="#{checkoutHandler.r_nachname}" required="true"
+                    	requiredMessage="Bitte geben Sie einen Nachnamen an."
+        				validatorMessage="Der Name darf keine Zahlen enthalten und muss mit einem Großbuchstaben beginnen."
+        				rendered="#{checkoutHandler.isRechnungszahlung()}">
+        				<f:validateRegex pattern="^[A-Z][a-zA-Z]*$"/>                    	
+                    	</h:inputText>     
+                    	<h:message class="error" for="nachname"/>
+        				<p:watermark value="Nachname" for="nachname"></p:watermark>                     	               	
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                    	<h:inputText class="input" id="adresse" initial="#{loginHandler.kunde.adresse}" value="#{checkoutHandler.r_adresse}" required="true"
+                    	requiredMessage="Bitte geben Sie eine Adresse an."
+                    	validatorMessage="Die Adresse muss aus einer Straße gefolgt von einer Hausnummer bestehen."
+                    	rendered="#{checkoutHandler.isRechnungszahlung()}">
+        				<f:validateRegex pattern="^[A-Z][a-zA-Zß ]*[0-9]+[a-zA-Z]*$"/>
+                    	</h:inputText>
+                    	<h:message class="error" for="adresse"/>
+        				<p:watermark value="Adresse (Straße Hausnummer)" for="adresse"></p:watermark>                   	                          
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                    	<h:inputText class="input" id="plz" initial="#{loginHandler.kunde.plz}" value="#{checkoutHandler.r_plz}" required="true"
+                    	requiredMessage="Bitte geben Sie eine Postleitzahl an."
+                    	validatorMessage="Die PLZ muss aus 5 Zahlen bestehen."
+                    	rendered="#{checkoutHandler.isRechnungszahlung()}">
+        				<f:validateRegex pattern="^[0-9]{5}$"/>
+                    	</h:inputText>
+        				<h:message class="error" for="plz"/>
+        				<p:watermark value="PLZ" for="plz"></p:watermark>                    	                          
+                    </td>
+                    <td>
+                    	<h:inputText class="input" id="ort" initial="#{loginHandler.kunde.ort}" value="#{checkoutHandler.r_ort}" required="true"
+                    	requiredMessage="Bitte geben Sie einen Ort an."
+        				validatorMessage="Der Ort darf nur aus Buchstaben bestehen und muss mit einem Großbuchstaben beginnen."
+        				rendered="#{checkoutHandler.isRechnungszahlung()}">
+        				<f:validateRegex pattern="^[A-Z][a-zA-Z -]*$"/>
+        				</h:inputText>
+        				<h:message class="error" for="ort"/>
+        				<p:watermark value="Ort" for="ort"></p:watermark>                                      
+                    </td>
+                </tr>
 												
 					</table>
 					<div class="link">

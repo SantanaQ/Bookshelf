@@ -2,7 +2,6 @@ package JSF;
 
 import java.io.IOException;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Date;
 
 import javax.annotation.PostConstruct;
@@ -13,14 +12,16 @@ import javax.inject.Named;
 
 import database.DatabaseStatements;
 import objects.Bestellung;
+import objects.Kreditkarte;
+import objects.Rechnung;
 
 
 @Named("checkoutHandler")
 @SessionScoped
-public class checkoutHandler implements Serializable{
+public class CheckoutHandler implements Serializable{
 
 	private static final long serialVersionUID = 1L;
-	
+	//Lieferdaten
 	private String vorname;
 	private String nachname;
 	private String adresse;
@@ -28,8 +29,17 @@ public class checkoutHandler implements Serializable{
 	private String ort;
 	private String zahlungsmethode;
 	
+	//Rechnungsdaten
+	private String r_vorname;
+	private String r_nachname;
+	private String r_adresse;
+	private String r_plz;
+	private String r_ort;
+	
 	private boolean rechnungszahlung = false;
 	private boolean kartenzahlung = false;
+	
+	//Kreditkarteninfos
 	private String kreditkartenAnbieter;
 	private String kartenInhaber;
 	private String kartennummer;
@@ -50,6 +60,11 @@ public class checkoutHandler implements Serializable{
 		adresse = loginHandler.getKunde().getAdresse();
 		plz = loginHandler.getKunde().getPlz();
 		ort = loginHandler.getKunde().getOrt();
+		r_vorname = vorname;
+		r_nachname = nachname;
+		r_adresse = adresse;
+		r_plz = plz;
+		r_ort = ort;
 	}
 	
 	public String getVorname() {
@@ -158,6 +173,46 @@ public class checkoutHandler implements Serializable{
 		this.cartHandler = cartHandler;
 	}
 	
+	public String getR_vorname() {
+		return r_vorname;
+	}
+
+	public void setR_vorname(String r_vorname) {
+		this.r_vorname = r_vorname;
+	}
+
+	public String getR_nachname() {
+		return r_nachname;
+	}
+
+	public void setR_nachname(String r_nachname) {
+		this.r_nachname = r_nachname;
+	}
+
+	public String getR_adresse() {
+		return r_adresse;
+	}
+
+	public void setR_adresse(String r_adresse) {
+		this.r_adresse = r_adresse;
+	}
+
+	public String getR_plz() {
+		return r_plz;
+	}
+
+	public void setR_plz(String r_plz) {
+		this.r_plz = r_plz;
+	}
+
+	public String getR_ort() {
+		return r_ort;
+	}
+
+	public void setR_ort(String r_ort) {
+		this.r_ort = r_ort;
+	}
+
 
 	public void toPayment() throws IOException {
 		FacesContext.getCurrentInstance().getExternalContext().redirect("checkout-payment.xhtml");
@@ -195,7 +250,7 @@ public class checkoutHandler implements Serializable{
 		setRechnungszahlung(false);
 	}
 
-	public void buyNow() throws IOException {
+	public void buyNow() throws IOException {	
 		// BestellNr festhalten
 		setBestellNr();
 		
@@ -205,10 +260,18 @@ public class checkoutHandler implements Serializable{
 		Bestellung bestellung = new Bestellung(loginHandler.getKunde(), cartHandler.getBooks(), today, zahlungsmethode);
 		stmts.addBestellung(bestellung);
 		
+		//Rechnung bzw. Kreditkarte in DB eintragen
+		if(isRechnungszahlung()) {
+			Rechnung rechnung = new Rechnung(bestellNr, r_vorname, r_nachname, r_adresse, r_plz, r_ort);
+			stmts.addRechnung(rechnung);
+		}else {
+			Kreditkarte kreditkarte = new Kreditkarte(kartennummer, kreditkartenAnbieter, gueltigkeit, kartenInhaber);
+			stmts.addKreditkarte(kreditkarte);
+		}
+				
 		// Warenkorb clearen
-		cartHandler.setBooks(new ArrayList<>());
-		cartHandler.setNumberItems(0);
-		cartHandler.setTotal(0);
+		cartHandler.clearCart();
+		
 		FacesContext.getCurrentInstance().getExternalContext().redirect("confirmation2.xhtml");
 	}
 

@@ -81,6 +81,7 @@ public class LoginHandler implements Serializable {
 	
 	public void logout() throws IOException {
 		FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("user", null);
+		FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
 		kunde = null;
 		FacesContext.getCurrentInstance().getExternalContext().redirect("login.xhtml");
 	}

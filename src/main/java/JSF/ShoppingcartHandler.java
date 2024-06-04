@@ -14,7 +14,7 @@ import objects.Buch;
 import objects.Item;
 
 @Named("cartHandler")
-@SessionScoped
+@SessionScoped()
 public class ShoppingcartHandler implements Serializable{
 
 	private static final long serialVersionUID = 1L;
@@ -70,11 +70,32 @@ public class ShoppingcartHandler implements Serializable{
 		return numberItems;
 	}
 	
+	public boolean isCheckout() {
+		return checkout;
+	}
+
+	public void setCheckout(boolean checkout) {
+		this.checkout = checkout;
+	}
+
+	public double getGesamt() {
+		return gesamt;
+	}
+
+	public void setGesamt() {
+		this.gesamt = total + versandkosten;
+	}
+
+	public double getVersandkosten() {
+		return versandkosten;
+	}
+	
 	public void addNew() {
 		numberItems += 1;
 		total += book.getBuch().getPreis().doubleValue();
 		book.setBuchSumme(book.getBuch().getPreis().doubleValue());
 		books.add(book);
+		
 	}
 	
 	public void delete(Item item) throws IOException {
@@ -133,24 +154,11 @@ public class ShoppingcartHandler implements Serializable{
 		}
 	}
 
-	public boolean isCheckout() {
-		return checkout;
+	public void clearCart() {
+		setBooks(new ArrayList<>());
+		setNumberItems(0);
+		setTotal(0);
 	}
 
-	public void setCheckout(boolean checkout) {
-		this.checkout = checkout;
-	}
-
-	public double getGesamt() {
-		return gesamt;
-	}
-
-	public void setGesamt() {
-		this.gesamt = total + versandkosten;
-	}
-
-	public double getVersandkosten() {
-		return versandkosten;
-	}
 
 }

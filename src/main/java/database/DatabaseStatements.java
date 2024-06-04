@@ -13,7 +13,9 @@ import java.util.List;
 import objects.Bestellung;
 import objects.Buch;
 import objects.Item;
+import objects.Kreditkarte;
 import objects.Kunde;
+import objects.Rechnung;
 
 
 public class DatabaseStatements {
@@ -304,6 +306,25 @@ public class DatabaseStatements {
 		return bezahlmethodenNr;
 	}
 	
+	public int getBezahlmethodenNr(String bezahlmethode) {
+		int bezahlmethodenNr = -1;
+		try {
+			con = DatabaseConnection.initializeDatabase();
+			PreparedStatement stmt = con.prepareStatement("SELECT * FROM Bezahlmethode WHERE Bezeichnung = ?");
+			stmt.setString(1, bezahlmethode);
+			ResultSet rs = stmt.executeQuery();
+			if(rs.next()) {
+				bezahlmethodenNr = rs.getInt("BezahlmethodenNr");
+			}
+			con.close();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return bezahlmethodenNr;
+	}
+	
 	public void addBestellung(Bestellung bestellung) {
 		int kundenNr = getKundenNr(bestellung.getKunde());
 		int bezahlmethodenNr = getBezahlmethodenNr(bestellung);
@@ -356,6 +377,63 @@ public class DatabaseStatements {
 				stmt.setInt(3, i.getAnzahl());
 				stmt.executeUpdate();
 			}
+			con.close();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void addRechnung(Rechnung rechnung) {
+		try {
+			con = DatabaseConnection.initializeDatabase();
+			PreparedStatement stmt = con.prepareStatement("INSERT INTO Rechnung (BestellNr, Vorname, Nachname, Adresse, PLZ, Ort) VALUES (?,?,?,?,?,?)");
+			stmt.setInt(1, rechnung.getBestellNr());
+			stmt.setString(2, rechnung.getVorname());
+			stmt.setString(3, rechnung.getNachname());
+			stmt.setString(4, rechnung.getAdresse());
+			stmt.setString(5, rechnung.getPlz());
+			stmt.setString(6, rechnung.getOrt());
+			stmt.executeUpdate();
+			con.close();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public boolean kreditkarteVorhanden(String nummer) {
+		boolean vorhanden = false;
+		try {
+			con = DatabaseConnection.initializeDatabase();
+			PreparedStatement stmt = con.prepareStatement("SELECT * FROM Kreditkarte WHERE KreditkartenNr = ?");
+			stmt.setString(1, nummer);
+			ResultSet rs = stmt.executeQuery();
+			if(rs.next()) {
+				vorhanden = true;
+			}
+			con.close();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return vorhanden;
+	}
+	
+	public void addKreditkarte(Kreditkarte karte) {
+		Date sqlDate = new Date(karte.getGueltigkeit().getTime());
+		try {
+			con = DatabaseConnection.initializeDatabase();
+			PreparedStatement stmt = con.prepareStatement("INSERT INTO Kreditkarte (KreditkartenNr, Anbieter, Gueltigkeit, Inhaber, BezahlmethodenNr) VALUES (?,?,?,?,?)");
+			stmt.setString(1, karte.getKartenNr());
+			stmt.setString(2, karte.getAnbieter());
+			stmt.setDate(3, sqlDate);
+			stmt.setString(4, karte.getInhaber());
+			stmt.setInt(5, getBezahlmethodenNr("Kreditkarte"));
+			stmt.executeUpdate();
 			con.close();
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
