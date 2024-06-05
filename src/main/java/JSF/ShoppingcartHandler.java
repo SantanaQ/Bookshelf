@@ -32,7 +32,7 @@ public class ShoppingcartHandler implements Serializable{
 	public void init() throws IOException {
 		// wenn Buch bereits vorhanden, keine Initialisierung
 		for(Item b : books) {
-			if(b.getBuch().getIsbn().equals(newISBN)) {	
+			if(b.getBuch().getIsbn().equals(newISBN)) {
 				return;
 			}
 		}
@@ -158,6 +158,29 @@ public class ShoppingcartHandler implements Serializable{
 		setBooks(new ArrayList<>());
 		setNumberItems(0);
 		setTotal(0);
+	}
+	
+	public void show(Buch buch) throws IOException {
+		Item item = new Item(buch, 1);
+		book = item;
+		addFromStart();
+		FacesContext.getCurrentInstance().getExternalContext().redirect("shoppingcart.xhtml");
+	}
+	
+	private void addFromStart() {
+		for(Item b: books) {
+			if(b.getBuch().equals(book.getBuch())) {
+				numberItems += 1;
+				b.setAnzahl(b.getAnzahl()+1);
+				total += book.getBuch().getPreis().doubleValue();
+				book.setBuchSumme(book.getBuch().getPreis().doubleValue());
+				return;
+			}
+		}
+		numberItems += 1;
+		total += book.getBuch().getPreis().doubleValue();
+		book.setBuchSumme(book.getBuch().getPreis().doubleValue());
+		books.add(book);
 	}
 
 

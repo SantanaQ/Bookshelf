@@ -47,7 +47,7 @@ public class LoginHandler implements Serializable {
 		FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("user", true);
 		setKunde();
 		if(!cartHandler.isCheckout()) {
-			FacesContext.getCurrentInstance().getExternalContext().redirect("ProductGroups");
+			FacesContext.getCurrentInstance().getExternalContext().redirect("index.xhtml");
 		} else
 			FacesContext.getCurrentInstance().getExternalContext().redirect("checkout.xhtml");
 		cartHandler.setCheckout(false);

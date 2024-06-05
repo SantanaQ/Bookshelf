@@ -166,7 +166,6 @@ li{
 	white-space: normal;
 	margin: auto;
  	margin-top: 20px;
- 	margin-left: 16px;
 	width: 80%;
 	background: none;
 	border: none;
@@ -198,11 +197,11 @@ li{
   margin: auto;
   margin-left: 20px;
   font-weight: bold;
-  padding-top: 5px;
 }
 
 .shoppingcart{
   float: right;
+  padding-top: 5px;
 }
 
 .mini-warenkorb-button{

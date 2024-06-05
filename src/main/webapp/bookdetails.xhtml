@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+  <h:head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <link rel="stylesheet" href="./styles/bookdetails.css"/>
+    <link rel="stylesheet" href="./styles/header.css"/>
+    <link rel="stylesheet" href="./styles/general.css"/>
+	<h:outputStylesheet name="primeicons/primeicons.css" library="primefaces" />
+    <link rel="icon" type="image/x-icon" href="https://github.com/SantanaQ/Internet-Technologien/blob/main/images/icon.png?raw=true"/>
+
+    <title>Bookshelf - Details</title>
+  </h:head>
+  <h:body>
+	<ui:insert name="header">
+		<ui:include src="#{loginHandler.includeHeader()}" />
+	</ui:insert>
+
+
+  <div class="main-content">
+    <div class="image-box">
+      <div class="image">
+      	<h:graphicImage class="book-image" value="data:image/jpg;base64,#{detailHandler.book.b64Cover}" />
+      </div>
+    </div>
+    <div class="text-box">
+      <div class="title">
+        <h2>
+        	#{detailHandler.book.titel}
+        </h2>
+      </div>
+      <div class="autor">
+        <h3>
+        	#{detailHandler.book.autor}
+        </h3>
+      </div>
+      <div class="buchart">
+      	<ui:repeat value="#{detailHandler.book.kategorien}" var="kategorie">
+	      	<div class="katbox">
+	        	<p>
+	        		#{kategorie}
+	        	</p>      		
+	      	</div>
+	    </ui:repeat>
+      </div>
+      <div class="preisinfo">
+        <h3 class="preiss">
+        	<h:outputText value="#{detailHandler.book.preis}">
+					<f:convertNumber type="currency" currencySymbol="€"/>
+			</h:outputText>
+        </h3>
+        <p class="mwst">inkl. gesetzl. MwSt.</p>
+      </div>
+      <div class="warenkorb-box">
+      		<a class="warenkorb-link" style="color:white" href="shoppingcart.xhtml?isbn=${detailHandler.book.isbn}"><button class="warenkorb-hinzufuegen-button" > In den Warenkorb</button></a>
+
+      </div>
+      <div class="isbn-box">
+        <p class="isbn" >ISBN #{detailHandler.book.isbn}</p>
+      </div>
+    </div>
+  </div>
+  <div class="beschreibungs-box-unten" id="Buchbeschreibung">
+    <h1 class="beschreibung-ueberschrift">Beschreibung</h1>
+    <div class="beschreibungstext-box">
+      <p>
+      	#{detailHandler.book.beschreibung}
+      </p>
+    </div>
+  </div>
+
+  </h:body>
+</html>

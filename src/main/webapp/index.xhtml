@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+  <h:head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <link rel="stylesheet" href="./styles/header.css"/>
+    <link rel="stylesheet" href="./styles/general.css"/>
+    <link rel="stylesheet" href="./styles/index.css"/>
+    <h:outputStylesheet name="primeicons/primeicons.css" library="primefaces" />
+   
+ 	<link rel="icon" type="image/x-icon" href="https://github.com/SantanaQ/Internet-Technologien/blob/main/images/icon.png?raw=true"/>
+
+    <title>Bookshelf - Home</title>
+  </h:head>
+  <h:body>
+	<ui:insert name="header">
+		<ui:include src="#{loginHandler.includeHeader()}" />
+	</ui:insert>
+<h:form id="main">
+<div class="main-content">
+		<div class="katalog">
+			<div class="main-top">
+				<div class="ueberschrift-katalog">
+					<h1 class="durchsuchen">
+						#{indexHandler.kategorieheadline}
+					</h1>
+				</div>
+			</div>
+			<div class="filteroptionen">
+				<aside class="menu">
+					<h:form style="text-align:center">
+						<p class="menu-label" style="text-align:center">
+							<h:commandLink class="katlabel all" type="button" value="Kateogorien" action="#{indexHandler.goToCategory(Durchsuchen)}">
+								<f:ajax render="main"></f:ajax>
+							</h:commandLink>
+						</p>
+						<hr/>
+						<ul class="menu-list">
+						<ui:repeat value="#{indexHandler.kategorien}" var="kategorie">
+							<p style="text-align:center">
+								<h:commandLink  class="katlabel" type="button" value="#{kategorie}" action="#{indexHandler.goToCategory(kategorie)}">
+								<f:ajax render="main"></f:ajax>
+								</h:commandLink>
+							</p>
+						</ui:repeat>
+						</ul>
+					</h:form>
+				</aside>
+			</div>
+		</div>
+
+	<section class="auswahl-kontent">
+		<ui:repeat value="#{indexHandler.books}" var="book">
+			<div class="auswahl">
+				<div class="bookbox" id="item">
+						<div class="coverbox">
+							<h:graphicImage value="data:image/jpg;base64,#{book.b64Cover}" />
+						</div>
+						<br/>
+						<div class="description">
+							<div class="title">
+								<h:form style="margin-left: 20px">
+									<h:inputHidden value="#{book.isbn}" id="hiddenISBN" />
+									<h:commandLink class="buchtitel" type="button" value="#{book.titel}" action="#{detailHandler.show(book)}">
+										<f:ajax render="main"></f:ajax>
+									</h:commandLink>
+								</h:form>
+								
+							</div>
+							<div class="author">
+								<p>#{book.autor}</p>
+							</div>
+						</div>
+					<div class="price-and-shopping">
+						<div class="price">
+							<p>
+								<h:outputText value="#{book.preis}">
+										<f:convertNumber type="currency" currencySymbol="€"/>
+								</h:outputText>
+							</p>
+						</div>
+						<div class="shoppingcart">
+						<h:commandLink class="warenkorb-link" type="button" action="#{cartHandler.show(book)}">
+						<i class="pi pi-shopping-cart" style="font-size: 2rem"></i>
+						<f:ajax render="main"></f:ajax>
+						</h:commandLink>
+						<!-- <a class="warenkorb-link" style="color:white" href="shoppingcart.xhtml?isbn=${book.isbn}">
+							<button class="mini-warenkorb-button">
+								<i class="pi pi-shopping-cart" style="font-size: 2rem"></i>
+							</button>
+						</a> -->
+						</div>
+					</div>
+				</div>
+			</div>
+		</ui:repeat>
+	</section>
+</div>
+</h:form>
+  </h:body>
+</html>
