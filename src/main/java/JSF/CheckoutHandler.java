@@ -232,10 +232,10 @@ public class CheckoutHandler implements Serializable{
 	}
 	
 	public void toConfirm() throws IOException {
-		if(zahlungsmethode == null  &&  !zahlungsmethode.equals("Rechnung") && !zahlungsmethode.equals("Kreditkarte")) {
+		if(zahlungsmethode == null  ||  (!zahlungsmethode.equals("Rechnung") && !zahlungsmethode.equals("Kreditkarte")) ) {
 			return;
-		}
-		FacesContext.getCurrentInstance().getExternalContext().redirect("confirmation1.xhtml");
+		}else
+			FacesContext.getCurrentInstance().getExternalContext().redirect("confirmation1.xhtml");
 	}
 	
 	public void mitRechnung() throws IOException {

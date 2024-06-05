@@ -70,3 +70,12 @@ input[type="submit"]:hover{
 .user_signup a:hover{
     text-decoration: underline;
 }
+
+.registered{
+	margin:auto;
+	width: 35%;
+	margin-top:40px;
+	text-align:center;
+	color:white
+}
+

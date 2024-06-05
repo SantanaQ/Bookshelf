@@ -100,9 +100,9 @@
       <div class="txt_field">
         <div class="control">
         	<h:inputText id="email" value="#{regHandler.email}" required="true"
-        	requiredMessage="Bitte geben Sie eine E-Mail Adresse an."
-        	validatorMessage="Die E-Mail muss folgendes Format haben: z.B. example@service.com">
-        	<f:validateRegex pattern="^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$"/>
+        	requiredMessage="Bitte geben Sie eine E-Mail Adresse an.">
+        	<f:validator validatorId="validateAlreadyExists" />
+        	<f:validator validatorId="validateEmailRegex" />
         	</h:inputText>
         	<h:message class="error" for="email"/>
         	<p:watermark value="E-Mail" for="email"></p:watermark>        	

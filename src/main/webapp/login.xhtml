@@ -24,6 +24,13 @@
 	<ui:insert name="header">
 		<ui:include src="#{loginHandler.includeHeader()}"/>
 	</ui:insert>
+	
+	<div class="registered" style="">
+		<h:panelGroup style="text-align:center;background-color:#33cc33;padding:15px" rendered="#{loginHandler.registrationSuccessful}">
+			<h:outputText style="font-weight:bold;font-style:italic" value="Registrierung erfoglreich! Sie können sich jetzt anmelden." />
+		</h:panelGroup>
+	</div>
+	
 
 	<!-- Start Login-->
 	<section class="center">

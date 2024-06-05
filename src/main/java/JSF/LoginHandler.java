@@ -23,7 +23,9 @@ public class LoginHandler implements Serializable {
 	@Inject
 	private ShoppingcartHandler cartHandler;
 	private Kunde kunde;
-
+	
+	private boolean registrationSuccessful;
+	
 	public LoginHandler() {
 	}
 
@@ -85,6 +87,13 @@ public class LoginHandler implements Serializable {
 		kunde = null;
 		FacesContext.getCurrentInstance().getExternalContext().redirect("login.xhtml");
 	}
-	
-	
+
+	public boolean isRegistrationSuccessful() {
+		return registrationSuccessful;
+	}
+
+	public void setRegistrationSuccessful(boolean registrationSuccessful) {
+		this.registrationSuccessful = registrationSuccessful;
+	}
+
 }

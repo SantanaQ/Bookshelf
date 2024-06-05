@@ -5,14 +5,16 @@ import java.io.Serializable;
 import java.util.Date;
 import java.text.ParseException;
 
+import javax.inject.Inject;
 import javax.inject.Named;//
 
 import database.DatabaseStatements;
 import objects.Kunde;
 
 import javax.enterprise.context.RequestScoped;
-import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+
+
 
 @Named("regHandler")
 @RequestScoped
@@ -29,12 +31,16 @@ public class RegristrationHandler implements Serializable{
 	private String email;
 	private String passwort;
 	private String confirmPasswort;
+	private boolean successful;
 	
+	@Inject
+	LoginHandler loginHandler;
 	
 	public void register() throws IOException {
 		Kunde neuerKunde = new Kunde(vorname, nachname, geburtsdatum, adresse, plz, ort, email, passwort);
 		DatabaseStatements stmts = new DatabaseStatements();
 		stmts.addKunde(neuerKunde);
+		loginHandler.setRegistrationSuccessful(true);
 		FacesContext.getCurrentInstance().getExternalContext().redirect("login.xhtml");
 	}
 
@@ -122,6 +128,14 @@ public class RegristrationHandler implements Serializable{
 
 	public void setConfirmPasswort(String confirmPasswort) {
 		this.confirmPasswort = confirmPasswort;
+	}
+
+	public boolean isSuccessful() {
+		return successful;
+	}
+
+	public void setSuccessful(boolean successful) {
+		this.successful = successful;
 	}
 
 	
