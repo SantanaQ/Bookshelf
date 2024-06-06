@@ -356,26 +356,6 @@ public class DatabaseStatements {
 		}
 	}
 	
-	public int setBestellNr() {
-		int bestellNr = -1;
-		try {
-			con = DatabaseConnection.initializeDatabase();
-			PreparedStatement stmt = con.prepareStatement("SELECT * FROM Bestellung ORDER BY BestellNr DESC LIMIT 1");
-			ResultSet rs = stmt.executeQuery();
-			if(rs.next()) {
-				bestellNr = rs.getInt("BestellNr") + 1;
-			}else
-				bestellNr = 1;
-			con.close();
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return bestellNr;
-	}
-	
-	
 	private void addBuchBestellung(Bestellung bestellung, int bestellNr) {
 		try {
 			con = DatabaseConnection.initializeDatabase();
