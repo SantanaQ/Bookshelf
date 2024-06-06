@@ -7,6 +7,7 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,6 +23,8 @@ public class DatabaseStatements {
 	
 	private static Connection con;
 
+	private int bestellNr;
+	
 	public void addBook(Buch buch) {
 		PreparedStatement stmt = null;
 		try {
@@ -328,16 +331,21 @@ public class DatabaseStatements {
 	public void addBestellung(Bestellung bestellung) {
 		int kundenNr = getKundenNr(bestellung.getKunde());
 		int bezahlmethodenNr = getBezahlmethodenNr(bestellung);
-		int bestellNr = setBestellNr();
+		int bestellNr = -1;
 		Date sqlDate = new Date(bestellung.getDatum().getTime());
 		try {
 			con = DatabaseConnection.initializeDatabase();
-			PreparedStatement stmt = con.prepareStatement("INSERT INTO Bestellung (BestellNr, Datum, KundenNr, BezahlmethodenNr) VALUES (?,?,?,?)");
-			stmt.setInt(1, bestellNr);
-			stmt.setDate(2,sqlDate);
-			stmt.setInt(3,kundenNr);
-			stmt.setInt(4,bezahlmethodenNr);
+			PreparedStatement stmt = con.prepareStatement("INSERT INTO Bestellung (Datum, KundenNr, BezahlmethodenNr) VALUES (?,?,?)", Statement.RETURN_GENERATED_KEYS);
+			
+			stmt.setDate(1,sqlDate);
+			stmt.setInt(2,kundenNr);
+			stmt.setInt(3,bezahlmethodenNr);
 			stmt.executeUpdate();
+			ResultSet rs = stmt.getGeneratedKeys();
+			if(rs.next()) {
+				bestellNr = rs.getInt(1);
+				setBestellNr(bestellNr);
+			}
 			addBuchBestellung(bestellung, bestellNr);
 			con.close();
 
@@ -366,6 +374,7 @@ public class DatabaseStatements {
 		}
 		return bestellNr;
 	}
+	
 	
 	private void addBuchBestellung(Bestellung bestellung, int bestellNr) {
 		try {
@@ -440,6 +449,14 @@ public class DatabaseStatements {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+	}
+
+	public int getBestellNr() {
+		return bestellNr;
+	}
+
+	public void setBestellNr(int bestellNr) {
+		this.bestellNr = bestellNr;
 	}
 	
 	

@@ -222,13 +222,8 @@ public class CheckoutHandler implements Serializable{
 		return bestellNr;
 	}
 	
-	public void setBestellNr() {
-		DatabaseStatements stmts = new DatabaseStatements();
-		int nr = stmts.setBestellNr();
-		if(nr > 1) {
-			this.bestellNr =  stmts.setBestellNr();
-		}else
-			this.bestellNr = 1;
+	public void setBestellNr(int bestellNr) {
+		this.bestellNr = bestellNr;
 	}
 	
 	public void toConfirm() throws IOException {
@@ -251,14 +246,14 @@ public class CheckoutHandler implements Serializable{
 	}
 
 	public void buyNow() throws IOException {	
-		// BestellNr festhalten
-		setBestellNr();
-		
 		// Bestellung in DB eintragen
 		DatabaseStatements stmts = new DatabaseStatements();
 		Date today = new Date();
 		Bestellung bestellung = new Bestellung(loginHandler.getKunde(), cartHandler.getBooks(), today, zahlungsmethode);
 		stmts.addBestellung(bestellung);
+
+		// BestellNr festhalten
+		setBestellNr(stmts.getBestellNr());
 		
 		//Rechnung bzw. Kreditkarte in DB eintragen
 		if(isRechnungszahlung()) {
@@ -271,9 +266,10 @@ public class CheckoutHandler implements Serializable{
 				
 		// Warenkorb clearen
 		cartHandler.clearCart();
-		
 		FacesContext.getCurrentInstance().getExternalContext().redirect("confirmation2.xhtml");
 	}
+	
+	
 
 
 
