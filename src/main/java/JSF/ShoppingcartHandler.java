@@ -25,7 +25,6 @@ public class ShoppingcartHandler implements Serializable{
 	private Item book;
 	private String newISBN;
 	private boolean checkout = false;
-	
 	private final double versandkosten = 3.99;
 	private double gesamt;
 	

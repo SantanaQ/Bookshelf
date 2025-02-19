@@ -38,8 +38,10 @@ public class RegristrationHandler implements Serializable{
 	
 	public void register() throws IOException {
 		Kunde neuerKunde = new Kunde(vorname, nachname, geburtsdatum, adresse, plz, ort, email, passwort);
+		
 		DatabaseStatements stmts = new DatabaseStatements();
 		stmts.addKunde(neuerKunde);
+		
 		loginHandler.setRegistrationSuccessful(true);
 		FacesContext.getCurrentInstance().getExternalContext().redirect("login.xhtml");
 	}

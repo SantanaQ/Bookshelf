@@ -20,11 +20,12 @@ public class LoginHandler implements Serializable {
 
 	private String email;
 	private String passwort;
+	private Kunde kunde;	
+	private boolean registrationSuccessful;
+
+
 	@Inject
 	private ShoppingcartHandler cartHandler;
-	private Kunde kunde;
-	
-	private boolean registrationSuccessful;
 	
 	public LoginHandler() {
 	}

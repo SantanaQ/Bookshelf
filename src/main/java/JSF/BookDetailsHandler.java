@@ -30,6 +30,4 @@ public class BookDetailsHandler implements Serializable{
 		FacesContext.getCurrentInstance().getExternalContext().redirect("bookdetails.xhtml");
 	}
 	
-	
-
 }

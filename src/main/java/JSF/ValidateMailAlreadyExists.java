@@ -19,7 +19,7 @@ public class ValidateMailAlreadyExists implements Validator<Object>{
     	Kunde k = stmt.getKunde((String) email);
     	
         if (email == null) {
-            return; // Let required="true" handle.
+            return;
         }
 
         if (k != null) {
