@@ -8,6 +8,7 @@ public class Bestellung implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 	
+	
 	private Kunde kunde;
 	private List<Item> books;
 	private Date datum;

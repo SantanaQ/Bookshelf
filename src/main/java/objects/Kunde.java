@@ -18,10 +18,6 @@ public class Kunde implements Serializable{
 	private String passwort;
 	
 	
-	/*        String date=request.getParameter("dob");
-        System.out.println("dateString:"+date);
-        Date utilDate=new SimpleDateFormat("yyyy-mm-dd").parse(date); */
-	
 	public Kunde() {
 	}
 	
