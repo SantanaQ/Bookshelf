@@ -250,18 +250,20 @@ public class CheckoutHandler implements Serializable{
 		DatabaseStatements stmts = new DatabaseStatements();
 		Date today = new Date();
 		Bestellung bestellung = new Bestellung(loginHandler.getKunde(), cartHandler.getBooks(), today, zahlungsmethode);
-		stmts.addBestellung(bestellung);
+		int bestellNr = stmts.addBestellung(bestellung);
 
 		// BestellNr festhalten
-		setBestellNr(stmts.getBestellNr());
+		setBestellNr(bestellNr);
 		
 		//Rechnung bzw. Kreditkarte in DB eintragen
 		if(isRechnungszahlung()) {
 			Rechnung rechnung = new Rechnung(bestellNr, r_vorname, r_nachname, r_adresse, r_plz, r_ort);
 			stmts.addRechnung(rechnung);
 		}else {
-			Kreditkarte kreditkarte = new Kreditkarte(kartennummer, kreditkartenAnbieter, gueltigkeit, kartenInhaber);
-			stmts.addKreditkarte(kreditkarte);
+			if(!stmts.kreditkarteVorhanden(kartennummer)) {
+				Kreditkarte kreditkarte = new Kreditkarte(kartennummer, kreditkartenAnbieter, gueltigkeit, kartenInhaber);
+				stmts.addKreditkarte(kreditkarte);				
+			}
 		}
 				
 		// Warenkorb clearen

@@ -13,8 +13,8 @@ import objects.Item;
 public class DataHelper {
 	
 	public List<String> stringValuesToList(String s){
-		List<String> categories = Arrays.asList(s.split(","));
-		return categories;
+		List<String> str = Arrays.asList(s.split(","));
+		return str;
 	}
 	
 	public boolean containsVal(String[] arr, String val) {

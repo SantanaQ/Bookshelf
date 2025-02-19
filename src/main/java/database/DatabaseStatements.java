@@ -23,8 +23,6 @@ public class DatabaseStatements {
 	
 	private static Connection con;
 
-	private int bestellNr;
-	
 	public void addBook(Buch buch) {
 		PreparedStatement stmt = null;
 		try {
@@ -328,7 +326,7 @@ public class DatabaseStatements {
 		return bezahlmethodenNr;
 	}
 	
-	public void addBestellung(Bestellung bestellung) {
+	public int addBestellung(Bestellung bestellung) {
 		int kundenNr = getKundenNr(bestellung.getKunde());
 		int bezahlmethodenNr = getBezahlmethodenNr(bestellung);
 		int bestellNr = -1;
@@ -344,16 +342,15 @@ public class DatabaseStatements {
 			ResultSet rs = stmt.getGeneratedKeys();
 			if(rs.next()) {
 				bestellNr = rs.getInt(1);
-				setBestellNr(bestellNr);
 			}
 			addBuchBestellung(bestellung, bestellNr);
 			con.close();
-
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		return bestellNr;
 	}
 	
 	private void addBuchBestellung(Bestellung bestellung, int bestellNr) {
@@ -431,13 +428,5 @@ public class DatabaseStatements {
 		}
 	}
 
-	public int getBestellNr() {
-		return bestellNr;
-	}
-
-	public void setBestellNr(int bestellNr) {
-		this.bestellNr = bestellNr;
-	}
-	
 	
 }
