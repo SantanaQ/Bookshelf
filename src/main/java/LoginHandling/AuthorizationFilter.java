@@ -34,21 +34,15 @@ public class AuthorizationFilter implements Filter {
         boolean ajaxRequest = "partial/ajax".equals(request.getHeader("Faces-Request"));
         
         if (loggedIn || loginRequest || resourceRequest) {
-/*            if (!resourceRequest) { // Prevent browser from caching restricted resources. See also https://stackoverflow.com/q/4194207/157882
-                response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1.
-                response.setHeader("Pragma", "no-cache"); // HTTP 1.0.
-                response.setDateHeader("Expires", 0); // Proxies.
-            }
-*/
-            chain.doFilter(request, response); // So, just continue request.
+            chain.doFilter(request, response); 
         }
         else if (ajaxRequest) {
             response.setContentType("text/xml");
             response.setCharacterEncoding("UTF-8");
-            response.getWriter().printf(AJAX_REDIRECT_XML, loginURL); // So, return special XML response instructing JSF ajax to send a redirect.
+            response.getWriter().printf(AJAX_REDIRECT_XML, loginURL); 
         }
         else {
-            response.sendRedirect(loginURL); // So, just perform standard synchronous redirect.
+            response.sendRedirect(loginURL);
         }
     }
 
@@ -64,6 +58,4 @@ public class AuthorizationFilter implements Filter {
 		
 	}
 
-
-    // You need to override init() and destroy() as well, but they can be kept empty.
 }
