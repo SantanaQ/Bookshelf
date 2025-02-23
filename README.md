@@ -46,6 +46,8 @@ Before starting the application, set up the MySQL database manually using XAMPP:
    - Start Tomcat and access the application at `http://localhost:8080/OnlineBookstore`.
 
 ## Features
+- Register new users
+- Login to a user's account
 - Browse books by category
 - View book details
 - Add books to the shopping cart
