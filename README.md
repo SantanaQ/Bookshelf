@@ -4,15 +4,18 @@ Bookshelf is a web-based application for browsing and purchasing books. The proj
 
 ## Technologies
 - **Java** – Backend logic
+- **Jakarta Faces (JSF)** – Frontend framework for building user interfaces
 - **Apache Tomcat** – Web server to host the application
 - **MySQL** – Database for storing book and user data
 - **XAMPP** – Tool for managing the MySQL database and Apache server
+- **Maven** – Dependency and build management
 
 ## Installation
 ### Prerequisites
 - Java Development Kit (JDK) 17 or higher
 - Apache Tomcat (configured manually)
 - XAMPP (for MySQL database management)
+- Maven
 
 ### Database Setup
 Before starting the application, set up the MySQL database manually using XAMPP:
@@ -41,7 +44,9 @@ Before starting the application, set up the MySQL database manually using XAMPP:
    db.username=user
    db.password=your-password
    ```
-3. **Deploy to Apache Tomcat**
+3. **Build and package the application**
+   - mvn clean package 
+4. **Deploy to Apache Tomcat**
    - Place the compiled `.war` file in the `webapps` folder of your Tomcat installation.
    - Start Tomcat and access the application at `http://localhost:8080/OnlineBookstore`.
 
