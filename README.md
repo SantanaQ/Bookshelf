@@ -29,7 +29,7 @@ Before starting the application, set up the MySQL database manually using XAMPP:
    CREATE USER 'user'@'localhost' IDENTIFIED BY 'your-password';
    GRANT ALL PRIVILEGES ON bookshelf.* TO 'user'@'localhost';
    ```
-4. Import the provided SQL schema bookshelf.sql into the `bookshelf` database.
+4. Import the provided SQL schema `bookshelf.sql` into the `bookshelf` database.
 
 ### Deployment Steps
 1. **Clone the repository**
