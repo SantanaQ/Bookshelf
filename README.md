@@ -48,7 +48,7 @@ Before starting the application, set up the MySQL database manually using XAMPP:
    - mvn clean package 
 4. **Deploy to Apache Tomcat**
    - Place the compiled `.war` file in the `webapps` folder of your Tomcat installation.
-   - Start Tomcat and access the application at `http://localhost:8080/OnlineBookstore`.
+   - Start Tomcat and access the application at `http://localhost:8080/bookshelf`.
 
 ## Features
 - Register new users
